@@ -6,11 +6,23 @@ window._ = _;
  * to our Laravel back-end. This library automatically handles sending the
  * CSRF token as a header based on the value of the "XSRF" token cookie.
  */
-
 import axios from 'axios';
 window.axios = axios;
-
 window.axios.defaults.headers.common['X-Requested-With'] = 'XMLHttpRequest';
+
+// dayjs
+import dayjs from "dayjs";
+import utc from "dayjs/plugin/utc";
+import timezone from "dayjs/plugin/timezone";
+import relativeTime from "dayjs/plugin/relativeTime";
+import calendar from "dayjs/plugin/calendar";
+import duration from "dayjs/plugin/duration";
+dayjs.extend(utc);
+dayjs.extend(timezone);
+dayjs.extend(calendar);
+dayjs.extend(relativeTime);
+dayjs.extend(duration);
+window.dayjs = dayjs;
 
 /**
  * Echo exposes an expressive API for subscribing to channels and listening

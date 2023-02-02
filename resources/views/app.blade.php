@@ -21,17 +21,7 @@
 <body class="font-sans antialiased">
     @inertia
 
-    <!-- <script defer data-domain="help.changelogfy.com" src="https://plausible.io/js/script.local.js"></script>
-    <script async src="https://cdn.panelbear.com/analytics.js?site=8Sog1WJJqCV"></script>
-    <script>
-        window.panelbear = window.panelbear || function() {
-            (window.panelbear.q = window.panelbear.q || []).push(arguments);
-        };
-        panelbear('config', {
-            site: '8Sog1WJJqCV',
-            debug: true
-        });
-    </script> -->
+    <script async defer data-website-id="a30fdd8f-91a8-4b2b-815a-a85da0c77cef" src="http://localhost:3000/umami.js"></script>
 </body>
 
 </html>

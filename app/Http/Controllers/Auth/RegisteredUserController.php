@@ -15,6 +15,7 @@ use Inertia\Inertia;
 use Inertia\Response;
 
 use App\Models\User;
+use App\Models\Timezone;
 
 class RegisteredUserController extends Controller
 {
@@ -42,7 +43,8 @@ class RegisteredUserController extends Controller
         $user = User::create([
             'name' => $request->name,
             'email' => $request->email,
-            'password' => Hash::make($request->password)
+            'password' => Hash::make($request->password),
+            'timezone_id' => Timezone::where('value', 'America/Sao_Paulo')->first()->id,
         ]);
 
         event(new Registered($user));

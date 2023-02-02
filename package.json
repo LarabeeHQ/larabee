@@ -21,6 +21,8 @@
         "@heroicons/vue": "^2.0.14",
         "@tailwindcss/aspect-ratio": "^0.4.2",
         "@tailwindcss/line-clamp": "^0.4.2",
-        "@tailwindcss/typography": "^0.5.9"
+        "@tailwindcss/typography": "^0.5.9",
+        "dayjs": "^1.11.7",
+        "v-calendar": "^3.0.0-alpha.8"
     }
 }

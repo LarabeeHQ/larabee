@@ -17,8 +17,9 @@ return new class extends Migration
             $table->uuid('id')->primary();
 
             $table->string('name');
+            $table->string('domain');
             $table->json('allowed_domains')->nullable();
-            $table->foreignUuid('timezone_id');
+            $table->boolean('public')->default(false);
 
             $table->timestamps();
             $table->softDeletes('deleted_at', 0);

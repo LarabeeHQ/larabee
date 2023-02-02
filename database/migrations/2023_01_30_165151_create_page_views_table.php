@@ -18,8 +18,8 @@ return new class extends Migration
             $table->foreignUuid('session_id');
             $table->foreignUuid('website_id');
 
-            $table->string('path');
-            $table->string('referrer')->nullable();
+            $table->string('url');
+            $table->string('referrer')->default('');
             $table->timestamps();
         });
     }

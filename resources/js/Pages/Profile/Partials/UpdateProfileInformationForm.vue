@@ -3,11 +3,13 @@ import InputError from "@/Components/InputError.vue";
 import Label from "@/Components/Label.vue";
 import PrimaryButton from "@/Components/PrimaryButton.vue";
 import TextInput from "@/Components/Input.vue";
+import Select from "@/Components/Select.vue";
 import { Link, useForm, usePage } from "@inertiajs/vue3";
 
 const props = defineProps({
     mustVerifyEmail: Boolean,
     status: String,
+    timezones: Object,
 });
 
 const user = usePage().props.auth.user;
@@ -15,6 +17,7 @@ const user = usePage().props.auth.user;
 const form = useForm({
     name: user.name,
     email: user.email,
+    timezone_id: user.timezone_id,
 });
 </script>
 
@@ -86,6 +89,18 @@ const form = useForm({
                 >
                     A new verification link has been sent to your email address.
                 </div>
+            </div>
+
+            <div class="col-span-6 sm:col-span-4">
+                <Label for="timezone_id" value="Timezone" />
+                <Select
+                    id="timezone_id"
+                    :values="timezones"
+                    class="mt-1 block w-full"
+                    v-model="form.timezone_id"
+                />
+
+                <InputError :message="form.errors.timezone_id" class="mt-2" />
             </div>
 
             <div class="flex items-center gap-4">

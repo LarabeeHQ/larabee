@@ -8,6 +8,7 @@ import { Head, Link, useForm } from "@inertiajs/vue3";
 
 const form = useForm({
     name: "",
+    domain: ""
 });
 
 const submit = () => {
@@ -32,13 +33,25 @@ const submit = () => {
                     v-model="form.name"
                     required
                     autofocus
-                    autocomplete="name"
+                    placeholder="My Website"
+                    autocomplete="off"
                 />
-                <p class="text-gray-500 mt-2 text-sm">
-                    You can change it later - it's just a display name.
-                </p>
-
                 <InputError class="mt-2" :message="form.errors.name" />
+            </div>
+
+            <div class="mt-4">
+                <Label for="domain" value="Domain" />
+
+                <TextInput
+                    id="domain"
+                    type="text"
+                    class="mt-1 block w-full"
+                    placeholder="example.com"
+                    v-model="form.domain"
+                    required
+                />
+
+                <InputError class="mt-2" :message="form.errors.domain" />
             </div>
 
             <div class="flex items-center justify-end mt-4">

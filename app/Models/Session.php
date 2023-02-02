@@ -10,8 +10,13 @@ class Session extends Model
 {
     use HasFactory, HasUuids;
 
-    public function website()
+    public function website(): \Illuminate\Database\Eloquent\Relations\BelongsTo
     {
         return $this->belongsTo(Website::class);
+    }
+
+    public function page_views(): \Illuminate\Database\Eloquent\Relations\HasMany
+    {
+        return $this->hasMany(PageView::class);
     }
 }

@@ -38,9 +38,9 @@ class HandleInertiaRequests extends Middleware
                     }
 
                     return array_merge($request->user()->toArray(), array_filter([
-                        'user_notification_setting' => $request->user()->user_notification_setting,
                         'current_website' => collect($request->user()->currentWebsite)->merge(['role' => $request->user()->websiteRole($request->user()->currentWebsite)]),
                         'websites' => $request->user()->websites,
+                        'timezone' => $request->user()->timezone
                     ]));
                 },
             ],

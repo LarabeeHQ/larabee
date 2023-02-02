@@ -12,11 +12,6 @@ class Website extends Model
 
     protected $casts = [];
 
-    public function timezone()
-    {
-        return $this->belongsTo(Timezone::class);
-    }
-
     public function users()
     {
         return $this->belongsToMany(User::class)->withPivot('role')->as('membership')->withTimestamps();

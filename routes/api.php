@@ -3,11 +3,11 @@
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 
-use App\Http\Controllers\Api\EventController;
+use App\Http\Controllers\Api\CollectController;
 
 // open routes
 Route::group(['middleware' => []], function () {
-    Route::post('/events', [EventController::class, 'store'])->name('public-api.events.store');
+    Route::post('/collect', [CollectController::class, 'store'])->name('public-api.events.store');
 });
 
 

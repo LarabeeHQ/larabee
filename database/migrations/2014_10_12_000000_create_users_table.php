@@ -22,6 +22,7 @@ return new class extends Migration
 
             $table->string('avatar')->nullable();
 
+            $table->foreignUuid('timezone_id');
             $table->foreignUuid('current_website_id')->nullable();
 
             $table->string('stripe_id')->nullable()->index();

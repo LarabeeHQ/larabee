@@ -11,6 +11,8 @@ use Illuminate\Support\Facades\Redirect;
 use Inertia\Inertia;
 use Inertia\Response;
 
+use App\Models\Timezone;
+
 class ProfileController extends Controller
 {
     /**
@@ -18,9 +20,12 @@ class ProfileController extends Controller
      */
     public function edit(Request $request): Response
     {
+        $timezones = Timezone::orderBy('title', 'asc')->pluck('title', 'id');
+
         return Inertia::render('Profile/Edit', [
             'mustVerifyEmail' => $request->user() instanceof MustVerifyEmail,
             'status' => session('status'),
+            'timezones' => $timezones,
         ]);
     }
 

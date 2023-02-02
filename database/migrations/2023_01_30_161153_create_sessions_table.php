@@ -17,15 +17,16 @@ return new class extends Migration
             $table->uuid('id')->primary();
             $table->foreignUuid('website_id');
             $table->string('hash');
-            $table->string('hostname');
-            $table->string('browser');
-            $table->string('os');
-            $table->string('device');
-            $table->string('country');
-            $table->string('region');
-            $table->string('city');
-            $table->double('longitude')->nullable();
-            $table->double('latitude')->nullable();
+
+            $table->string('hostname')->nullable();
+            $table->string('browser')->nullable();
+            $table->string('os')->nullable();
+            $table->string('device')->nullable();
+            $table->string('screen')->nullable();
+            $table->string('language')->nullable();
+            $table->string('country')->nullable();
+            $table->string('region')->nullable();
+            $table->string('city')->nullable();
             $table->timestamps();
         });
     }

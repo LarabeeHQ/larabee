@@ -118,6 +118,11 @@ class User extends Authenticatable implements MustVerifyEmail
         return true;
     }
 
+    public function timezone()
+    {
+        return $this->belongsTo(Timezone::class);
+    }
+
     public function websites()
     {
         return $this->belongsToMany(Website::class)->withPivot('role')->as('membership')->withTimestamps();
