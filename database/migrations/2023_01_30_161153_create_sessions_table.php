@@ -16,8 +16,7 @@ return new class extends Migration
         Schema::create('sessions', function (Blueprint $table) {
             $table->uuid('id')->primary();
             $table->foreignUuid('website_id');
-            $table->string('hash');
-
+            $table->string('hash')->unique();
             $table->string('hostname')->nullable();
             $table->string('browser')->nullable();
             $table->string('os')->nullable();
@@ -27,6 +26,11 @@ return new class extends Migration
             $table->string('country')->nullable();
             $table->string('region')->nullable();
             $table->string('city')->nullable();
+            $table->string('utm_medium')->nullable();
+            $table->string('utm_source')->nullable();
+            $table->string('utm_campaign')->nullable();
+            $table->string('utm_content')->nullable();
+            $table->string('utm_term')->nullable();
             $table->timestamps();
         });
     }

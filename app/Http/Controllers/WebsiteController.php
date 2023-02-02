@@ -72,7 +72,7 @@ class WebsiteController extends Controller
             abort(404);
         }
 
-        return Inertia::render('Website/Show', [
+        return Inertia::render('Website/Show/Index', [
             'website' => $website
         ]);
     }
@@ -98,6 +98,30 @@ class WebsiteController extends Controller
             ->whereBetween('created_at', [$start, $end])
             ->get();
 
+        $countries = Session::where('website_id', $id)
+        ->select('country', \DB::raw('count(*) as total'))
+        ->whereBetween('created_at', [$start, $end])
+        ->whereNotNull('country')
+        ->groupBy('country')
+        ->orderBy('total', 'desc')
+        ->get();
+
+        $regions = Session::where('website_id', $id)
+            ->select('region', \DB::raw('count(*) as total'))
+            ->whereBetween('created_at', [$start, $end])
+            ->whereNotNull('region')
+            ->groupBy('region')
+            ->orderBy('total', 'desc')
+            ->get();
+
+        $cities = Session::where('website_id', $id)
+        ->select('city', \DB::raw('count(*) as total'))
+        ->whereBetween('created_at', [$start, $end])
+            ->whereNotNull('city')
+            ->groupBy('city')
+            ->orderBy('total', 'desc')
+            ->get();
+
 
         $pages = PageView::where('website_id', $id)
             ->select('url', \DB::raw('count(*) as total'))
@@ -106,11 +130,75 @@ class WebsiteController extends Controller
             ->orderBy('total', 'desc')
             ->get();
 
-        $referrer = PageView::where('website_id', $id)
+        $referrers = PageView::where('website_id', $id)
             ->select('referrer', \DB::raw('count(*) as total'))
             ->whereBetween('created_at', [$start, $end])
             ->where('referrer', 'NOT ILIKE', "%[$website->id}%" )
             ->groupBy('referrer')
+            ->orderBy('total', 'desc')
+            ->get();
+
+        $devices = Session::where('website_id', $id)
+        ->select('device', \DB::raw('count(*) as total'))
+        ->whereBetween('created_at', [$start, $end])
+            ->whereNotNull('device')
+            ->groupBy('device')
+            ->orderBy('total', 'desc')
+            ->get();
+
+        $browers = Session::where('website_id', $id)
+        ->select('browser', \DB::raw('count(*) as total'))
+        ->whereBetween('created_at', [$start, $end])
+            ->whereNotNull('browser')
+            ->groupBy('browser')
+            ->orderBy('total', 'desc')
+            ->get();
+
+        $os = Session::where('website_id', $id)
+        ->select('os', \DB::raw('count(*) as total'))
+        ->whereBetween('created_at', [$start, $end])
+            ->whereNotNull('os')
+            ->groupBy('os')
+            ->orderBy('total', 'desc')
+            ->get();
+
+        $utmSources = Session::where('website_id', $id)
+        ->select('utm_source', \DB::raw('count(*) as total'))
+        ->whereBetween('created_at', [$start, $end])
+            ->whereNotNull('utm_source')
+            ->groupBy('utm_source')
+            ->orderBy('total', 'desc')
+            ->get();
+
+        $utmMediums = Session::where('website_id', $id)
+            ->select('utm_medium', \DB::raw('count(*) as total'))
+            ->whereBetween('created_at', [$start, $end])
+                ->whereNotNull('utm_medium')
+                ->groupBy('utm_medium')
+                ->orderBy('total', 'desc')
+                ->get();
+
+        $utmCampaigns = Session::where('website_id', $id)
+        ->select('utm_campaign', \DB::raw('count(*) as total'))
+        ->whereBetween('created_at', [$start, $end])
+            ->whereNotNull('utm_campaign')
+            ->groupBy('utm_campaign')
+            ->orderBy('total', 'desc')
+            ->get();
+
+        $utmContents = Session::where('website_id', $id)
+        ->select('utm_content', \DB::raw('count(*) as total'))
+        ->whereBetween('created_at', [$start, $end])
+            ->whereNotNull('utm_content')
+            ->groupBy('utm_content')
+            ->orderBy('total', 'desc')
+            ->get();
+
+        $utmTerms = Session::where('website_id', $id)
+        ->select('utm_term', \DB::raw('count(*) as total'))
+        ->whereBetween('created_at', [$start, $end])
+            ->whereNotNull('utm_term')
+            ->groupBy('utm_term')
             ->orderBy('total', 'desc')
             ->get();
 
@@ -124,31 +212,26 @@ class WebsiteController extends Controller
             'page_views' => $pageViews->count(),
 
             'pages' => $pages,
-            'referrer' => $referrer,
 
-            'devices' => [
-                'desktop' => 0,
-                'mobile' => 0,
-                'tablet' => 0,
+            'referrers' => $referrers,
+            'campaigns' => [
+                'utm_sources' => $utmSources,
+                'utm_mediums' => $utmMediums,
+                'utm_campaigns' => $utmCampaigns,
+                'utm_contents' => $utmContents,
+                'utm_terms' => $utmTerms,
             ],
 
-            'browser' => [
-                'chrome' => 0,
-                'firefox' => 0,
-                'safari' => 0,
-                'edge' => 0,
-                'opera' => 0,
-                'other' => 0,
-            ],
+            'devices' => $devices,
 
-            'os' => [
-                'windows' => 0,
-                'mac' => 0,
-                'linux' => 0,
-                'ios' => 0,
-                'android' => 0,
-                'other' => 0,
-            ],
+            'countries' => $countries,
+            'regions' => $regions,
+            'cities' => $cities,
+
+            'browsers' => $browers,
+            'os' => $os,
+
+
         ];
 
         return response()->json($data);

@@ -10,6 +10,29 @@ class Session extends Model
 {
     use HasFactory, HasUuids;
 
+    const DEVICE_MOBILE = 'mobile';
+    const DEVICE_TABLET = 'tablet';
+    const DEVICE_DESKTOP = 'desktop';
+
+    protected $fillable = [
+        'website_id',
+        'hash',
+        'hostname',
+        'browser',
+        'os',
+        'device',
+        'screen',
+        'language',
+        'country',
+        'region',
+        'city',
+        'utm_medium',
+        'utm_source',
+        'utm_campaign',
+        'utm_content',
+        'utm_term'
+    ];
+
     public function website(): \Illuminate\Database\Eloquent\Relations\BelongsTo
     {
         return $this->belongsTo(Website::class);

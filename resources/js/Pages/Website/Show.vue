@@ -191,8 +191,12 @@ watch(range, (value) => {
                         <div class="mt-4">
                             <ul>
                                 <li v-for="page in data.pages" :key="page">
-                                    {{ page.url }}
-                                    {{ page.total }}
+                                    <div
+                                        class="flex items-center justify-between"
+                                    >
+                                        <div>{{ page.url }}</div>
+                                        <div>{{ page.total }}</div>
+                                    </div>
                                 </li>
                             </ul>
                         </div>

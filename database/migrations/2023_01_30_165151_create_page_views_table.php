@@ -19,7 +19,7 @@ return new class extends Migration
             $table->foreignUuid('website_id');
 
             $table->string('url');
-            $table->string('referrer')->default('');
+            $table->string('referrer')->nullable();
             $table->timestamps();
         });
     }
