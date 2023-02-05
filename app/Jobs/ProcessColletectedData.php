@@ -46,12 +46,11 @@ class ProcessColletectedData implements ShouldQueue
         $this->data['ip'] = '104.103.238.0';
 
         // get session hash
-        $hash = hash('md5', "{$this->data['website_id']}-{$this->data['ip']}-{$this->data['user_agent']}");
+        $hash = Session::generateHash($this->data['website_id'], $this->data['hostname'], $this->data['ip'], $this->data['user_agent']);
 
         // parse url
         $url = parse_url($this->data['url']);
         isset($url['query']) ? parse_str($url['query'], $queryParams) : null;
-
 
         if (!Cache::has("session:$hash")) {
 
@@ -79,7 +78,7 @@ class ProcessColletectedData implements ShouldQueue
                 'os' => $browser->platformFamily(),
                 'screen' => $this->data['screen'],
                 'language' => $this->data['language'],
-                'country' => $geo->country,
+                'country' => $geo->iso_code,
                 'region' => $geo->state_name,
                 'city' => $geo->city,
                 'utm_medium' => isset($queryParams) ? $queryParams['utm_medium'] : null,
@@ -95,11 +94,16 @@ class ProcessColletectedData implements ShouldQueue
             $session = Cache::get("session:$hash");
         }
 
+
+        // parse referrer
+        $referrer = parse_url($this->data['referrer']);
+        isset($referrer['query']) ? parse_str($referrer['query'], $queryParams) : null;
+
         $pageView = new PageView;
         $pageView->session_id = $session->id;
         $pageView->website_id = $session->website_id;
         $pageView->url = $url['path'];
-        $pageView->referrer = $this->data['referrer'];
+        $pageView->referrer = $referrer['host'] !== $this->data['hostname'] ? $referrer['path'] : null;
         $pageView->save();
     }
 }

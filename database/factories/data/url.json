@@ -1,0 +1,27 @@
+[
+    "/",
+    "/admin/users",
+    "/admin/users/1",
+    "/account/edit",
+    "/docs",
+    "/docs/guide",
+    "/features",
+    "/pricing",
+    "/terms",
+    "/privacy",
+    "/contact",
+    "/about",
+    "/login",
+    "/register",
+    "/password/reset",
+    "/password/email",
+    "/home",
+    "/docs/api",
+    "/alternatives",
+    "/alternatives/product-1",
+    "/alternatives/product-2",
+    "/alternatives/product-3",
+    "/backoffice",
+    "/backoffice/overview"
+
+]

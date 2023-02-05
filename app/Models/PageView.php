@@ -10,6 +10,16 @@ class PageView extends Model
 {
     use HasFactory, HasUuids;
 
+    public $timestamps = false;
+
+    public static function boot()
+    {
+        parent::boot();
+        static::creating(function ($model) {
+            $model->created_at = $model->created_at ? $model->created_at : now();
+        });
+    }
+
     public function session()
     {
         return $this->belongsTo(Session::class);

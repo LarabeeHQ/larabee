@@ -1,9 +1,11 @@
 <?php
 
-use App\Http\Controllers\ProfileController;
-use App\Http\Controllers\WebsiteController;
-
 use Illuminate\Support\Facades\Route;
+
+use App\Http\Controllers\DashboardController;
+use App\Http\Controllers\AccountController;
+use App\Http\Controllers\WebsiteController;
+use App\Http\Controllers\BillingController;
 
 Route::get('/', function () {
     return redirect(route('login'));
@@ -11,18 +13,53 @@ Route::get('/', function () {
 
 Route::group(['middleware' => ['auth', 'verified']], function () {
 
+    // dashboard
+    Route::get('/dashboard', [DashboardController::class, 'index'])->name('dashboard');
+
+    Route::get('/dashboard/statistics/load-data', [DashboardController::class, 'overview'])->name('dashboard.overview');
+
+    Route::get('/dashboard/statistics/pages', [DashboardController::class, 'pages'])->name('dashboard.pages');
+    Route::get('/dashboard/statistics/entry-pages', [DashboardController::class, 'entryPages'])->name('dashboard.entryPages');
+    Route::get('/dashboard/statistics/exit-pages', [DashboardController::class, 'exitPages'])->name('dashboard.exitPages');
+
+    Route::get('/dashboard/statistics/referrers', [DashboardController::class, 'referrers'])->name('dashboard.referrers');
+    Route::get('/dashboard/statistics/utm-sources', [DashboardController::class, 'utmSources'])->name('dashboard.utm-sources');
+    Route::get('/dashboard/statistics/utm-mediums', [DashboardController::class, 'utmMediums'])->name('dashboard.utm-mediums');
+    Route::get('/dashboard/statistics/utm-campaigns', [DashboardController::class, 'utmCampaigns'])->name('dashboard.utm-campaigns');
+    Route::get('/dashboard/statistics/utm-contents', [DashboardController::class, 'utmContents'])->name('dashboard.utm-contents');
+    Route::get('/dashboard/statistics/utm-terms', [DashboardController::class, 'utmTerms'])->name('dashboard.utm-terms');
+
+    Route::get('/dashboard/statistics/browsers', [DashboardController::class, 'browsers'])->name('dashboard.browsers');
+    Route::get('/dashboard/statistics/os', [DashboardController::class, 'os'])->name('dashboard.os');
+    Route::get('/dashboard/statistics/devices', [DashboardController::class, 'devices'])->name('dashboard.devices');
+    Route::get('/dashboard/statistics/screens', [DashboardController::class, 'screens'])->name('dashboard.screens');
+    Route::get('/dashboard/statistics/languages', [DashboardController::class, 'languages'])->name('dashboard.languages');
+
+    Route::get('/dashboard/statistics/countries', [DashboardController::class, 'countries'])->name('dashboard.countries');
+    Route::get('/dashboard/statistics/regions', [DashboardController::class, 'regions'])->name('dashboard.regions');
+    Route::get('/dashboard/statistics/cities', [DashboardController::class, 'cities'])->name('dashboard.cities');
+
+    Route::get('/dashboard/chart', [DashboardController::class, 'loadChart'])->name('dashboard.load-chart');
+
+
+
     // websites
-    Route::get('/websites', [WebsiteController::class, 'index'])->name('websites.index');
     Route::get('/websites/create', [WebsiteController::class, 'create'])->name('websites.create');
     Route::post('/websites', [WebsiteController::class, 'store'])->name('websites.store');
-    Route::get('/websites/{id}', [WebsiteController::class, 'show'])->name('websites.show');
-    Route::get('/websites/{id}/load-data', [WebsiteController::class, 'loadData'])->name('websites.load-data');
+    Route::put('/websites', [WebsiteController::class, 'update'])->name('websites.update');
     Route::put('/websites/update-current', [WebsiteController::class, 'setCurrentWebsite'])->name('websites.update-current');
 
-    Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
-    Route::patch('/profile', [ProfileController::class, 'update'])->name('profile.update');
-    Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
-});
+    // account
+    Route::get('/account', [AccountController::class, 'edit'])->name('account.edit');
+    Route::post('/account', [AccountController::class, 'update'])->name('account.update');
+    Route::post('/account/update-password', [AccountController::class, 'updatePassword'])->name('account.update-password');
+    Route::delete('/account', [AccountController::class, 'destroy'])->name('account.destroy');
 
+    // billing
+    Route::get('/pricing', [BillingController::class, 'pricing'])->name('billing.pricing');
+    Route::get('/billing', [BillingController::class, 'index'])->name('billing.index');
+    Route::get('/billing/redirect-to-portal', [BillingController::class, 'redirectToPortal'])->name('billing.redirect-to-portal');
+    Route::post('/billing/generate-checkout-link', [BillingController::class, 'generateCheckoutLink'])->name('billing.generate-checkout-link');
+});
 
 require __DIR__.'/auth.php';

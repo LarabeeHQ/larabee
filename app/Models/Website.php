@@ -10,7 +10,9 @@ class Website extends Model
 {
     use HasFactory, HasUuids;
 
-    protected $casts = [];
+    protected $casts = [
+        'public' => 'boolean',
+    ];
 
     public function users()
     {

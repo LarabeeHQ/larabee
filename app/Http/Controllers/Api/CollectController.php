@@ -6,6 +6,8 @@ use Illuminate\Support\Facades\Validator;
 
 use App\Jobs\ProcessColletectedData;
 
+use App\Http\Requests\CollectRequest;
+
 use Illuminate\Http\Request;
 use Browser;
 
@@ -18,20 +20,14 @@ use Illuminate\Support\Facades\Cache;
 
 class CollectController extends Controller
 {
-    public function store(Request $request)
+    public function store(CollectRequest $request)
     {
-        $validator = Validator::make($request->all(), [
-            'website' => ['required', 'uuid'],
-            'event' => ['required', 'string'],
-            'hostname' => ['required', 'string'],
-            'referrer' => ['nullable', 'url'],
-            'language' => ['nullable', 'string'],
-            'screen' => ['required', 'string'],
-            'url' => ['required', 'string'],
-        ]);
+        $website = Cache::remember("website:{$request->website}", now()->addMinutes(5), function () use ($request) {
+            return Website::where('id', $request->website)->first();
+        });
 
-        if ($validator->fails()) {
-            return response()->json($validator->errors(), 422);
+        if(!$website) {
+            return response()->json(null, 404);
         }
 
         $data = [

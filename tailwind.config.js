@@ -16,6 +16,16 @@ module.exports = {
             fontFamily: {
                 sans: ["Inter", ...defaultTheme.fontFamily.sans],
             },
+
+            colors: {
+                "gray-900": "#141414",
+                "gray-800": "#202020",
+                "gray-700": "#2c2c2c",
+            },
+
+            boxShadow: {
+                card: "0px 0px 30px #ffffff",
+            },
         },
     },
 

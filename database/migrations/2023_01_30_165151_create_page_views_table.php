@@ -20,7 +20,13 @@ return new class extends Migration
 
             $table->string('url');
             $table->string('referrer')->nullable();
-            $table->timestamps();
+            $table->dateTime('created_at', 0);
+
+            $table->index(['website_id', 'url']);
+            $table->index(['website_id', 'referrer']);
+
+            $table->index(['session_id', 'url']);
+            $table->index(['session_id', 'referrer']);
         });
     }
 

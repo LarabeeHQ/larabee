@@ -24,6 +24,11 @@ dayjs.extend(relativeTime);
 dayjs.extend(duration);
 window.dayjs = dayjs;
 
+// moment
+import moment from "moment";
+import timezoneData from "moment-timezone/builds/moment-timezone-with-data";
+window.moment = moment;
+
 /**
  * Echo exposes an expressive API for subscribing to channels and listening
  * for events that are broadcast by Laravel. Echo and event broadcasting

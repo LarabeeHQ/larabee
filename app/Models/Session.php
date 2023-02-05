@@ -14,6 +14,8 @@ class Session extends Model
     const DEVICE_TABLET = 'tablet';
     const DEVICE_DESKTOP = 'desktop';
 
+    public $timestamps = false;
+
     protected $fillable = [
         'website_id',
         'hash',
@@ -33,13 +35,26 @@ class Session extends Model
         'utm_term'
     ];
 
+    public static function boot()
+    {
+        parent::boot();
+        static::creating(function ($model) {
+            $model->created_at = $model->created_at ? $model->created_at : now();
+        });
+    }
+
     public function website(): \Illuminate\Database\Eloquent\Relations\BelongsTo
     {
         return $this->belongsTo(Website::class);
     }
 
-    public function page_views(): \Illuminate\Database\Eloquent\Relations\HasMany
+    public function pageViews(): \Illuminate\Database\Eloquent\Relations\HasMany
     {
         return $this->hasMany(PageView::class);
+    }
+
+    public static function generateHash($websiteId, $hostname, $ip, $userAgent)
+    {
+        return hash('md5', "{$websiteId}-{$hostname}-{$ip}-{$userAgent}");
     }
 }
