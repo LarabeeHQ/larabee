@@ -6,7 +6,7 @@ const { dateRange } = defineProps({
     dateRange: Object,
 });
 
-const pages = ref([]);
+const pages = ref(null);
 
 const loadData = () => {
     axios
@@ -31,5 +31,5 @@ watch(dateRange, (value) => {
 </script>
 
 <template>
-    <Table v-if="pages" :data="pages" />
+    <Table v-if="pages" :data="pages" progressBarColor="blue" />
 </template>

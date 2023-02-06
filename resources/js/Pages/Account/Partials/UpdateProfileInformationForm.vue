@@ -54,6 +54,7 @@ const sendEmailVerification = () => {
                     type="text"
                     class="mt-1 block w-full"
                     autocomplete="name"
+                    placeholder="Your name"
                 />
                 <InputError :message="form.errors.name" class="mt-2" />
             </div>
@@ -66,6 +67,7 @@ const sendEmailVerification = () => {
                     v-model="form.email"
                     type="email"
                     class="mt-1 block w-full"
+                    placeholder="Your email"
                 />
                 <InputError :message="form.errors.email" class="mt-2" />
 

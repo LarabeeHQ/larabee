@@ -70,19 +70,21 @@ watch(dateRange, (value) => {
 });
 </script>
 <template>
-    <div class="overflow-hidden rounded-xl bg-white dark:bg-gray-900 p-6">
+    <div
+        class="overflow-hidden bg-white rounded-lg shadow dark:shadow-none dark:bg-gray-900 p-6"
+    >
         <div class="grid grid-cols-1 gap-4 sm:grid-cols-4">
             <div
                 v-for="data in tabs"
                 :key="data"
                 @click="setChart(data.id)"
                 :class="{
-                    'border-t-4 border-transparent overflow-hidden rounded-md bg-white dark:bg-gray-800 px-4 py-5 sm:p-6 cursor-pointer': true,
+                    'border-t-4 border-transparent overflow-hidden rounded-md bg-gray-100 dark:bg-gray-800 px-4 py-5 sm:p-6 cursor-pointer': true,
                     ' border-green-400': data.id === currentTab,
                 }"
             >
                 <div
-                    class="truncate text-xs tracking-wider font-bold uppercase text-gray-200"
+                    class="truncate text-xs tracking-wider font-bold uppercase text-gray-800 dark:text-gray-200"
                 >
                     {{ data.name }}
                 </div>

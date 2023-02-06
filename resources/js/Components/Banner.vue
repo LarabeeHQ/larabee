@@ -16,7 +16,7 @@
                 leave-to-class="opacity-0"
             >
                 <div
-                    class="max-w-sm w-full bg-gray-900 shadow-2xl rounded-lg pointer-events-auto ring-1 ring-black ring-opacity-5 overflow-hidden"
+                    class="max-w-sm w-full bg-gray-900 dark:bg-white shadow-2xl rounded-lg pointer-events-auto ring-1 ring-black ring-opacity-5 overflow-hidden"
                 >
                     <div class="px-4 py-4">
                         <div class="flex items-center">
@@ -43,14 +43,14 @@
                                 />
                             </div>
                             <div
-                                class="ml-2 w-0 flex-1 text-sm text-gray-300 font-semibold"
+                                class="ml-2 w-0 flex-1 text-sm text-gray-300 dark:text-gray-800 font-semibold"
                             >
                                 {{ message }}
                             </div>
                             <div class="ml-4 flex-shrink-0 flex">
                                 <button
                                     @click="show = false"
-                                    class="inline-flex text-gray-500 hover:text-gray-500 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500"
+                                    class="inline-flex text-gray-500 dark:text-gray-400 hover:text-gray-500 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500"
                                 >
                                     <span class="sr-only">Close</span>
                                     <XMarkIcon

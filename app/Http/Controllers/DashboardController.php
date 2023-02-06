@@ -293,10 +293,12 @@ class DashboardController extends Controller
         $pages = PageView::where('website_id', $website->id)
             ->select('url as x', DB::raw('count(*) as y'))
             ->whereBetween('created_at', [$start, $end])
-            ->groupBy('url')
+            ->groupBy(['url', 'session_id'])
             ->orderBy('y', 'desc')
             ->take(10)
             ->get();
+
+
 
         return response()->json($pages);
     }

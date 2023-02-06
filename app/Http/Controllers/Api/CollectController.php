@@ -33,7 +33,6 @@ class CollectController extends Controller
         $data = [
             'ip' => $request->ip(),
             'user_agent' => $request->header('user-agent'),
-            'website_id' => $request->website,
             'event' => $request->event,
             'hostname' => $request->hostname,
             'referrer' => $request->referrer,
@@ -42,7 +41,7 @@ class CollectController extends Controller
             'url' => $request->url
         ];
 
-        ProcessColletectedData::dispatch($data);
+        ProcessColletectedData::dispatch($data, $website);
         // ProcessColletectedData::dispatchAfterResponse($data);
 
         return response()->json(null, 202);

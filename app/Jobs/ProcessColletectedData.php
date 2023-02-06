@@ -25,14 +25,17 @@ class ProcessColletectedData implements ShouldQueue
 
     public $data;
 
+    public $website;
+
     /**
      * Create a new job instance.
      *
      * @return void
      */
-    public function __construct($data)
+    public function __construct($data, $website)
     {
         $this->data = $data;
+        $this->website = $website;
     }
 
     /**
@@ -43,10 +46,10 @@ class ProcessColletectedData implements ShouldQueue
     public function handle()
     {
 
-        $this->data['ip'] = '105.103.238.0';
+        $this->data['ip'] = '101.103.238.0';
 
         // get session hash
-        $hash = Session::generateHash($this->data['website_id'], $this->data['hostname'], $this->data['ip'], $this->data['user_agent']);
+        $hash = Session::generateHash($this->website['id'], $this->data['hostname'], $this->data['ip'], $this->data['user_agent']);
 
         // parse url
         $url = parse_url($this->data['url']);
@@ -72,7 +75,7 @@ class ProcessColletectedData implements ShouldQueue
 
             $session = Session::create([
                 'hash' => $hash,
-                'website_id' => $this->data['website_id'],
+                'website_id' => $this->website['id'],
                 'device' => $device,
                 'hostname' => $this->data['hostname'],
                 'browser' => $browser->browserFamily(),
@@ -97,14 +100,19 @@ class ProcessColletectedData implements ShouldQueue
 
 
         // parse referrer
-        $referrer = parse_url($this->data['referrer']);
-        isset($referrer['query']) ? parse_str($referrer['query'], $queryParams) : null;
+        $referrer = null;
+        $referrerUrl = parse_url($this->data['referrer']);
+        isset($referrerUrl['query']) ? parse_str($referrerUrl['query'], $queryParams) : null;
+
+        if($this->website['host'] !== $this->data['hostname']) {
+            $referrer = $referrerUrl['path'] ? $referrerUrl['path'] : 'none';
+        }
 
         $pageView = new PageView;
         $pageView->session_id = $session->id;
         $pageView->website_id = $session->website_id;
         $pageView->url = $url['path'];
-        // $pageView->referrer = $referrer['host'] !== $this->data['hostname'] ? $referrer['path'] : null;
+        $pageView->referrer = $referrer;
         $pageView->save();
     }
 }

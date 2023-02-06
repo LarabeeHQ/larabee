@@ -30,5 +30,5 @@ watch(dateRange, (value) => {
 });
 </script>
 <template>
-    <Table v-if="os" :data="os" />
+    <Table v-if="os" :data="os" progressBarColor="pink" />
 </template>

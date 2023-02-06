@@ -280,12 +280,12 @@ const formatDate = (date) => {
             <div class="space-y-4">
                 <Overview :date-range="range" />
 
-                <div class="grid grid-cols-10 gap-4">
+                <div class="grid grid-cols-12 gap-4">
                     <Source :date-range="range" />
                     <Page :date-range="range" />
                 </div>
 
-                <div class="grid grid-cols-10 gap-4">
+                <div class="grid grid-cols-12 gap-4">
                     <Location :date-range="range" />
                     <Device :date-range="range" />
                 </div>

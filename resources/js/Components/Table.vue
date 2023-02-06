@@ -1,10 +1,10 @@
 <script setup>
 import helper from "@/helper";
-import { onBeforeMount, onMounted, ref, watch } from "vue";
+import { onMounted, ref, computed } from "vue";
 
 const total = ref(0);
 
-const { data } = defineProps({
+const { data, progressBarColor, country, favicon } = defineProps({
     data: Object,
     favicon: {
         type: Boolean,
@@ -14,6 +14,32 @@ const { data } = defineProps({
         type: Boolean,
         default: false,
     },
+
+    progressBarColor: {
+        type: String,
+        default: "gray",
+    },
+
+    capitalize: {
+        type: Boolean,
+        default: false,
+    },
+
+    uppercase: {
+        type: Boolean,
+        default: false,
+    },
+});
+
+const colorClass = computed(() => {
+    return {
+        gray: "bg-gray-100 dark:bg-gray-500",
+        blue: "bg-blue-100 dark:bg-blue-500",
+        green: "bg-emerald-100 dark:bg-green-500",
+        orange: "bg-orange-100 dark:bg-orange-500",
+        red: "bg-red-100 dark:bg-red-500",
+        pink: "bg-pink-100 dark:bg-pink-500",
+    }[progressBarColor];
 });
 
 onMounted(async () => {
@@ -32,15 +58,13 @@ onMounted(async () => {
                 <div class="flex items-center justify-between">
                     <div class="flex items-center">
                         <div
-                            class="absolute top-0 left-0 h-full bg-gray-100 dark:bg-gray-500 dark:bg-opacity-15"
+                            :class="`absolute top-0 left-0 h-full dark:bg-opacity-20 rounded-sm ${colorClass}`"
                             :style="`width: ${helper.calcPercentage(
                                 total,
                                 value.y
                             )}%`"
                         ></div>
-                        <div
-                            class="flex items-center space-x-1 z-10 px-2 py-0.5"
-                        >
+                        <div class="flex items-center space-x-2 z-10 px-2 py-1">
                             <img
                                 v-if="favicon"
                                 :src="`https://www.google.com/s2/favicons?domain=${value.x}&sz=128`"
@@ -54,14 +78,28 @@ onMounted(async () => {
                                 :alt="value.x"
                             />
 
-                            <div>{{ value.x }}</div>
+                            <div
+                                :class="{
+                                    'text-gray-800 dark:text-white text-sm font-medium': true,
+                                    capitalize: capitalize,
+                                    uppercase: uppercase,
+                                }"
+                            >
+                                {{ value.x }}
+                            </div>
                         </div>
                     </div>
-                    <div class="flex items-center">
-                        <div class="mr-4 hidden group-hover:flex">
+                    <div class="flex items-center justify-between min-w-[4rem]">
+                        <div
+                            class="invisible group-hover:visible flex text-xs font-medium text-gray-500 dark:hover:text-gray-300"
+                        >
                             {{ helper.calcPercentage(total, value.y) }}%
                         </div>
-                        <div>{{ helper.kFormatter(value.y) }}</div>
+                        <div
+                            class="text-sm font-medium text-gray-800 dark:text-white"
+                        >
+                            {{ helper.kFormatter(value.y) }}
+                        </div>
                     </div>
                 </div>
             </li>

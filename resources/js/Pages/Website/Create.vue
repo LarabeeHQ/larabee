@@ -8,7 +8,7 @@ import { Head, Link, useForm } from "@inertiajs/vue3";
 
 const form = useForm({
     name: "",
-    domain: ""
+    domain: "",
 });
 
 const submit = () => {
@@ -46,7 +46,7 @@ const submit = () => {
                     id="domain"
                     type="text"
                     class="mt-1 block w-full"
-                    placeholder="example.com"
+                    placeholder="https://example.com"
                     v-model="form.domain"
                     required
                 />

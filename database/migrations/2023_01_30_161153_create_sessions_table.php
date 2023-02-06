@@ -34,8 +34,6 @@ return new class extends Migration
             $table->dateTime('created_at', 0);
 
             $table->index(['website_id', 'country']);
-            $table->index(['website_id', 'region']);
-            $table->index(['website_id', 'city']);
         });
     }
 

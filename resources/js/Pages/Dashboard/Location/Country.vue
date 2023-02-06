@@ -30,5 +30,10 @@ watch(dateRange, (value) => {
 });
 </script>
 <template>
-    <Table v-if="countries" :data="countries" :country="true" />
+    <Table
+        v-if="countries"
+        :data="countries"
+        :country="true"
+        progressBarColor="orange"
+    />
 </template>

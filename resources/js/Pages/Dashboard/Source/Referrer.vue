@@ -30,5 +30,10 @@ watch(dateRange, (value) => {
 });
 </script>
 <template>
-    <Table v-if="referrers" :data="referrers" :favicon="true" />
+    <Table
+        v-if="referrers"
+        :data="referrers"
+        progressBarColor="green"
+        :favicon="true"
+    />
 </template>
