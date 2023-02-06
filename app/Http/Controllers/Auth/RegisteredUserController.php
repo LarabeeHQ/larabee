@@ -19,11 +19,11 @@ use App\Models\Timezone;
 
 class RegisteredUserController extends Controller
 {
-    /**
-     * Display the registration view.
-     */
-    public function create(): Response
+    public function create()
     {
+        if(config('app.self_hosted')) {
+            return redirect(route('login'));
+        }
         return Inertia::render('Auth/Register');
     }
 

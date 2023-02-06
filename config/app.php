@@ -6,6 +6,17 @@ return [
 
     /*
     |--------------------------------------------------------------------------
+    | Self Hosted
+    |--------------------------------------------------------------------------
+    |
+    | If it's a self hosted, some features will be disabled.
+    |
+    */
+
+    'self_hosted' => env('SELF_HOSTED', false),
+
+    /*
+    |--------------------------------------------------------------------------
     | Application Name
     |--------------------------------------------------------------------------
     |
@@ -54,7 +65,7 @@ return [
     |
     */
 
-    'url' => env('APP_URL', 'http://localhost'),
+    'url' => env('APP_URL', 'https://wanalytics.io'),
 
     'asset_url' => env('ASSET_URL'),
 

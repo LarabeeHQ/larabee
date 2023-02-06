@@ -143,7 +143,7 @@ const formatDate = (date) => {
                 <Menu as="div" class="relative inline-block text-left">
                     <div>
                         <MenuButton
-                            class="inline-flex w-full justify-center rounded-md bg-white dark:bg-gray-900 dark:text-white px-4 py-2 text-sm font-medium text-gray-700 shadow-sm hover:bg-gray-50 focus:outline-none"
+                            class="inline-flex w-full justify-center rounded-md bg-white dark:bg-zinc-900 dark:text-white px-4 py-2 text-sm font-medium text-gray-700 shadow-sm hover:bg-gray-50 focus:outline-none"
                         >
                             {{
                                 selectedFilter.value == "custom"
@@ -167,7 +167,7 @@ const formatDate = (date) => {
                         leave-to-class="transform opacity-0 scale-95"
                     >
                         <MenuItems
-                            class="absolute right-0 z-10 mt-2 w-52 origin-top-right divide-y divide-gray-100 dark:divide-gray-700 rounded-md bg-white dark:bg-gray-800 shadow-lg focus:outline-none"
+                            class="absolute right-0 z-10 mt-2 w-52 origin-top-right divide-y divide-gray-100 dark:divide-zinc-700 rounded-md bg-white dark:bg-zinc-800 shadow-lg focus:outline-none"
                         >
                             <div
                                 v-for="periodFilter in periodFilters"
@@ -181,7 +181,7 @@ const formatDate = (date) => {
                                     v-slot="{ active }"
                                 >
                                     <div
-                                        class="text-gray-700 dark:text-white block px-4 py-2 text-sm cursor-pointer hover:bg-gray-100 dark:hover:bg-gray-700"
+                                        class="text-gray-700 dark:text-white block px-4 py-2 text-sm cursor-pointer hover:bg-gray-100 dark:hover:bg-zinc-700"
                                     >
                                         {{ filter.name }}
                                     </div>
@@ -199,7 +199,7 @@ const formatDate = (date) => {
                                     v-slot="{ active }"
                                 >
                                     <div
-                                        class="text-gray-700 dark:text-white block px-4 py-2 text-sm cursor-pointer hover:bg-gray-100 dark:hover:bg-gray-700"
+                                        class="text-gray-700 dark:text-white block px-4 py-2 text-sm cursor-pointer hover:bg-gray-100 dark:hover:bg-zinc-700"
                                     >
                                         Custom
                                     </div>
@@ -245,7 +245,7 @@ const formatDate = (date) => {
                                                                 v-on="
                                                                     inputEvents.start
                                                                 "
-                                                                class="px-2 py-1 w-full rounded focus:outline-none bg-gray-100 dark:bg-gray-700 dark:text-white"
+                                                                class="px-2 py-1 w-full rounded focus:outline-none bg-gray-100 dark:bg-zinc-700 dark:text-white"
                                                             />
                                                         </div>
 
@@ -262,7 +262,7 @@ const formatDate = (date) => {
                                                                 v-on="
                                                                     inputEvents.end
                                                                 "
-                                                                class="px-2 py-1 w-full rounded focus:outline-none bg-gray-100 dark:bg-gray-700 dark:text-white"
+                                                                class="px-2 py-1 w-full rounded focus:outline-none bg-gray-100 dark:bg-zinc-700 dark:text-white"
                                                             />
                                                         </div>
                                                     </div>

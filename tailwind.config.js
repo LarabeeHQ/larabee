@@ -18,9 +18,9 @@ module.exports = {
             },
 
             colors: {
-                "gray-900": "#131315",
-                "gray-800": "#212123",
-                "gray-700": "#2c2c2c",
+                // "gray-900": "#131315",
+                // "gray-800": "#212123",
+                // "gray-700": "#2c2c2c",
             },
 
             boxShadow: {

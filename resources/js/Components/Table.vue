@@ -59,7 +59,7 @@ onMounted(async () => {
                     <div class="flex items-center">
                         <div
                             :class="`absolute top-0 left-0 h-full dark:bg-opacity-20 rounded-sm ${colorClass}`"
-                            :style="`width: ${helper.calcPercentage(
+                            :style="`max-width: 85%; width: ${helper.calcPercentage(
                                 total,
                                 value.y
                             )}%`"

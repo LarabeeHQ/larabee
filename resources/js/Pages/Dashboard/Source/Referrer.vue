@@ -33,7 +33,7 @@ watch(dateRange, (value) => {
     <Table
         v-if="referrers"
         :data="referrers"
-        progressBarColor="green"
+        progressBarColor="gray"
         :favicon="true"
     />
 </template>
