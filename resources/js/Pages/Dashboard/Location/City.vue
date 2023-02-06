@@ -1,22 +1,23 @@
 <script setup>
+import Table from "@/Components/Table.vue";
 import { ref, onMounted, watch } from "vue";
 
 const { dateRange } = defineProps({
     dateRange: Object,
 });
 
-const os = ref([]);
+const cities = ref(null);
 
 const loadData = async () => {
     return await axios
-        .get(route("dashboard.os"), {
+        .get(route("dashboard.cities"), {
             params: {
                 start: dateRange.start,
                 end: dateRange.end,
             },
         })
         .then((response) => {
-            os.value = response.data;
+            cities.value = response.data;
         });
 };
 
@@ -29,16 +30,5 @@ watch(dateRange, (value) => {
 });
 </script>
 <template>
-    <div>
-        <ul>
-            <li v-for="data in os" :key="data">
-                <div class="flex items-center justify-between">
-                    <div class="capitalize">
-                        {{ data.x }}
-                    </div>
-                    <div>{{ data.y }}</div>
-                </div>
-            </li>
-        </ul>
-    </div>
+    <Table v-if="cities" :data="cities" />
 </template>

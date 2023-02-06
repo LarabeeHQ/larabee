@@ -2,12 +2,12 @@
 import { Menu, MenuButton, MenuItem, MenuItems } from "@headlessui/vue";
 import { ChevronDownIcon } from "@heroicons/vue/20/solid";
 
-import Source from "./Show/Source/Index.vue";
-import Page from "./Show/Page/Index.vue";
+import Source from "./Source/Index.vue";
+import Page from "./Page/Index.vue";
 
-import Overview from "./Show/Overview/Index.vue";
-import Device from "./Show/Device/Index.vue";
-import Location from "./Show/Location/Index.vue";
+import Overview from "./Overview/Index.vue";
+import Device from "./Device/Index.vue";
+import Location from "./Location/Index.vue";
 
 import AuthenticatedLayout from "@/Layouts/AuthenticatedLayout.vue";
 import { Head, Link, usePage } from "@inertiajs/vue3";
@@ -134,7 +134,7 @@ const formatDate = (date) => {
             <div class="flex items-center justify-between mb-2">
                 <div class="min-w-0 flex-1">
                     <h1
-                        class="text-lg font-medium leading-6 text-black sm:truncate"
+                        class="text-lg font-medium leading-6 text-black dark:text-white sm:truncate"
                     >
                         Dashboard
                     </h1>

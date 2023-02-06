@@ -16,11 +16,11 @@ Route::group(['middleware' => ['auth', 'verified']], function () {
     // dashboard
     Route::get('/dashboard', [DashboardController::class, 'index'])->name('dashboard');
 
-    Route::get('/dashboard/statistics/load-data', [DashboardController::class, 'overview'])->name('dashboard.overview');
+    Route::get('/dashboard/statistics/overview', [DashboardController::class, 'overview'])->name('dashboard.overview');
 
     Route::get('/dashboard/statistics/pages', [DashboardController::class, 'pages'])->name('dashboard.pages');
-    Route::get('/dashboard/statistics/entry-pages', [DashboardController::class, 'entryPages'])->name('dashboard.entryPages');
-    Route::get('/dashboard/statistics/exit-pages', [DashboardController::class, 'exitPages'])->name('dashboard.exitPages');
+    Route::get('/dashboard/statistics/entry-pages', [DashboardController::class, 'entryPages'])->name('dashboard.entry-pages');
+    Route::get('/dashboard/statistics/exit-pages', [DashboardController::class, 'exitPages'])->name('dashboard.exit-pages');
 
     Route::get('/dashboard/statistics/referrers', [DashboardController::class, 'referrers'])->name('dashboard.referrers');
     Route::get('/dashboard/statistics/utm-sources', [DashboardController::class, 'utmSources'])->name('dashboard.utm-sources');

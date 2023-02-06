@@ -6,7 +6,7 @@ import Language from "./Language.vue";
 import Screen from "./Screen.vue";
 import Device from "./Device.vue";
 
-const tabs = ["devices", "browsers", "os", "language", "screen"];
+const tabs = ["devices", "browsers", "OS", "language", "screen"];
 const currentTab = ref("devices");
 
 const { dateRange } = defineProps({
@@ -15,7 +15,9 @@ const { dateRange } = defineProps({
 </script>
 
 <template>
-    <div class="col-span-4 bg-white dark:bg-gray-900 rounded-md p-4">
+    <div
+        class="col-span-4 bg-white dark:bg-gray-900 rounded-md p-4 min-h-[20rem]"
+    >
         <div class="flex items-center">
             <div class="flex items-center space-x-1">
                 <div
@@ -33,7 +35,7 @@ const { dateRange } = defineProps({
             </div>
         </div>
 
-        <div>
+        <div class="mt-4">
             <Screen v-if="currentTab == 'screen'" :dateRange="dateRange" />
             <Device
                 v-else-if="currentTab == 'devices'"
@@ -43,7 +45,7 @@ const { dateRange } = defineProps({
                 v-else-if="currentTab == 'browsers'"
                 :dateRange="dateRange"
             />
-            <OS v-else-if="currentTab == 'os'" :dateRange="dateRange" />
+            <OS v-else-if="currentTab == 'OS'" :dateRange="dateRange" />
             <Language
                 v-else-if="currentTab == 'language'"
                 :dateRange="dateRange"

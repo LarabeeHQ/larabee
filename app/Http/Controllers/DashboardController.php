@@ -26,22 +26,39 @@ class DashboardController extends Controller
             'end' => ['required', 'max:255', 'date_format:Y-m-d'],
         ]);
 
-        $start = Carbon::createFromFormat('Y-m-d', $request->start, auth()->user()->timezone->value)->setTimezone('UTC')->startOfDay();
-        $end = Carbon::createFromFormat('Y-m-d', $request->end, auth()->user()->timezone->value)->setTimezone('UTC')->endOfDay();
+        $startDate = Carbon::createFromFormat('Y-m-d', $request->start, auth()->user()->timezone->value)->setTimezone('UTC')->startOfDay();
+        $endDate = Carbon::createFromFormat('Y-m-d', $request->end, auth()->user()->timezone->value)->setTimezone('UTC')->endOfDay();
+
+        $prevStartDate = Carbon::createFromFormat('Y-m-d', $request->start, auth()->user()->timezone->value)->setTimezone('UTC')->startOfDay()->subDays(7);
+        $prevEndDate = Carbon::createFromFormat('Y-m-d', $request->end, auth()->user()->timezone->value)->setTimezone('UTC')->endOfDay()->subDays(7);
 
         $website = auth()->user()->currentWebsite;
 
-        $sessions = Session::where('website_id', $website->id)
-            ->whereBetween('created_at', [$start, $end])
-            ->get();
+        // sessions
+        $sessions = Session::where('website_id', $website->id)->whereBetween('created_at', [$startDate, $endDate])->count();
+        $sessionsPrevPeriod = Session::where('website_id', $website->id)->whereBetween('created_at', [$prevStartDate, $prevEndDate])->count();
 
-        $pageViews = PageView::where('website_id', $website->id)
-            ->whereBetween('created_at', [$start, $end])
-            ->get();
+        // page views
+        $pageViews = PageView::where('website_id', $website->id)->whereBetween('created_at', [$startDate, $endDate])->count();
+        $pageViewsPrevPeriod = PageView::where('website_id', $website->id)->whereBetween('created_at', [$prevStartDate, $prevEndDate])->count();
+
+        // bounce rate
 
         return response()->json([
-            'sessions' => $sessions,
-            'pageViews' => $pageViews
+            'sessions' => [
+                'change' => $sessions - $sessionsPrevPeriod,
+                'value' => $sessions
+            ],
+            'pageViews' => [
+                'change' => $pageViews - $pageViewsPrevPeriod,
+                'value' => $pageViews
+            ],
+            'bounceRate' => [
+
+            ],
+            'avgSessionDuration' => [
+
+            ],
         ]);
     }
 
@@ -251,10 +268,10 @@ class DashboardController extends Controller
         $website = auth()->user()->currentWebsite;
 
         $pages = PageView::where('website_id', $website->id)
-            ->select('url', DB::raw('count(*) as total'))
+            ->select('url as x', DB::raw('count(*) as y'))
             ->whereBetween('created_at', [$start, $end])
             ->groupBy('url')
-            ->orderBy('total', 'desc')
+            ->orderBy('y', 'desc')
             ->take(10)
             ->get();
 
@@ -274,10 +291,11 @@ class DashboardController extends Controller
         $website = auth()->user()->currentWebsite;
 
         $pages = PageView::where('website_id', $website->id)
-            ->select('url', DB::raw('count(*) as total'))
+            ->select('url as x', DB::raw('count(*) as y'))
             ->whereBetween('created_at', [$start, $end])
             ->groupBy('url')
-            ->orderBy('total', 'desc')
+            ->orderBy('y', 'desc')
+            ->take(10)
             ->get();
 
         return response()->json($pages);
@@ -296,10 +314,11 @@ class DashboardController extends Controller
         $website = auth()->user()->currentWebsite;
 
         $pages = PageView::where('website_id', $website->id)
-            ->select('url', DB::raw('count(*) as total'))
+            ->select('url as x', DB::raw('count(*) as y'))
             ->whereBetween('created_at', [$start, $end])
-            ->groupBy('url')
-            ->orderBy('total', 'desc')
+            ->groupBy(['url', 'session_id'])
+            ->orderBy('y', 'desc')
+            ->take(10)
             ->get();
 
         return response()->json($pages);

@@ -1,17 +1,16 @@
 <script setup>
+import Table from "@/Components/Table.vue";
 import { ref, onMounted, watch } from "vue";
 
 const { dateRange } = defineProps({
     dateRange: Object,
 });
 
-const tabs = ["pages", "entryPages", "exitPages"];
-const currentTab = ref("pages");
 const pages = ref([]);
 
-const loadData = async () => {
-    return await axios
-        .get(route("dashboard.pages"), {
+const loadData = () => {
+    axios
+        .get(route("dashboard.exit-pages"), {
             params: {
                 start: dateRange.start,
                 end: dateRange.end,
@@ -32,14 +31,5 @@ watch(dateRange, (value) => {
 </script>
 
 <template>
-    <div>
-        <ul>
-            <li v-for="page in pages" :key="page">
-                <div class="flex items-center justify-between">
-                    <div>{{ page.url }}</div>
-                    <div>{{ page.total }}</div>
-                </div>
-            </li>
-        </ul>
-    </div>
+    <Table v-if="pages" :data="pages" />
 </template>

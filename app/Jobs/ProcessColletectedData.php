@@ -43,7 +43,7 @@ class ProcessColletectedData implements ShouldQueue
     public function handle()
     {
 
-        $this->data['ip'] = '104.103.238.0';
+        $this->data['ip'] = '105.103.238.0';
 
         // get session hash
         $hash = Session::generateHash($this->data['website_id'], $this->data['hostname'], $this->data['ip'], $this->data['user_agent']);
@@ -53,6 +53,7 @@ class ProcessColletectedData implements ShouldQueue
         isset($url['query']) ? parse_str($url['query'], $queryParams) : null;
 
         if (!Cache::has("session:$hash")) {
+
 
             // get geo data
             $geo = geoip($this->data['ip']);
@@ -103,7 +104,7 @@ class ProcessColletectedData implements ShouldQueue
         $pageView->session_id = $session->id;
         $pageView->website_id = $session->website_id;
         $pageView->url = $url['path'];
-        $pageView->referrer = $referrer['host'] !== $this->data['hostname'] ? $referrer['path'] : null;
+        // $pageView->referrer = $referrer['host'] !== $this->data['hostname'] ? $referrer['path'] : null;
         $pageView->save();
     }
 }

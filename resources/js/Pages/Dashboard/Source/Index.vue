@@ -17,7 +17,9 @@ const tabs = ["referrers", "medium", "source", "campaign", "content", "term"];
 </script>
 
 <template>
-    <div class="col-span-6 bg-white dark:bg-gray-900 rounded-md p-4">
+    <div
+        class="col-span-6 bg-white dark:bg-gray-900 rounded-md p-4 min-h-[20rem]"
+    >
         <div class="flex items-center">
             <div class="flex items-center space-x-1">
                 <div
@@ -35,7 +37,7 @@ const tabs = ["referrers", "medium", "source", "campaign", "content", "term"];
             </div>
         </div>
 
-        <div>
+        <div class="mt-4">
             <Referrer v-if="currentTab == 'referrers'" :dateRange="dateRange" />
             <Medium v-else-if="currentTab == 'medium'" :dateRange="dateRange" />
             <Source v-else-if="currentTab == 'source'" :dateRange="dateRange" />

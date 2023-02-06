@@ -1,14 +1,15 @@
 <script setup>
+import Table from "@/Components/Table.vue";
 import { ref, onMounted, watch } from "vue";
 
 const { dateRange } = defineProps({
     dateRange: Object,
 });
 
-const contents = ref([]);
+const contents = ref(null);
 
-const loadData = async () => {
-    return await axios
+const loadData = () => {
+    axios
         .get(route("dashboard.utm-contents"), {
             params: {
                 start: dateRange.start,
@@ -29,16 +30,5 @@ watch(dateRange, (value) => {
 });
 </script>
 <template>
-    <div>
-        <ul>
-            <li v-for="data in contents" :key="data">
-                <div class="flex items-center justify-between">
-                    <div class="capitalize">
-                        {{ data.x }}
-                    </div>
-                    <div>{{ data.y }}</div>
-                </div>
-            </li>
-        </ul>
-    </div>
+    <Table v-if="contents" :data="contents" />
 </template>

@@ -13,7 +13,9 @@ const currentTab = ref("pages");
 </script>
 
 <template>
-    <div class="col-span-4 bg-white dark:bg-gray-900 rounded-md p-4">
+    <div
+        class="col-span-4 bg-white dark:bg-gray-900 rounded-md p-4 min-h-[20rem]"
+    >
         <div class="flex items-center">
             <div class="flex items-center space-x-1">
                 <div
@@ -30,8 +32,13 @@ const currentTab = ref("pages");
                 </div>
             </div>
         </div>
-        <Page :dateRange="dateRange" v-if="currentTab == 'pages'" />
-        <EntryPage :dateRange="dateRange" v-if="currentTab == 'entryPages'" />
-        <ExitPage :dateRange="dateRange" v-if="currentTab == 'exitPages'" />
+        <div class="mt-4">
+            <Page :dateRange="dateRange" v-if="currentTab == 'pages'" />
+            <EntryPage
+                :dateRange="dateRange"
+                v-if="currentTab == 'entryPages'"
+            />
+            <ExitPage :dateRange="dateRange" v-if="currentTab == 'exitPages'" />
+        </div>
     </div>
 </template>
