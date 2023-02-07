@@ -23,8 +23,6 @@
 
 <body class="font-sans antialiased">
     @inertia
-
-    <script async defer data-website-id="a30fdd8f-91a8-4b2b-815a-a85da0c77cef" src="http://localhost:3000/umami.js"></script>
 </body>
 
 </html>

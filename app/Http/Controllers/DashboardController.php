@@ -2,8 +2,9 @@
 
 namespace App\Http\Controllers;
 
+use App\Repositories\WebsiteRepository;
+
 use Carbon\Carbon;
-use Illuminate\Support\Facades\DB;
 use Illuminate\Http\Request;
 use Inertia\Inertia;
 
@@ -12,6 +13,18 @@ use App\Models\PageView;
 
 class DashboardController extends Controller
 {
+    /**
+     * The website repository implementation.
+     *
+     * @var WebsiteRepository
+     */
+    protected $website;
+
+    public function __construct(WebsiteRepository $website)
+    {
+        $this->website = $website;
+    }
+
     public function index()
     {
         return Inertia::render('Dashboard/Index', [
@@ -26,40 +39,20 @@ class DashboardController extends Controller
             'end' => ['required', 'max:255', 'date_format:Y-m-d'],
         ]);
 
+        $website = auth()->user()->currentWebsite;
+
         $startDate = Carbon::createFromFormat('Y-m-d', $request->start, auth()->user()->timezone->value)->setTimezone('UTC')->startOfDay();
         $endDate = Carbon::createFromFormat('Y-m-d', $request->end, auth()->user()->timezone->value)->setTimezone('UTC')->endOfDay();
 
-        $prevStartDate = Carbon::createFromFormat('Y-m-d', $request->start, auth()->user()->timezone->value)->setTimezone('UTC')->startOfDay()->subDays(7);
-        $prevEndDate = Carbon::createFromFormat('Y-m-d', $request->end, auth()->user()->timezone->value)->setTimezone('UTC')->endOfDay()->subDays(7);
+        $diffInDays = $startDate->diffInDays($endDate);
 
-        $website = auth()->user()->currentWebsite;
+        $prevStartDate = Carbon::createFromFormat('Y-m-d', $request->start, auth()->user()->timezone->value)->setTimezone('UTC')->startOfDay()->subDays($diffInDays)->toDateTimeString();
+        $prevEndDate = Carbon::createFromFormat('Y-m-d', $request->end, auth()->user()->timezone->value)->setTimezone('UTC')->endOfDay()->subDays($diffInDays)->toDateTimeString();
 
-        // sessions
-        $sessions = Session::where('website_id', $website->id)->whereBetween('created_at', [$startDate, $endDate])->count();
-        $sessionsPrevPeriod = Session::where('website_id', $website->id)->whereBetween('created_at', [$prevStartDate, $prevEndDate])->count();
+        $data = $this->website->overviewStats($website->id, $startDate, $endDate, $prevStartDate, $prevEndDate);
 
-        // page views
-        $pageViews = PageView::where('website_id', $website->id)->whereBetween('created_at', [$startDate, $endDate])->count();
-        $pageViewsPrevPeriod = PageView::where('website_id', $website->id)->whereBetween('created_at', [$prevStartDate, $prevEndDate])->count();
 
-        // bounce rate
-
-        return response()->json([
-            'sessions' => [
-                'change' => $sessions - $sessionsPrevPeriod,
-                'value' => $sessions
-            ],
-            'pageViews' => [
-                'change' => $pageViews - $pageViewsPrevPeriod,
-                'value' => $pageViews
-            ],
-            'bounceRate' => [
-
-            ],
-            'avgSessionDuration' => [
-
-            ],
-        ]);
+        return response()->json($data);
     }
 
     public function browsers(Request $request)
@@ -74,14 +67,7 @@ class DashboardController extends Controller
 
         $website = auth()->user()->currentWebsite;
 
-        $browers = Session::where('website_id', $website->id)
-            ->select('browser as x', DB::raw('count(*) as y'))
-            ->whereBetween('created_at', [$start, $end])
-            ->whereNotNull('browser')
-            ->groupBy('browser')
-            ->orderBy('y', 'desc')
-            ->take(10)
-            ->get();
+        $browers = $this->website->browserStats($website->id, $start, $end);
 
         return response()->json($browers);
     }
@@ -98,14 +84,7 @@ class DashboardController extends Controller
 
         $website = auth()->user()->currentWebsite;
 
-        $os = Session::where('website_id', $website->id)
-            ->select('os as x', DB::raw('count(*) as y'))
-            ->whereBetween('created_at', [$start, $end])
-            ->whereNotNull('os')
-            ->groupBy('os')
-            ->orderBy('y', 'desc')
-            ->take(10)
-            ->get();
+        $os = $this->website->osStats($website->id, $start, $end);
 
         return response()->json($os);
     }
@@ -122,16 +101,9 @@ class DashboardController extends Controller
 
         $website = auth()->user()->currentWebsite;
 
-        $language = Session::where('website_id', $website->id)
-            ->select('language as x', DB::raw('count(*) as y'))
-            ->whereBetween('created_at', [$start, $end])
-            ->whereNotNull('language')
-            ->groupBy('language')
-            ->orderBy('y', 'desc')
-            ->take(10)
-            ->get();
+        $languages = $this->website->languageStats($website->id, $start, $end);
 
-        return response()->json($language);
+        return response()->json($languages);
     }
 
     public function screens(Request $request)
@@ -146,14 +118,7 @@ class DashboardController extends Controller
 
         $website = auth()->user()->currentWebsite;
 
-        $screens = Session::where('website_id', $website->id)
-            ->select('screen as x', DB::raw('count(*) as y'))
-            ->whereBetween('created_at', [$start, $end])
-            ->whereNotNull('screen')
-            ->groupBy('screen')
-            ->orderBy('y', 'desc')
-            ->take(10)
-            ->get();
+        $screens = $this->website->screenStats($website->id, $start, $end);
 
         return response()->json($screens);
     }
@@ -170,14 +135,7 @@ class DashboardController extends Controller
 
         $website = auth()->user()->currentWebsite;
 
-        $devices = Session::where('website_id', $website->id)
-            ->select('device as x', DB::raw('count(*) as y'))
-            ->whereBetween('created_at', [$start, $end])
-            ->whereNotNull('device')
-            ->groupBy('device')
-            ->orderBy('y', 'desc')
-            ->take(10)
-            ->get();
+        $devices = $this->website->deviceStats($website->id, $start, $end);
 
         return response()->json($devices);
     }
@@ -194,14 +152,7 @@ class DashboardController extends Controller
 
         $website = auth()->user()->currentWebsite;
 
-        $countries = Session::where('website_id', $website->id)
-            ->select('country as x', DB::raw('count(*) as y'))
-            ->whereBetween('created_at', [$start, $end])
-            ->whereNotNull('country')
-            ->groupBy('country')
-            ->orderBy('y', 'desc')
-            ->take(10)
-            ->get();
+        $countries = $this->website->countryStats($website->id, $start, $end);
 
         return response()->json($countries);
     }
@@ -218,15 +169,7 @@ class DashboardController extends Controller
 
         $website = auth()->user()->currentWebsite;
 
-        $regions = Session::where('website_id', $website->id)
-            ->select('region as x', DB::raw('count(*) as y'))
-            ->whereBetween('created_at', [$start, $end])
-            ->whereNotNull('region')
-            ->groupBy('region')
-            ->orderBy('y', 'desc')
-            ->take(10)
-            ->get();
-
+        $regions = $this->website->regionStats($website->id, $start, $end);
 
         return response()->json($regions);
     }
@@ -243,14 +186,7 @@ class DashboardController extends Controller
 
         $website = auth()->user()->currentWebsite;
 
-        $cities = Session::where('website_id', $website->id)
-            ->select('city as x', DB::raw('count(*) as y'))
-            ->whereBetween('created_at', [$start, $end])
-            ->whereNotNull('city')
-            ->groupBy('city')
-            ->orderBy('y', 'desc')
-            ->take(10)
-            ->get();
+        $cities = $this->website->cityStats($website->id, $start, $end);
 
         return response()->json($cities);
     }
@@ -267,13 +203,7 @@ class DashboardController extends Controller
 
         $website = auth()->user()->currentWebsite;
 
-        $pages = PageView::where('website_id', $website->id)
-            ->select('url as x', DB::raw('count(*) as y'))
-            ->whereBetween('created_at', [$start, $end])
-            ->groupBy('url')
-            ->orderBy('y', 'desc')
-            ->take(10)
-            ->get();
+        $pages = $this->website->pageStats($website->id, $start, $end);
 
         return response()->json($pages);
     }
@@ -285,20 +215,12 @@ class DashboardController extends Controller
             'end' => ['required', 'max:255', 'date_format:Y-m-d'],
         ]);
 
-        $start = Carbon::createFromFormat('Y-m-d', $request->start, auth()->user()->timezone->value)->setTimezone('UTC')->startOfDay();
-        $end = Carbon::createFromFormat('Y-m-d', $request->end, auth()->user()->timezone->value)->setTimezone('UTC')->endOfDay();
+        $start = Carbon::createFromFormat('Y-m-d', $request->start, auth()->user()->timezone->value)->setTimezone('UTC')->startOfDay()->toDateTimeString();
+        $end = Carbon::createFromFormat('Y-m-d', $request->end, auth()->user()->timezone->value)->setTimezone('UTC')->endOfDay()->toDateTimeString();
 
         $website = auth()->user()->currentWebsite;
 
-        $pages = PageView::where('website_id', $website->id)
-            ->select('url as x', DB::raw('count(*) as y'))
-            ->whereBetween('created_at', [$start, $end])
-            ->groupBy(['url', 'session_id'])
-            ->orderBy('y', 'desc')
-            ->take(10)
-            ->get();
-
-
+        $pages = $this->website->entryPageStats($website->id, $start, $end);
 
         return response()->json($pages);
     }
@@ -310,18 +232,12 @@ class DashboardController extends Controller
             'end' => ['required', 'max:255', 'date_format:Y-m-d'],
         ]);
 
-        $start = Carbon::createFromFormat('Y-m-d', $request->start, auth()->user()->timezone->value)->setTimezone('UTC')->startOfDay();
-        $end = Carbon::createFromFormat('Y-m-d', $request->end, auth()->user()->timezone->value)->setTimezone('UTC')->endOfDay();
+        $start = Carbon::createFromFormat('Y-m-d', $request->start, auth()->user()->timezone->value)->setTimezone('UTC')->startOfDay()->toDateTimeString();
+        $end = Carbon::createFromFormat('Y-m-d', $request->end, auth()->user()->timezone->value)->setTimezone('UTC')->endOfDay()->toDateTimeString();
 
         $website = auth()->user()->currentWebsite;
 
-        $pages = PageView::where('website_id', $website->id)
-            ->select('url as x', DB::raw('count(*) as y'))
-            ->whereBetween('created_at', [$start, $end])
-            ->groupBy(['url', 'session_id'])
-            ->orderBy('y', 'desc')
-            ->take(10)
-            ->get();
+        $pages = $this->website->exitPageStats($website->id, $start, $end);
 
         return response()->json($pages);
     }
@@ -338,14 +254,7 @@ class DashboardController extends Controller
 
         $website = auth()->user()->currentWebsite;
 
-        $referrers = PageView::where('website_id', $website->id)
-            ->select('referrer as x', DB::raw('count(*) as y'))
-            ->whereBetween('created_at', [$start, $end])
-            ->whereNotNull('referrer')
-            ->groupBy('referrer')
-            ->orderBy('y', 'desc')
-            ->take(10)
-            ->get();
+        $referrers = $this->website->referrerStats($website->id, $start, $end);
 
         return response()->json($referrers);
     }
@@ -362,14 +271,7 @@ class DashboardController extends Controller
 
         $website = auth()->user()->currentWebsite;
 
-        $utmSources = Session::where('website_id', $website->id)
-            ->select('utm_source as x', DB::raw('count(*) as y'))
-            ->whereBetween('created_at', [$start, $end])
-            ->whereNotNull('utm_source')
-            ->groupBy('utm_source')
-            ->orderBy('y', 'desc')
-            ->take(10)
-            ->get();
+        $utmSources = $this->website->utmSourceStats($website->id, $start, $end);
 
         return response()->json($utmSources);
     }
@@ -386,14 +288,7 @@ class DashboardController extends Controller
 
         $website = auth()->user()->currentWebsite;
 
-        $utmMediums = Session::where('website_id', $website->id)
-            ->select('utm_medium as x', DB::raw('count(*) as y'))
-            ->whereBetween('created_at', [$start, $end])
-            ->whereNotNull('utm_medium')
-            ->groupBy('utm_medium')
-            ->orderBy('y', 'desc')
-            ->take(10)
-            ->get();
+        $utmMediums = $this->website->utmMediumStats($website->id, $start, $end);
 
         return response()->json($utmMediums);
     }
@@ -410,14 +305,7 @@ class DashboardController extends Controller
 
         $website = auth()->user()->currentWebsite;
 
-        $utmCampaigns = Session::where('website_id', $website->id)
-            ->select('utm_campaign as x', DB::raw('count(*) as y'))
-            ->whereBetween('created_at', [$start, $end])
-            ->whereNotNull('utm_campaign')
-            ->groupBy('utm_campaign')
-            ->orderBy('y', 'desc')
-            ->take(10)
-            ->get();
+        $utmCampaigns = $this->website->utmCampaignStats($website->id, $start, $end);
 
         return response()->json($utmCampaigns);
     }
@@ -434,14 +322,7 @@ class DashboardController extends Controller
 
         $website = auth()->user()->currentWebsite;
 
-        $utmContents = Session::where('website_id', $website->id)
-            ->select('utm_content as x', DB::raw('count(*) as y'))
-            ->whereBetween('created_at', [$start, $end])
-            ->whereNotNull('utm_content')
-            ->groupBy('utm_content')
-            ->orderBy('y', 'desc')
-            ->take(10)
-            ->get();
+        $utmContents = $this->website->utmContentStats($website->id, $start, $end);
 
         return response()->json($utmContents);
     }
@@ -458,14 +339,7 @@ class DashboardController extends Controller
 
         $website = auth()->user()->currentWebsite;
 
-        $utmTerms = Session::where('website_id', $website->id)
-            ->select('utm_term as x', DB::raw('count(*) as y'))
-            ->whereBetween('created_at', [$start, $end])
-            ->whereNotNull('utm_term')
-            ->groupBy('utm_term')
-            ->orderBy('y', 'desc')
-            ->take(10)
-            ->get();
+        $utmTerms = $this->website->utmTermStats($website->id, $start, $end);
 
         return response()->json($utmTerms);
     }

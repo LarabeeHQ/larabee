@@ -46,7 +46,7 @@ class ProcessColletectedData implements ShouldQueue
     public function handle()
     {
 
-        $this->data['ip'] = '101.103.238.0';
+        $this->data['ip'] = '103.103.238.0';
 
         // get session hash
         $hash = Session::generateHash($this->website['id'], $this->data['hostname'], $this->data['ip'], $this->data['user_agent']);

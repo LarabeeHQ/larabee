@@ -12,25 +12,30 @@ const tabs = ref([
         name: "Sessions",
         value: null,
         change: null,
+        helperFunction: helper.kFormatter,
     },
     {
         id: "pageViews",
         name: "Page Views",
         value: null,
         change: null,
+        helperFunction: helper.kFormatter,
     },
-
     {
         id: "bounceRate",
         name: "Bounce Rate",
         value: null,
         change: null,
+        helperFunction: (value) => {
+            return `${value}%`;
+        },
     },
     {
         id: "avgSessionDuration",
         name: "Session Duration",
         value: null,
         change: null,
+        helperFunction: helper.secondsToTime,
     },
 ]);
 
@@ -92,7 +97,7 @@ watch(dateRange, (value) => {
                     <div
                         class="mt-1 text-3xl font-bold tracking-tight text-gray-900 dark:text-white"
                     >
-                        {{ helper.kFormatter(data.value) }}
+                        {{ data.helperFunction(data.value) }}
                     </div>
 
                     <div class="flex items-center space-x-1">
@@ -105,13 +110,14 @@ watch(dateRange, (value) => {
                             class="h-4 w-4 text-red-400 stroke-2"
                         />
                         <div
+                            v-if="data.change > 0"
                             :class="{
                                 'font-medium text-sm': true,
                                 'text-green-400': data.change > 0,
                                 'text-red-400': data.change < 0,
                             }"
                         >
-                            {{ data.change }}
+                            {{ data.helperFunction(data.change) }}
                         </div>
                     </div>
                 </div>

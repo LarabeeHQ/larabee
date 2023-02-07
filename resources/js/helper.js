@@ -5,7 +5,18 @@ export default {
         : Math.sign(num) * Math.abs(num);
     },
 
+    secondsToTime(secs) {
+        const minutes = Math.floor(secs / 60);
+
+        const seconds = secs - minutes * 60;
+
+        return `${minutes}m ${seconds}s`;
+
+    },
+
     calcTotal(data) {
+        if(Object.keys(data).length === 0) return;
+
         return data.reduce((a, b) => {
             return a + b.y;
         }, 0);
