@@ -12,8 +12,8 @@ import AuthenticatedLayout from "@/Layouts/AuthenticatedLayout.vue";
 const selectedPlan = ref(plans[0]);
 const yearly = ref(false);
 
-import { plansProd } from "~/private/plans.js";
-import { plansLocal } from "~/private/plans.local.js";
+import { plans as plansProd } from "~/private/plans.js";
+import { plans as plansLocal } from "~/private/plans.local.js";
 
 const plans = ref(
     import.meta.env.VITE_APP_ENV === "local" ? plansLocal : plansProd
