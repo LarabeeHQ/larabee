@@ -16,7 +16,6 @@ return new class extends Migration
         Schema::create('sessions', function (Blueprint $table) {
             $table->uuid('id')->primary();
             $table->foreignUuid('website_id');
-            $table->string('hash')->unique();
             $table->string('hostname')->nullable();
             $table->string('browser')->nullable();
             $table->string('os')->nullable();

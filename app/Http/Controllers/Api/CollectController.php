@@ -30,6 +30,10 @@ class CollectController extends Controller
             return response()->json(null, 404);
         }
 
+        if(!$request->header('user-agent')) {
+            return response()->json(null, 400);
+        }
+
         $data = [
             'ip' => $request->ip(),
             'user_agent' => $request->header('user-agent'),
@@ -42,7 +46,6 @@ class CollectController extends Controller
         ];
 
         ProcessColletectedData::dispatch($data, $website);
-        // ProcessColletectedData::dispatchAfterResponse($data);
 
         return response()->json(null, 202);
     }

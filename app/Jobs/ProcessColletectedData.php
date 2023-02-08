@@ -48,16 +48,23 @@ class ProcessColletectedData implements ShouldQueue
 
         $this->data['ip'] = '103.103.238.0';
 
-        // get session hash
-        $hash = Session::generateHash($this->website['id'], $this->data['hostname'], $this->data['ip'], $this->data['user_agent']);
+        // redis cache key
+        $hash = Session::generateHash(
+            $this->website['id'],
+            $this->data['hostname'],
+            $this->data['ip'],
+            $this->data['user_agent']
+        );
 
         // parse url
         $url = parse_url($this->data['url']);
         isset($url['query']) ? parse_str($url['query'], $queryParams) : null;
 
-        if (!Cache::has("session:$hash")) {
-
-
+        // if found in cache, revalidate for more 30min
+        if (Cache::has("session:$hash")) {
+            $session = Cache::get("session:$hash");
+        }
+        else {
             // get geo data
             $geo = geoip($this->data['ip']);
 
@@ -74,7 +81,6 @@ class ProcessColletectedData implements ShouldQueue
             }
 
             $session = Session::create([
-                'hash' => $hash,
                 'website_id' => $this->website['id'],
                 'device' => $device,
                 'hostname' => $this->data['hostname'],
@@ -91,20 +97,16 @@ class ProcessColletectedData implements ShouldQueue
                 'utm_content' => isset($queryParams) ? $queryParams['utm_content'] : null,
                 'utm_term' => isset($queryParams) ? $queryParams['utm_term'] : null
             ]);
-
-            Cache::put("session:$hash", $session, 1800); // 30 minutes
-        }
-        else {
-            $session = Cache::get("session:$hash");
         }
 
+        Cache::put("session:$hash", $session, 1800);
 
         // parse referrer
         $referrer = null;
         $referrerUrl = parse_url($this->data['referrer']);
         isset($referrerUrl['query']) ? parse_str($referrerUrl['query'], $queryParams) : null;
 
-        if($this->website['host'] !== $this->data['hostname']) {
+        if ($this->website['host'] !== $this->data['hostname']) {
             $referrer = $referrerUrl['path'] ? $referrerUrl['path'] : 'none';
         }
 

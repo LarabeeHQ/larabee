@@ -18,7 +18,6 @@ class Session extends Model
 
     protected $fillable = [
         'website_id',
-        'hash',
         'hostname',
         'browser',
         'os',
