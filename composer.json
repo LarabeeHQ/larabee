@@ -1,8 +1,29 @@
 {
-    "name": "laravel/laravel",
+    "name": "WanalyticsHQ/wanalytics",
     "type": "project",
-    "description": "The Laravel Framework.",
-    "keywords": ["framework", "laravel"],
+    "description": "wAnalytics A simple, lightweight, and open source Google Analytics alternative.",
+    "keywords": [
+        "analytics",
+        "redis",
+        "php",
+        "website",
+        "charts",
+        "marketing",
+        "vuejs",
+        "laravel",
+        "cloud",
+        "privacy",
+        "statistics",
+        "metrics",
+        "google-analytics",
+        "web-analytics",
+        "postgresql",
+        "self-hosted",
+        "horizon",
+        "website-analytics",
+        "tailwindcss",
+        "website-stats"
+    ],
     "license": "MIT",
     "require": {
         "php": "^8.0.2",
@@ -60,7 +81,7 @@
     "extra": {
         "laravel": {
             "dont-discover": [
-                 "laravel/telescope"
+                "laravel/telescope"
             ]
         }
     },
