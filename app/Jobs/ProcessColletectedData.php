@@ -45,9 +45,6 @@ class ProcessColletectedData implements ShouldQueue
      */
     public function handle()
     {
-
-        $this->data['ip'] = '103.103.238.0';
-
         // redis cache key
         $hash = Session::generateHash(
             $this->website['id'],
