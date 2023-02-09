@@ -67,5 +67,6 @@ class Kernel extends HttpKernel
         'verified' => \Illuminate\Auth\Middleware\EnsureEmailIsVerified::class,
 
         'set.website' => \App\Http\Middleware\SetWebsite::class,
+        'check.trial' => \App\Http\Middleware\CheckTrial::class,
     ];
 }

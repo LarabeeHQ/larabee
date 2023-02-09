@@ -1,5 +1,7 @@
 <script setup>
 import { onMounted, ref } from "vue";
+import ModalUpgrade from "@/Pages/Billing/ModalUpgrade.vue";
+
 import ApplicationLogo from "@/Components/ApplicationLogo.vue";
 import Dropdown from "@/Components/Dropdown.vue";
 import DropdownLink from "@/Components/DropdownLink.vue";
@@ -16,7 +18,11 @@ const user = usePage().props.auth.user;
 const websites = user.websites;
 const currentWebsite = user.current_website;
 const showingNavigationDropdown = ref(false);
+const modalUpgrade = ref(null);
 
+const trialDays = dayjs(user.trial_ends_at).diff(dayjs(), "days");
+
+console.log(trialDays);
 const switchToWebsite = (website) => {
     const form = useForm({
         website_id: website.id,
@@ -40,6 +46,10 @@ const toggleDarkMode = () => {
     } else {
         document.documentElement.classList.remove("dark");
     }
+};
+
+const openModalUpgrade = () => {
+    modalUpgrade.value.open();
 };
 </script>
 
@@ -67,7 +77,7 @@ const toggleDarkMode = () => {
                             >
                                 <div>
                                     <MenuButton
-                                        class="inline-flex w-full truncate justify-center rounded-md bg-white dark:bg-gray-900 px-4 py-2 text-sm font-medium text-gray-700 dark:text-white shadow-sm hover:bg-gray-50 focus:outline-none"
+                                        class="inline-flex w-full truncate rounded-md border justify-center border-gray-300 dark:border-gray-800 bg-white dark:bg-gray-900 text-gray-700 dark:text-white px-4 py-2 text-sm font-medium shadow-sm hover:bg-gray-50 focus:outline-none"
                                     >
                                         {{ currentWebsite.name }}
                                         <ChevronDownIcon
@@ -135,19 +145,27 @@ const toggleDarkMode = () => {
                     </div>
                 </div>
 
-                <div class="hidden sm:flex sm:items-center sm:ml-6">
+                <div class="hidden sm:flex sm:items-center sm:ml-6 space-x-2">
+                    <button
+                        v-if="!user.self_hosted && user.is_trial"
+                        @click="openModalUpgrade"
+                        type="button"
+                        class="flex items-center space-x-2 rounded-md border border-gray-300 dark:border-gray-800 bg-white dark:bg-gray-900 text-gray-700 dark:text-white hover:bg-gray-50 px-4 py-2 text-sm font-medium focus:outline-none"
+                    >
+                        <div>Upgrade</div>
+                        <div>🚀</div>
+                    </button>
+
                     <button
                         @click="toggleDarkMode"
                         type="button"
                         class="inline-flex w-full justify-center px-2 py-2 focus:outline-none"
                     >
                         <div v-if="!darkMode" class="">
-                            <MoonIcon
-                                class="mr-2 h-6 w-6 stroke-2 text-black"
-                            />
+                            <MoonIcon class="h-6 w-6 stroke-2 text-black" />
                         </div>
                         <div v-else class="">
-                            <SunIcon class="mr-2 h-6 w-6 stroke-2 text-white" />
+                            <SunIcon class="h-6 w-6 stroke-2 text-white" />
                         </div>
                     </button>
 
@@ -171,7 +189,10 @@ const toggleDarkMode = () => {
                                     Profile
                                 </DropdownLink>
 
-                                <DropdownLink :href="route('billing.index')">
+                                <DropdownLink
+                                    v-if="!user.self_hosted"
+                                    :href="route('billing.index')"
+                                >
                                     Billing
                                 </DropdownLink>
                                 <DropdownLink
@@ -270,4 +291,6 @@ const toggleDarkMode = () => {
             </div>
         </div>
     </nav>
+
+    <ModalUpgrade ref="modalUpgrade" />
 </template>

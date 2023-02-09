@@ -23,7 +23,7 @@ class WebsiteController extends Controller
     {
         $request->validate([
             'name' => 'required|min:2',
-            'domain' => 'required|url',
+            'domain' => 'required',
         ]);
 
         // get auth user

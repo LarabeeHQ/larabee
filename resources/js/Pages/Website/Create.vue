@@ -46,7 +46,7 @@ const submit = () => {
                     id="domain"
                     type="text"
                     class="mt-1 block w-full"
-                    placeholder="https://example.com"
+                    placeholder="domain.com"
                     v-model="form.domain"
                     required
                 />

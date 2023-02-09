@@ -38,6 +38,8 @@ class HandleInertiaRequests extends Middleware
                     }
 
                     return array_merge($request->user()->toArray(), array_filter([
+                        'is_trial' => auth()->user()->onTrial(),
+                        'self_hosted' => config('app.self_hosted'),
                         'current_website' => collect($request->user()->currentWebsite)->merge(['role' => $request->user()->websiteRole($request->user()->currentWebsite)]),
                         'websites' => $request->user()->websites,
                         'timezone' => $request->user()->timezone

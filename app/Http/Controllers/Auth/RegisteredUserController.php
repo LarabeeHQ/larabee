@@ -40,12 +40,13 @@ class RegisteredUserController extends Controller
             'password' => ['required', Rules\Password::defaults()],
         ]);
 
-        $user = User::create([
-            'name' => $request->name,
-            'email' => $request->email,
-            'password' => Hash::make($request->password),
-            'timezone_id' => Timezone::where('value', 'America/Sao_Paulo')->first()->id,
-        ]);
+        $user = new User;
+        $user->name = $request->name;
+        $user->email = $request->email;
+        $user->password = Hash::make($request->password);
+        $user->timezone_id = Timezone::where('value', 'America/Sao_Paulo')->first()->id;
+        $user->trial_ends_at = now()->addMonth();
+        $user->save();
 
         event(new Registered($user));
 
