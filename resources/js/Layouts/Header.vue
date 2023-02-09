@@ -20,9 +20,6 @@ const currentWebsite = user.current_website;
 const showingNavigationDropdown = ref(false);
 const modalUpgrade = ref(null);
 
-const trialDays = dayjs(user.trial_ends_at).diff(dayjs(), "days");
-
-console.log(trialDays);
 const switchToWebsite = (website) => {
     const form = useForm({
         website_id: website.id,

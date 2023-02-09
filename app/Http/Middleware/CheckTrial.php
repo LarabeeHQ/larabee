@@ -18,8 +18,6 @@ class CheckTrial
 
         if (!auth()->user()->onTrial() && !auth()->user()->subscribed('default')) {
 
-            dd('trial ended');
-
             // redirect
         }
         else {
