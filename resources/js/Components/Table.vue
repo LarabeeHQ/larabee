@@ -1,4 +1,5 @@
 <script setup>
+import countryHelper from "@/countryHelper";
 import helper from "@/helper";
 import { onMounted, ref, computed } from "vue";
 
@@ -41,6 +42,10 @@ const colorClass = computed(() => {
         pink: "bg-pink-100 dark:bg-pink-500",
     }[progressBarColor];
 });
+
+const formatName = (name) => {
+    return country ? countryHelper.getCountryName(name) : name;
+};
 
 onMounted(async () => {
     total.value = helper.calcTotal(data);
@@ -85,7 +90,7 @@ onMounted(async () => {
                                     uppercase: uppercase,
                                 }"
                             >
-                                {{ value.x }}
+                                {{ formatName(value.x) }}
                             </div>
                         </div>
                     </div>
