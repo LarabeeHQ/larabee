@@ -5,7 +5,7 @@ import { onMounted, ref, computed } from "vue";
 
 const total = ref(0);
 
-const { data, progressBarColor, country, favicon } = defineProps({
+const { data, country, favicon } = defineProps({
     data: Object,
     favicon: {
         type: Boolean,
@@ -14,11 +14,6 @@ const { data, progressBarColor, country, favicon } = defineProps({
     country: {
         type: Boolean,
         default: false,
-    },
-
-    progressBarColor: {
-        type: String,
-        default: "gray",
     },
 
     capitalize: {
@@ -30,17 +25,6 @@ const { data, progressBarColor, country, favicon } = defineProps({
         type: Boolean,
         default: false,
     },
-});
-
-const colorClass = computed(() => {
-    return {
-        gray: "bg-gray-100 dark:bg-gray-500",
-        blue: "bg-blue-100 dark:bg-blue-500",
-        green: "bg-emerald-100 dark:bg-green-500",
-        orange: "bg-orange-100 dark:bg-orange-500",
-        red: "bg-red-100 dark:bg-red-500",
-        pink: "bg-pink-100 dark:bg-pink-500",
-    }[progressBarColor];
 });
 
 const formatName = (name) => {
@@ -63,7 +47,7 @@ onMounted(async () => {
                 <div class="flex items-center justify-between">
                     <div class="flex items-center">
                         <div
-                            :class="`absolute top-0 left-0 h-full dark:bg-opacity-20 rounded-r-md ${colorClass}`"
+                            :class="`absolute top-0 left-0 h-full dark:bg-opacity-20 rounded-r-md bg-gray-100 dark:bg-gray-500`"
                             :style="`max-width: 85%; width: ${helper.calcPercentage(
                                 total,
                                 value.y

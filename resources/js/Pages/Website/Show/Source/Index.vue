@@ -1,5 +1,5 @@
 <script setup>
-import { ref, onMounted } from "vue";
+import { ref } from "vue";
 import Tab from "@/Components/Tab.vue";
 import Referrer from "./Referrer.vue";
 import Medium from "./Medium.vue";

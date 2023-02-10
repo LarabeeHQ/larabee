@@ -9,8 +9,8 @@ const { dateRange, website } = defineProps({
 
 const mediums = ref(null);
 
-const loadData = async () => {
-    return await axios
+const loadData = () => {
+    axios
         .get(route("websites.statistics", website.id), {
             params: {
                 start: dateRange.start,
@@ -32,5 +32,5 @@ watch(dateRange, (value) => {
 });
 </script>
 <template>
-    <Table v-if="mediums" :data="mediums" progressBarColor="green" />
+    <Table v-if="mediums" :data="mediums" />
 </template>
