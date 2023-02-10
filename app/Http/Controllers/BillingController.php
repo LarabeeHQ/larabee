@@ -57,7 +57,7 @@ class BillingController extends Controller
             abort(404);
         }
 
-        return auth()->user()->team->redirectToBillingPortal(route('dashboard'));
+        return auth()->user()->team->redirectToBillingPortal(route('websites.index'));
     }
 
     public function generateCheckoutLink(Request $request)
@@ -66,8 +66,8 @@ class BillingController extends Controller
             ->newSubscription('default', $request->stripePlan)
             ->allowPromotionCodes()
             ->checkout([
-                'success_url' => route('dashboard'),
-                'cancel_url' => route('dashboard')
+                'success_url' => route('websites.index'),
+                'cancel_url' => route('websites.index')
             ]);
 
         return response()->json($checkout->id);

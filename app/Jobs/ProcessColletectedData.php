@@ -88,15 +88,15 @@ class ProcessColletectedData implements ShouldQueue
                 'country' => $geo->iso_code,
                 'region' => $geo->state_name,
                 'city' => $geo->city,
-                'utm_medium' => isset($queryParams) ? $queryParams['utm_medium'] : null,
-                'utm_source' => isset($queryParams) ? $queryParams['utm_source'] : null,
-                'utm_campaign' => isset($queryParams) ? $queryParams['utm_campaign'] : null,
-                'utm_content' => isset($queryParams) ? $queryParams['utm_content'] : null,
-                'utm_term' => isset($queryParams) ? $queryParams['utm_term'] : null
+                'utm_medium' => isset($queryParams['utm_medium']) ? $queryParams['utm_medium'] : null,
+                'utm_source' => isset($queryParams['utm_source']) ? $queryParams['utm_source'] : null,
+                'utm_campaign' => isset($queryParams['utm_campaign']) ? $queryParams['utm_campaign'] : null,
+                'utm_content' => isset($queryParams['utm_content']) ? $queryParams['utm_content'] : null,
+                'utm_term' => isset($queryParams['utm_term']) ? $queryParams['utm_term'] : null
             ]);
         }
 
-        Cache::put("session:$hash", $session, 1800);
+        Cache::put("session:$hash", $session, now()->addMinutes($this->website['session_duration']));
 
         // parse referrer
         $referrer = null;

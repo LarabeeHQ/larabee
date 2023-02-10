@@ -2,6 +2,7 @@
 
 namespace App\Http\Middleware;
 
+use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Inertia\Middleware;
 use Tightenco\Ziggy\Ziggy;
@@ -40,8 +41,9 @@ class HandleInertiaRequests extends Middleware
                     return array_merge($request->user()->toArray(), array_filter([
                         'is_trial' => auth()->user()->onTrial(),
                         'self_hosted' => config('app.self_hosted'),
-                        'current_website' => collect($request->user()->currentWebsite)->merge(['role' => $request->user()->websiteRole($request->user()->currentWebsite)]),
-                        'websites' => $request->user()->websites,
+                        'websites' => $request->user()->websites->loadCount(['sessions' => function ($query) {
+                            $query->whereBetween('created_at', [now()->subHours(24), now()]);
+                        }]),
                         'timezone' => $request->user()->timezone
                     ]));
                 },

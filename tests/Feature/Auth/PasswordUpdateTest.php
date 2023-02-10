@@ -19,7 +19,7 @@ class PasswordUpdateTest extends TestCase
             ->actingAs($user)
             ->from('/profile')
             ->put('/password', [
-                'current_password' => 'password',
+                'current_password' => 'admin',
                 'password' => 'new-password',
                 'password_confirmation' => 'new-password',
             ]);

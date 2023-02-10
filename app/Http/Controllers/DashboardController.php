@@ -8,8 +8,7 @@ use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Inertia\Inertia;
 
-use App\Models\Session;
-use App\Models\PageView;
+use App\Models\Website;
 
 class DashboardController extends Controller
 {
@@ -25,9 +24,10 @@ class DashboardController extends Controller
         $this->website = $website;
     }
 
-    public function index()
+    public function index($id)
     {
-        $website = auth()->user()->currentWebsite;
+        $website = Website::where('id', $id)->firstOrFail();
+
 
         return Inertia::render('Dashboard/Index', [
             'website' => $website

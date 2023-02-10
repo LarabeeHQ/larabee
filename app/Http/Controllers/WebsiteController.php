@@ -14,6 +14,11 @@ use App\Models\PageView;
 
 class WebsiteController extends Controller
 {
+    public function Index()
+    {
+        return Inertia::render('Website/Index');
+    }
+
     public function create()
     {
         return Inertia::render('Website/Create');
@@ -41,14 +46,7 @@ class WebsiteController extends Controller
             'role' => User::ROLE_OWNER,
         ]);
 
-        $user->forceFill([
-            'current_website_id' => $website->id,
-        ])->save();
-
-        // change website
-        $user->switchWebsite($website);
-
-        return redirect(route('dashboard'));
+        return redirect(route('website.show', $website->id));
     }
 
     public function update(Request $request)
@@ -66,17 +64,8 @@ class WebsiteController extends Controller
         $website->public = $request->public;
         $website->save();
 
-        return redirect(route('dashboard'));
+        return redirect(route('website.show', $website->id));
     }
 
-    public function setCurrentWebsite(Request $request)
-    {
-        $website = Website::findOrFail($request->website_id);
 
-        if (!$request->user()->switchWebsite($website)) {
-            abort(403);
-        }
-
-        return Inertia::location(route('dashboard'));
-    }
 }

@@ -42,12 +42,12 @@ class Session extends Model
         });
     }
 
-    public function website(): \Illuminate\Database\Eloquent\Relations\BelongsTo
+    public function website()
     {
         return $this->belongsTo(Website::class);
     }
 
-    public function pageViews(): \Illuminate\Database\Eloquent\Relations\HasMany
+    public function pageViews()
     {
         return $this->hasMany(PageView::class);
     }

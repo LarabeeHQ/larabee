@@ -11,12 +11,13 @@ Route::get('/', function () {
     return redirect(route('login'));
 });
 
-Route::group(['middleware' => ['auth', 'verified', 'set.website']], function () {
+Route::group(['middleware' => ['auth', 'verified']], function () {
 
     // dashboard
     Route::group(['middleware' => ['check.trial']], function() {
 
-        Route::get('/dashboard', [DashboardController::class, 'index'])->name('dashboard');
+        Route::get('/dashboard/{id}', [DashboardController::class, 'index'])->name('websites.show');
+
         Route::get('/dashboard/statistics/overview', [DashboardController::class, 'overview'])->name('dashboard.overview');
         Route::get('/dashboard/statistics/pages', [DashboardController::class, 'pages'])->name('dashboard.pages');
         Route::get('/dashboard/statistics/entry-pages', [DashboardController::class, 'entryPages'])->name('dashboard.entry-pages');
@@ -39,6 +40,7 @@ Route::group(['middleware' => ['auth', 'verified', 'set.website']], function () 
     });
 
     // websites
+    Route::get('/websites', [WebsiteController::class, 'index'])->name('websites.index');
     Route::get('/websites/create', [WebsiteController::class, 'create'])->name('websites.create')->withoutMiddleware(['set.website']);
     Route::post('/websites', [WebsiteController::class, 'store'])->name('websites.store')->withoutMiddleware(['set.website']);
     Route::put('/websites', [WebsiteController::class, 'update'])->name('websites.update');

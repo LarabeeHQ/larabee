@@ -18,4 +18,9 @@ class Website extends Model
     {
         return $this->belongsToMany(User::class)->withPivot('role')->as('membership')->withTimestamps();
     }
+
+    public function sessions()
+    {
+        return $this->hasMany(Session::class);
+    }
 }

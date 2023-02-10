@@ -29,8 +29,7 @@ class User extends Authenticatable implements MustVerifyEmail
         'name',
         'email',
         'password',
-        'timezone_id',
-        'current_website_id'
+        'timezone_id'
     ];
 
     /**
@@ -53,73 +52,11 @@ class User extends Authenticatable implements MustVerifyEmail
         'trial_ends_at' => 'datetime'
     ];
 
-    public function isCurrentWebsite($website)
-    {
-        return $website->id === $this->currentWebsite->id;
-    }
-
-    public function allWebsites()
-    {
-        return $this->websites->sortBy('name');
-    }
-
-    public function currentWebsite()
-    {
-        return $this->belongsTo(Website::class, 'current_website_id');
-    }
-
     public function belongsToWebsite($website)
     {
         return $this->websites->contains(function ($t) use ($website) {
             return $t->id === $website->id;
         });
-    }
-
-    public function websiteRole($website)
-    {
-        if (!$this->belongsToWebsite($website)) {
-            return;
-        }
-
-        $user = $this->whereHas('websites', function (Builder $query) use ($website) {
-            $query->where('websites.id', $website->id);
-        })
-            ->where('id', $this->id)
-            ->with('websites')
-            ->first();
-
-        return $user->websites->first()->membership->role;
-    }
-
-    public function hasWebsiteRole($website, $role)
-    {
-        if (!$this->belongsToWebsite($website)) {
-            return;
-        }
-
-        $user = $this->whereHas('websites', function (Builder $query) use ($website) {
-            $query->where('websites.id', $website->id);
-        })
-            ->where('id', $this->id)
-            ->with('websites')
-            ->first();
-
-        return $user->websites->first()->membership->role === $role;
-    }
-
-    public function switchWebsite($website)
-    {
-        if (!$this->belongsToWebsite($website)) {
-            return false;
-        }
-
-        $this->forceFill([
-            'current_website_id' => $website->id,
-        ])->save();
-
-        $this->setRelation('currentWebsite', $website);
-
-        return true;
     }
 
     public function timezone()

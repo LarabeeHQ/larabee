@@ -13,6 +13,8 @@ import AuthenticatedLayout from "@/Layouts/AuthenticatedLayout.vue";
 import { Head, Link, usePage } from "@inertiajs/vue3";
 import { onMounted, ref, computed, onBeforeMount, watch } from "vue";
 
+const user = usePage().props.auth.user;
+const websites = user.websites;
 const website = computed(() => usePage().props.website);
 const data = ref(null);
 
@@ -133,17 +135,96 @@ const formatDate = (date) => {
         <div>
             <div class="flex items-center justify-between mb-2">
                 <div class="min-w-0 flex-1">
-                    <h1
-                        class="text-lg font-medium leading-6 text-black dark:text-white sm:truncate"
+                    <div
+                        class="hidden space-x-4 sm:-my-px sm:flex items-center"
                     >
-                        Dashboard
-                    </h1>
+                        <div>
+                            <Menu
+                                as="div"
+                                class="relative inline-block text-left"
+                            >
+                                <div>
+                                    <MenuButton
+                                        class="inline-flex w-full truncate rounded-md border justify-center border-zinc-300 dark:border-zinc-800 bg-white dark:bg-zinc-900 text-zinc-700 dark:text-white px-4 py-2 text-sm font-medium shadow-sm hover:bg-zinc-50 focus:outline-none"
+                                    >
+                                        {{ website.name }}
+                                        <ChevronDownIcon
+                                            class="-mr-1 ml-2 h-5 w-5"
+                                            aria-hidden="true"
+                                        />
+                                    </MenuButton>
+                                </div>
+
+                                <transition
+                                    enter-active-class="transition ease-out duration-100"
+                                    enter-from-class="transform opacity-0 scale-95"
+                                    enter-to-class="transform opacity-100 scale-100"
+                                    leave-active-class="transition ease-in duration-75"
+                                    leave-from-class="transform opacity-100 scale-100"
+                                    leave-to-class="transform opacity-0 scale-95"
+                                >
+                                    <MenuItems
+                                        class="absolute left-0 z-10 mt-2 w-56 origin-top-left divide-y divide-zinc-100 dark:divide-zinc-800 rounded-md bg-white dark:bg-[#181717] shadow-lg focus:outline-none"
+                                    >
+                                        <div class="py-1">
+                                            <MenuItem
+                                                v-for="website in websites"
+                                                :key="website"
+                                                v-slot="{ active }"
+                                            >
+                                                <Link
+                                                    :href="
+                                                        route('websites.show', {
+                                                            id: website.id,
+                                                        })
+                                                    "
+                                                >
+                                                    <button
+                                                        class="block px-4 py-2 w-full text-left"
+                                                    >
+                                                        <div
+                                                            class="text-sm font-semibold text-zinc-700 dark:text-white"
+                                                        >
+                                                            {{ website.name }}
+                                                        </div>
+                                                        <div
+                                                            class="text-xs text-zinc-700 dark:text-zinc-300"
+                                                        >
+                                                            {{ website.domain }}
+                                                        </div>
+                                                    </button>
+                                                </Link>
+                                            </MenuItem>
+                                        </div>
+                                        <div class="py-1">
+                                            <MenuItem v-slot="{ active }">
+                                                <Link
+                                                    :href="
+                                                        route('websites.create')
+                                                    "
+                                                    class="block px-4 py-2 w-full text-left text-sm font-semibold text-zinc-700 dark:text-white"
+                                                >
+                                                    Add Website
+                                                </Link>
+                                            </MenuItem>
+                                        </div>
+                                    </MenuItems>
+                                </transition>
+                            </Menu>
+                        </div>
+                        <div class="flex items-center space-x-1.5">
+                            <div
+                                class="h-2 w-2 bg-green-500 rounded-full"
+                            ></div>
+                            <div>0 active users</div>
+                        </div>
+                    </div>
                 </div>
 
                 <Menu as="div" class="relative inline-block text-left">
                     <div>
                         <MenuButton
-                            class="inline-flex w-full justify-center rounded-md bg-white dark:bg-zinc-800 dark:text-white px-4 py-2 text-sm font-medium text-gray-700 shadow-sm hover:bg-gray-50 focus:outline-none"
+                            class="inline-flex w-full justify-center rounded-md border border-zinc-300 dark:border-zinc-800 bg-white dark:bg-zinc-900 text-zinc-700 dark:text-white px-4 py-2 text-sm font-medium shadow-sm focus:outline-none"
                         >
                             {{
                                 selectedFilter.value == "custom"

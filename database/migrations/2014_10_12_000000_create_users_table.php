@@ -21,7 +21,6 @@ return new class extends Migration
             $table->string('password');
 
             $table->foreignUuid('timezone_id');
-            $table->foreignUuid('current_website_id')->nullable();
 
             $table->string('stripe_id')->nullable()->index();
             $table->string('pm_type')->nullable();

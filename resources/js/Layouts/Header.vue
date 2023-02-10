@@ -9,22 +9,14 @@ import NavLink from "@/Components/NavLink.vue";
 import ResponsiveNavLink from "@/Components/ResponsiveNavLink.vue";
 import { Link, useForm, usePage } from "@inertiajs/vue3";
 
-import { Menu, MenuButton, MenuItem, MenuItems } from "@headlessui/vue";
-import { ChevronDownIcon, MoonIcon, SunIcon } from "@heroicons/vue/20/solid";
+import { MoonIcon, SunIcon } from "@heroicons/vue/20/solid";
 import { UserCircleIcon } from "@heroicons/vue/24/outline";
 
 const darkMode = ref(localStorage.getItem("theme") == "dark" ? true : false);
 const user = usePage().props.auth.user;
-const websites = user.websites;
-const currentWebsite = user.current_website;
+
 const showingNavigationDropdown = ref(false);
 const modalUpgrade = ref(null);
-
-const switchToWebsite = (website) => {
-    const form = useForm({
-        website_id: website.id,
-    }).put(route("websites.update-current"));
-};
 
 onMounted(() => {
     if (darkMode.value) {
@@ -58,7 +50,7 @@ const openModalUpgrade = () => {
                 <div class="flex">
                     <!-- Logo -->
                     <div class="shrink-0 flex items-center">
-                        <Link :href="route('dashboard')">
+                        <Link :href="route('websites.index')">
                             <ApplicationLogo class="block h-9 w-auto" />
                         </Link>
                     </div>
@@ -67,78 +59,7 @@ const openModalUpgrade = () => {
                     <div
                         class="hidden space-x-8 sm:-my-px sm:ml-10 sm:flex items-center"
                     >
-                        <div>
-                            <Menu
-                                as="div"
-                                class="relative inline-block text-left"
-                            >
-                                <div>
-                                    <MenuButton
-                                        class="inline-flex w-full truncate rounded-md border justify-center border-zinc-300 dark:border-zinc-800 bg-white dark:bg-zinc-900 text-zinc-700 dark:text-white px-4 py-2 text-sm font-medium shadow-sm hover:bg-zinc-50 focus:outline-none"
-                                    >
-                                        {{ currentWebsite.name }}
-                                        <ChevronDownIcon
-                                            class="-mr-1 ml-2 h-5 w-5"
-                                            aria-hidden="true"
-                                        />
-                                    </MenuButton>
-                                </div>
-
-                                <transition
-                                    enter-active-class="transition ease-out duration-100"
-                                    enter-from-class="transform opacity-0 scale-95"
-                                    enter-to-class="transform opacity-100 scale-100"
-                                    leave-active-class="transition ease-in duration-75"
-                                    leave-from-class="transform opacity-100 scale-100"
-                                    leave-to-class="transform opacity-0 scale-95"
-                                >
-                                    <MenuItems
-                                        class="absolute left-0 z-10 mt-2 w-56 origin-top-left divide-y divide-zinc-100 dark:divide-zinc-800 rounded-md bg-white dark:bg-[#181717] shadow-lg focus:outline-none"
-                                    >
-                                        <div class="py-1">
-                                            <MenuItem
-                                                v-for="website in websites"
-                                                :key="website"
-                                                v-slot="{ active }"
-                                            >
-                                                <form
-                                                    @submit.prevent="
-                                                        switchToWebsite(website)
-                                                    "
-                                                >
-                                                    <button
-                                                        class="block px-4 py-2 w-full text-left"
-                                                    >
-                                                        <div
-                                                            class="text-sm font-semibold text-zinc-700 dark:text-white"
-                                                        >
-                                                            {{ website.name }}
-                                                        </div>
-                                                        <div
-                                                            class="text-xs text-zinc-700 dark:text-zinc-300"
-                                                        >
-                                                            {{ website.domain }}
-                                                        </div>
-                                                    </button>
-                                                </form>
-                                            </MenuItem>
-                                        </div>
-                                        <div class="py-1">
-                                            <MenuItem v-slot="{ active }">
-                                                <Link
-                                                    :href="
-                                                        route('websites.create')
-                                                    "
-                                                    class="block px-4 py-2 w-full text-left text-sm font-semibold text-zinc-700 dark:text-white"
-                                                >
-                                                    Add Website
-                                                </Link>
-                                            </MenuItem>
-                                        </div>
-                                    </MenuItems>
-                                </transition>
-                            </Menu>
-                        </div>
+                        <div></div>
                     </div>
                 </div>
 
