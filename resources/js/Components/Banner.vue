@@ -16,7 +16,7 @@
                 leave-to-class="opacity-0"
             >
                 <div
-                    class="max-w-sm w-full bg-gray-900 dark:bg-white shadow-2xl rounded-lg pointer-events-auto ring-1 ring-black ring-opacity-5 overflow-hidden"
+                    class="max-w-lg w-full bg-gray-900 dark:bg-white shadow-2xl rounded-lg pointer-events-auto ring-1 ring-black ring-opacity-5 overflow-hidden"
                 >
                     <div class="px-4 py-4">
                         <div class="flex items-center">

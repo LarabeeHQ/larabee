@@ -63,7 +63,7 @@ onMounted(async () => {
                 <div class="flex items-center justify-between">
                     <div class="flex items-center">
                         <div
-                            :class="`absolute top-0 left-0 h-full dark:bg-opacity-20 rounded-sm ${colorClass}`"
+                            :class="`absolute top-0 left-0 h-full dark:bg-opacity-20 rounded-r-md ${colorClass}`"
                             :style="`max-width: 85%; width: ${helper.calcPercentage(
                                 total,
                                 value.y
@@ -85,7 +85,7 @@ onMounted(async () => {
 
                             <div
                                 :class="{
-                                    'text-gray-800 dark:text-white text-sm font-medium': true,
+                                    'text-gray-800 dark:text-white text-sm font-semibold': true,
                                     capitalize: capitalize,
                                     uppercase: uppercase,
                                 }"
@@ -96,12 +96,12 @@ onMounted(async () => {
                     </div>
                     <div class="flex items-center justify-between min-w-[4rem]">
                         <div
-                            class="invisible group-hover:visible flex text-xs font-medium text-gray-500 dark:hover:text-gray-300"
+                            class="invisible group-hover:visible flex text-xs font-semibold text-gray-500 dark:hover:text-gray-300"
                         >
                             {{ helper.calcPercentage(total, value.y) }}%
                         </div>
                         <div
-                            class="text-sm font-medium text-gray-800 dark:text-white"
+                            class="text-sm font-semibold text-gray-800 dark:text-white"
                         >
                             {{ helper.kFormatter(value.y) }}
                         </div>

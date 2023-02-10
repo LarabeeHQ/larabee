@@ -164,9 +164,7 @@ const openModalUpgrade = () => {
                 </div>
             </div>
 
-            <div
-                class="overflow-hidden bg-white rounded-lg shadow dark:shadow-none dark:bg-zinc-900 p-6"
-            >
+            <div class="card p-6">
                 <div class="mb-4 text-sm">
                     Event usage: {{ data.startDate }} — {{ data.endDate }} (UTC)
                 </div>

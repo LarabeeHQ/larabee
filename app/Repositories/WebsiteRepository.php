@@ -3,14 +3,14 @@
 namespace App\Repositories;
 
 use Illuminate\Support\Facades\DB;
-use Carbon\Carbon;
+use Carbon\CarbonPeriod;
 
 use App\Models\Session;
 use App\Models\PageView;
 
 class WebsiteRepository
 {
-    public function overviewStats($websiteId, $start, $end, $prevStart, $prevEnd)
+    public function overview($websiteId, $start, $end, $prevStart, $prevEnd)
     {
         $firstData = collect(DB::select("SELECT
             count(DISTINCT table_aux.session_id) as sessions,
@@ -82,6 +82,35 @@ class WebsiteRepository
                 'change' => $previousData->totaltime && $previousData->sessions ? ceil(($previousData->totaltime / 60) / $previousData->sessions * 100) : 0,
             ],
         ];
+    }
+
+    public function chart($websiteId, $start, $end)
+    {
+        $pointInterval = 60 * 1000 * 60 * 24; // 1day
+
+        $data = [
+            [
+                'name' => 'Installation & Developers',
+                'data' => [43934, 48656, 65165, 81827, 112143, 142383, 171533, 165174, 155157, 161454, 154610]
+            ]
+        ];
+
+        return [
+            'data' => $data,
+            'pointStart' => $start->getTimestampMs(),
+            'pointInterval' => $pointInterval,
+            'min' => $start->getTimestampMs(),
+            'max' => $end->getTimestampMs(),
+            'color' =>  '#000000',
+            'fillOpacity' => 0.1,
+        ];
+    }
+
+    public function online($website)
+    {
+        return Session::where('website_id', $website->id)
+            ->where('created_at', '>=', now()->subMinutes($website->session_duration))
+            ->count();
     }
 
     public function pageStats($websiteId, $start, $end)

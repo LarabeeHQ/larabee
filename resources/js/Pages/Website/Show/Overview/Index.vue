@@ -43,16 +43,18 @@ const setChart = (stat) => {
     currentTab.value = stat;
 };
 
-const { dateRange } = defineProps({
+const { dateRange, website } = defineProps({
     dateRange: Object,
+    website: Object,
 });
 
 const loadData = () => {
     axios
-        .get(route("dashboard.overview"), {
+        .get(route("websites.statistics", website.id), {
             params: {
                 start: dateRange.start,
                 end: dateRange.end,
+                metric: "overview",
             },
         })
         .then((response) => {
@@ -75,27 +77,25 @@ watch(dateRange, (value) => {
 });
 </script>
 <template>
-    <div
-        class="overflow-hidden bg-white rounded-lg shadow dark:shadow-none dark:bg-zinc-800 p-6"
-    >
+    <div class="card p-6">
         <div class="grid grid-cols-1 gap-4 sm:grid-cols-4">
             <div
                 v-for="data in tabs"
                 :key="data"
                 @click="setChart(data.id)"
                 :class="{
-                    'border-t-4 border-transparent overflow-hidden rounded-md bg-gray-100 dark:bg-zinc-900 px-4 py-5 sm:p-6 cursor-pointer': true,
+                    'border-t-4 border-transparent overflow-hidden rounded-md bg-zinc-100 dark:bg-zinc-900 px-4 py-5 sm:p-6 cursor-pointer': true,
                     ' border-green-400': data.id === currentTab,
                 }"
             >
                 <div
-                    class="truncate text-xs tracking-wider font-bold uppercase text-zinc-800 dark:text-gray-200"
+                    class="truncate text-xs tracking-wider font-bold uppercase text-zinc-800 dark:text-zinc-200"
                 >
                     {{ data.name }}
                 </div>
                 <div class="flex items-center space-x-2">
                     <div
-                        class="mt-1 text-3xl font-bold tracking-tight text-gray-900 dark:text-white"
+                        class="mt-1 text-3xl font-bold tracking-tight text-zinc-900 dark:text-white"
                     >
                         {{ data.helperFunction(data.value) }}
                     </div>
@@ -124,6 +124,6 @@ watch(dateRange, (value) => {
             </div>
         </div>
 
-        <LineChart :date-range="dateRange" />
+        <LineChart :date-range="dateRange" :website="website" />
     </div>
 </template>

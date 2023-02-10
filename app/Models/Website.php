@@ -14,6 +14,29 @@ class Website extends Model
         'public' => 'boolean',
     ];
 
+    const METRICS = [
+        'online',
+        'overview',
+        'chart',
+        'pages',
+        'entry-pages',
+        'exit-pages',
+        'referrers',
+        'utm-sources',
+        'utm-mediums',
+        'utm-campaigns',
+        'utm-contents',
+        'utm-terms',
+        'browsers',
+        'os',
+        'devices',
+        'screens',
+        'languages',
+        'countries',
+        'regions',
+        'cities'
+    ];
+
     public function users()
     {
         return $this->belongsToMany(User::class)->withPivot('role')->as('membership')->withTimestamps();

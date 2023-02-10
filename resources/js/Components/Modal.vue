@@ -21,7 +21,9 @@
                         :class="left"
                         @click="close"
                     >
-                        <div class="absolute inset-0 bg-gray-500/75"></div>
+                        <div
+                            class="absolute inset-0 bg-zinc-600/75 dark:bg-zinc-800/80"
+                        ></div>
                     </div>
                 </transition>
 

@@ -1,0 +1,61 @@
+<script setup>
+import { ref, onMounted } from "vue";
+import Tab from "@/Components/Tab.vue";
+import Referrer from "./Referrer.vue";
+import Medium from "./Medium.vue";
+import Source from "./Source.vue";
+import Campaign from "./Campaign.vue";
+import Content from "./Content.vue";
+import Term from "./Term.vue";
+
+const { dateRange, website } = defineProps({
+    dateRange: Object,
+    website: Object,
+});
+
+const tab = ref("referrers");
+const tabs = ["referrers", "medium", "source", "campaign", "content", "term"];
+
+const setTab = (value) => {
+    tab.value = value;
+};
+</script>
+
+<template>
+    <div class="col-span-6 card p-4 min-h-[426px]">
+        <Tab :tabs="tabs" @update="setTab" />
+
+        <div class="mt-4">
+            <Referrer
+                v-if="tab == 'referrers'"
+                :dateRange="dateRange"
+                :website="website"
+            />
+            <Medium
+                v-else-if="tab == 'medium'"
+                :dateRange="dateRange"
+                :website="website"
+            />
+            <Source
+                v-else-if="tab == 'source'"
+                :dateRange="dateRange"
+                :website="website"
+            />
+            <Campaign
+                v-else-if="tab == 'campaign'"
+                :dateRange="dateRange"
+                :website="website"
+            />
+            <Content
+                v-else-if="tab == 'content'"
+                :dateRange="dateRange"
+                :website="website"
+            />
+            <Term
+                v-else-if="tab == 'term'"
+                :dateRange="dateRange"
+                :website="website"
+            />
+        </div>
+    </div>
+</template>

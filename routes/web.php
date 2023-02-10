@@ -2,7 +2,7 @@
 
 use Illuminate\Support\Facades\Route;
 
-use App\Http\Controllers\DashboardController;
+use App\Http\Controllers\WebsiteMetricController;
 use App\Http\Controllers\AccountController;
 use App\Http\Controllers\WebsiteController;
 use App\Http\Controllers\BillingController;
@@ -13,38 +13,17 @@ Route::get('/', function () {
 
 Route::group(['middleware' => ['auth', 'verified']], function () {
 
-    // dashboard
-    Route::group(['middleware' => ['check.trial']], function() {
 
-        Route::get('/dashboard/{id}', [DashboardController::class, 'index'])->name('websites.show');
-
-        Route::get('/dashboard/statistics/overview', [DashboardController::class, 'overview'])->name('dashboard.overview');
-        Route::get('/dashboard/statistics/pages', [DashboardController::class, 'pages'])->name('dashboard.pages');
-        Route::get('/dashboard/statistics/entry-pages', [DashboardController::class, 'entryPages'])->name('dashboard.entry-pages');
-        Route::get('/dashboard/statistics/exit-pages', [DashboardController::class, 'exitPages'])->name('dashboard.exit-pages');
-        Route::get('/dashboard/statistics/referrers', [DashboardController::class, 'referrers'])->name('dashboard.referrers');
-        Route::get('/dashboard/statistics/utm-sources', [DashboardController::class, 'utmSources'])->name('dashboard.utm-sources');
-        Route::get('/dashboard/statistics/utm-mediums', [DashboardController::class, 'utmMediums'])->name('dashboard.utm-mediums');
-        Route::get('/dashboard/statistics/utm-campaigns', [DashboardController::class, 'utmCampaigns'])->name('dashboard.utm-campaigns');
-        Route::get('/dashboard/statistics/utm-contents', [DashboardController::class, 'utmContents'])->name('dashboard.utm-contents');
-        Route::get('/dashboard/statistics/utm-terms', [DashboardController::class, 'utmTerms'])->name('dashboard.utm-terms');
-        Route::get('/dashboard/statistics/browsers', [DashboardController::class, 'browsers'])->name('dashboard.browsers');
-        Route::get('/dashboard/statistics/os', [DashboardController::class, 'os'])->name('dashboard.os');
-        Route::get('/dashboard/statistics/devices', [DashboardController::class, 'devices'])->name('dashboard.devices');
-        Route::get('/dashboard/statistics/screens', [DashboardController::class, 'screens'])->name('dashboard.screens');
-        Route::get('/dashboard/statistics/languages', [DashboardController::class, 'languages'])->name('dashboard.languages');
-        Route::get('/dashboard/statistics/countries', [DashboardController::class, 'countries'])->name('dashboard.countries');
-        Route::get('/dashboard/statistics/regions', [DashboardController::class, 'regions'])->name('dashboard.regions');
-        Route::get('/dashboard/statistics/cities', [DashboardController::class, 'cities'])->name('dashboard.cities');
-        Route::get('/dashboard/statistics/chart', [DashboardController::class, 'loadChart'])->name('dashboard.load-chart');
-    });
 
     // websites
+
+
     Route::get('/websites', [WebsiteController::class, 'index'])->name('websites.index');
-    Route::get('/websites/create', [WebsiteController::class, 'create'])->name('websites.create')->withoutMiddleware(['set.website']);
-    Route::post('/websites', [WebsiteController::class, 'store'])->name('websites.store')->withoutMiddleware(['set.website']);
+    Route::get('/websites/create', [WebsiteController::class, 'create'])->name('websites.create');
+    Route::post('/websites', [WebsiteController::class, 'store'])->name('websites.store');
     Route::put('/websites', [WebsiteController::class, 'update'])->name('websites.update');
-    Route::put('/websites/update-current', [WebsiteController::class, 'setCurrentWebsite'])->name('websites.update-current');
+    Route::get('/websites/{id}', [WebsiteController::class, 'show'])->name('websites.show');
+    Route::get('/websites/{id}/statistics', [WebsiteController::class, 'statistics'])->name('websites.statistics');
 
     // account
     Route::get('/account', [AccountController::class, 'edit'])->name('account.edit');

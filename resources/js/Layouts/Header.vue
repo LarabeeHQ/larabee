@@ -43,9 +43,11 @@ const openModalUpgrade = () => {
 </script>
 
 <template>
-    <nav class="bg-zinc-100 dark:bg-zinc-900">
+    <nav
+        class="bg-zinc-100 dark:bg-zinc-900 border-b border-zinc-200 dark:border-zinc-700"
+    >
         <!-- Primary Navigation Menu -->
-        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        <div class="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8">
             <div class="flex justify-between h-16">
                 <div class="flex">
                     <!-- Logo -->
@@ -68,7 +70,7 @@ const openModalUpgrade = () => {
                         v-if="!user.self_hosted && user.is_trial"
                         @click="openModalUpgrade"
                         type="button"
-                        class="flex items-center space-x-2 rounded-md border border-zinc-300 dark:border-zinc-800 bg-white dark:bg-zinc-900 text-zinc-700 dark:text-white hover:bg-zinc-50 px-4 py-2 text-sm font-medium focus:outline-none"
+                        class="flex items-center space-x-2 rounded-md border border-zinc-200 dark:border-zinc-700 bg-white dark:bg-zinc-800 text-zinc-700 dark:text-white hover:bg-zinc-50 px-4 py-2 text-sm font-medium focus:outline-none"
                     >
                         <div>Upgrade</div>
                         <div>🚀</div>

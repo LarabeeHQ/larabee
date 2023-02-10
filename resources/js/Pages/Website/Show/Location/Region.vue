@@ -2,22 +2,24 @@
 import Table from "@/Components/Table.vue";
 import { ref, onMounted, watch } from "vue";
 
-const { dateRange } = defineProps({
+const { dateRange, website } = defineProps({
     dateRange: Object,
+    website: Object,
 });
 
-const cities = ref(null);
+const regions = ref(null);
 
-const loadData = async () => {
-    return await axios
-        .get(route("dashboard.cities"), {
+const loadData = () => {
+    axios
+        .get(route("websites.statistics", website.id), {
             params: {
                 start: dateRange.start,
                 end: dateRange.end,
+                metric: "regions",
             },
         })
         .then((response) => {
-            cities.value = response.data;
+            regions.value = response.data;
         });
 };
 
@@ -30,5 +32,5 @@ watch(dateRange, (value) => {
 });
 </script>
 <template>
-    <Table v-if="cities" :data="cities" progressBarColor="orange" />
+    <Table v-if="regions" :data="regions" />
 </template>

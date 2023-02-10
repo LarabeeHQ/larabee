@@ -1,0 +1,42 @@
+<script setup>
+import { ref, onMounted, watch } from "vue";
+import Tab from "@/Components/Tab.vue";
+import Page from "./Page.vue";
+import EntryPage from "./EntryPage.vue";
+import ExitPage from "./ExitPage.vue";
+
+const { dateRange, website } = defineProps({
+    dateRange: Object,
+    website: Object,
+});
+
+const tabs = ["pages", "entryPages", "exitPages"];
+const tab = ref("pages");
+
+const setTab = (value) => {
+    tab.value = value;
+};
+</script>
+
+<template>
+    <div class="col-span-6 card p-4 min-h-[426px]">
+        <Tab :tabs="tabs" @update="setTab" />
+        <div class="mt-4">
+            <Page
+                :dateRange="dateRange"
+                v-if="tab == 'pages'"
+                :website="website"
+            />
+            <EntryPage
+                :dateRange="dateRange"
+                v-if="tab == 'entryPages'"
+                :website="website"
+            />
+            <ExitPage
+                :dateRange="dateRange"
+                v-if="tab == 'exitPages'"
+                :website="website"
+            />
+        </div>
+    </div>
+</template>

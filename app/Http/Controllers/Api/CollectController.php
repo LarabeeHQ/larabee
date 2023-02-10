@@ -22,8 +22,8 @@ class CollectController extends Controller
 {
     public function store(CollectRequest $request)
     {
-        $website = Cache::remember("website:{$request->website}", now()->addMinutes(5), function () use ($request) {
-            return Website::where('id', $request->website)->first();
+        $website = Cache::remember("website:{$request->hostname}", now()->addMinutes(5), function () use ($request) {
+            return Website::where('domain', $request->hostname)->first();
         });
 
         if(!$website) {

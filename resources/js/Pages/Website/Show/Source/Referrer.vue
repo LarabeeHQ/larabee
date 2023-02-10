@@ -2,22 +2,24 @@
 import Table from "@/Components/Table.vue";
 import { ref, onMounted, watch } from "vue";
 
-const { dateRange } = defineProps({
+const { dateRange, website } = defineProps({
     dateRange: Object,
+    website: Object,
 });
 
-const browsers = ref(null);
+const referrers = ref(null);
 
 const loadData = () => {
     axios
-        .get(route("dashboard.browsers"), {
+        .get(route("websites.statistics", website.id), {
             params: {
                 start: dateRange.start,
                 end: dateRange.end,
+                metric: "referrers",
             },
         })
         .then((response) => {
-            browsers.value = response.data;
+            referrers.value = response.data;
         });
 };
 
@@ -30,5 +32,10 @@ watch(dateRange, (value) => {
 });
 </script>
 <template>
-    <Table v-if="browsers" :data="browsers" progressBarColor="pink" />
+    <Table
+        v-if="referrers"
+        :data="referrers"
+        progressBarColor="gray"
+        :favicon="true"
+    />
 </template>

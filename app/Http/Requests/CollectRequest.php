@@ -24,7 +24,6 @@ class CollectRequest extends FormRequest
     public function rules()
     {
         return [
-            'website' => ['required', 'uuid'],
             'event' => ['required', 'string'],
             'hostname' => ['required', 'string'],
             'referrer' => ['nullable', 'url'],

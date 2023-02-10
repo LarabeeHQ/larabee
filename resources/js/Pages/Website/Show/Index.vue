@@ -2,6 +2,8 @@
 import { Menu, MenuButton, MenuItem, MenuItems } from "@headlessui/vue";
 import { ChevronDownIcon } from "@heroicons/vue/20/solid";
 
+import SnippetCode from "./SnippetCode.vue";
+
 import Source from "./Source/Index.vue";
 import Page from "./Page/Index.vue";
 
@@ -17,6 +19,7 @@ const user = usePage().props.auth.user;
 const websites = user.websites;
 const website = computed(() => usePage().props.website);
 const data = ref(null);
+const online = ref(0);
 
 const range = ref({
     start: dayjs().subtract(1, "month").format("YYYY-MM-DD"),
@@ -126,13 +129,31 @@ const setCurrentFilter = (filter) => {
 const formatDate = (date) => {
     return dayjs(date).format("YYYY-MM-DD");
 };
+
+const loadOnline = () => {
+    axios
+        .get(route("websites.statistics", website.value.id), {
+            params: {
+                start: range.value.start,
+                end: range.value.end,
+                metric: "online",
+            },
+        })
+        .then((response) => {
+            online.value = response.data;
+        });
+};
+
+onMounted(() => {
+    loadOnline();
+});
 </script>
 
 <template>
-    <Head title="Dashboard" />
+    <Head :title="`${website.name} - Analytics`" />
 
     <AuthenticatedLayout>
-        <div>
+        <div v-if="website.sessions_count >= 1">
             <div class="flex items-center justify-between mb-2">
                 <div class="min-w-0 flex-1">
                     <div
@@ -144,9 +165,7 @@ const formatDate = (date) => {
                                 class="relative inline-block text-left"
                             >
                                 <div>
-                                    <MenuButton
-                                        class="inline-flex w-full truncate rounded-md border justify-center border-zinc-300 dark:border-zinc-800 bg-white dark:bg-zinc-900 text-zinc-700 dark:text-white px-4 py-2 text-sm font-medium shadow-sm hover:bg-zinc-50 focus:outline-none"
-                                    >
+                                    <MenuButton class="w-full btn-dropdown">
                                         {{ website.name }}
                                         <ChevronDownIcon
                                             class="-mr-1 ml-2 h-5 w-5"
@@ -216,16 +235,18 @@ const formatDate = (date) => {
                             <div
                                 class="h-2 w-2 bg-green-500 rounded-full"
                             ></div>
-                            <div>0 active users</div>
+                            <div
+                                class="text-gray-800 dark:text-white text-sm font-medium"
+                            >
+                                {{ online }} active users
+                            </div>
                         </div>
                     </div>
                 </div>
 
                 <Menu as="div" class="relative inline-block text-left">
                     <div>
-                        <MenuButton
-                            class="inline-flex w-full justify-center rounded-md border border-zinc-300 dark:border-zinc-800 bg-white dark:bg-zinc-900 text-zinc-700 dark:text-white px-4 py-2 text-sm font-medium shadow-sm focus:outline-none"
-                        >
+                        <MenuButton class="inline-flex w-full btn-dropdown">
                             {{
                                 selectedFilter.value == "custom"
                                     ? `${formatDate(range.start)}
@@ -359,16 +380,48 @@ const formatDate = (date) => {
             </div>
 
             <div class="space-y-4">
-                <Overview :date-range="range" />
+                <Overview :date-range="range" :website="website" />
 
                 <div class="grid grid-cols-12 gap-4">
-                    <Source :date-range="range" />
-                    <Page :date-range="range" />
+                    <Source :date-range="range" :website="website" />
+                    <Page :date-range="range" :website="website" />
                 </div>
 
                 <div class="grid grid-cols-12 gap-4">
-                    <Location :date-range="range" />
-                    <Device :date-range="range" />
+                    <Location :date-range="range" :website="website" />
+                    <Device :date-range="range" :website="website" />
+                </div>
+            </div>
+        </div>
+        <div v-else class="space-y-4">
+            <div class="card p-6">
+                <div class="flex items-center">
+                    <div class="flex absolute h-4 w-4">
+                        <span
+                            class="animate-ping absolute inline-flex h-full w-full rounded-full bg-green-400 opacity-75"
+                        ></span
+                        ><span
+                            class="relative inline-flex rounded-full h-4 w-4 bg-green-500"
+                        ></span>
+                    </div>
+                    <div
+                        class="ml-7 flex items-center space-x-1 text-gray-800 dark:text-white text-sm font-medium"
+                    >
+                        <div>Waiting for first pageview on</div>
+                        <div class="font-bold">{{ website.domain }}</div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="card p-6">
+                <div class="text-gray-800 dark:text-white">
+                    <div class="text-xl font-semibold mb-1">
+                        Your javascript code
+                    </div>
+                    <div class="text-base font-medium">
+                        Paste this snippet in the &lt;head&gt; of your website.
+                    </div>
+                    <SnippetCode :website="website" />
                 </div>
             </div>
         </div>

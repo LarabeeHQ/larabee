@@ -1,3 +1,16 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+
+
+.card {
+    @apply rounded-md border border-zinc-200 dark:border-zinc-700 bg-white dark:bg-zinc-800 text-zinc-700 dark:text-white;
+}
+
+.card-hover {
+    @apply hover:bg-zinc-50 dark:hover:bg-zinc-900 text-zinc-700 dark:text-white;
+}
+
+.btn-dropdown {
+    @apply cursor-pointer rounded-md border flex items-center truncate border-zinc-200 dark:border-zinc-700 bg-white dark:bg-zinc-800 text-zinc-700 dark:text-white px-4 py-2 text-sm font-medium focus:outline-none;
+}

@@ -2,22 +2,24 @@
 import Table from "@/Components/Table.vue";
 import { ref, onMounted, watch } from "vue";
 
-const { dateRange } = defineProps({
+const { dateRange, website } = defineProps({
     dateRange: Object,
+    website: Object,
 });
 
-const contents = ref(null);
+const pages = ref(null);
 
 const loadData = () => {
     axios
-        .get(route("dashboard.utm-contents"), {
+        .get(route("websites.statistics", website.id), {
             params: {
                 start: dateRange.start,
                 end: dateRange.end,
+                metric: "entry-pages",
             },
         })
         .then((response) => {
-            contents.value = response.data;
+            pages.value = response.data;
         });
 };
 
@@ -29,6 +31,7 @@ watch(dateRange, (value) => {
     loadData();
 });
 </script>
+
 <template>
-    <Table v-if="contents" :data="contents" progressBarColor="green" />
+    <Table v-if="pages" :data="pages" />
 </template>
