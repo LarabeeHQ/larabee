@@ -43,7 +43,7 @@
         "fakerphp/faker": "^1.9.1",
         "laravel/breeze": "^1.18",
         "laravel/pint": "^1.0",
-        "laravel/sail": "^1.0.1",
+        "laravel/sail": "^1.20",
         "laravel/telescope": "^4.13",
         "mockery/mockery": "^1.4.4",
         "nunomaduro/collision": "^6.1",

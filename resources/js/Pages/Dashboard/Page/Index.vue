@@ -19,7 +19,7 @@ const setTab = (value) => {
 
 <template>
     <div
-        class="col-span-6 bg-white dark:bg-zinc-900 rounded-lg shadow dark:shadow-none p-4 min-h-[426px]"
+        class="col-span-6 bg-white dark:bg-zinc-800 rounded-lg shadow dark:shadow-none p-4 min-h-[426px]"
     >
         <Tab :tabs="tabs" @update="setTab" />
         <div class="mt-4">

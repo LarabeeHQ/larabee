@@ -101,6 +101,8 @@ class ProcessColletectedData implements ShouldQueue
         // parse referrer
         $referrer = null;
         $referrerUrl = parse_url($this->data['referrer']);
+
+        dd($referrerUrl);
         isset($referrerUrl['query']) ? parse_str($referrerUrl['query'], $queryParams) : null;
 
         if ($this->website['domain'] !== $this->data['hostname']) {

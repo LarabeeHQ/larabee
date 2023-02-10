@@ -143,7 +143,7 @@ const formatDate = (date) => {
                 <Menu as="div" class="relative inline-block text-left">
                     <div>
                         <MenuButton
-                            class="inline-flex w-full justify-center rounded-md bg-white dark:bg-zinc-900 dark:text-white px-4 py-2 text-sm font-medium text-gray-700 shadow-sm hover:bg-gray-50 focus:outline-none"
+                            class="inline-flex w-full justify-center rounded-md bg-white dark:bg-zinc-800 dark:text-white px-4 py-2 text-sm font-medium text-gray-700 shadow-sm hover:bg-gray-50 focus:outline-none"
                         >
                             {{
                                 selectedFilter.value == "custom"

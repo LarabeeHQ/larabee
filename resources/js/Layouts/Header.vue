@@ -51,7 +51,7 @@ const openModalUpgrade = () => {
 </script>
 
 <template>
-    <nav class="bg-zinc-100 dark:bg-black">
+    <nav class="bg-zinc-100 dark:bg-zinc-900">
         <!-- Primary Navigation Menu -->
         <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
             <div class="flex justify-between h-16">
@@ -74,7 +74,7 @@ const openModalUpgrade = () => {
                             >
                                 <div>
                                     <MenuButton
-                                        class="inline-flex w-full truncate rounded-md border justify-center border-gray-300 dark:border-gray-800 bg-white dark:bg-gray-900 text-gray-700 dark:text-white px-4 py-2 text-sm font-medium shadow-sm hover:bg-gray-50 focus:outline-none"
+                                        class="inline-flex w-full truncate rounded-md border justify-center border-zinc-300 dark:border-zinc-800 bg-white dark:bg-zinc-900 text-zinc-700 dark:text-white px-4 py-2 text-sm font-medium shadow-sm hover:bg-zinc-50 focus:outline-none"
                                     >
                                         {{ currentWebsite.name }}
                                         <ChevronDownIcon
@@ -93,7 +93,7 @@ const openModalUpgrade = () => {
                                     leave-to-class="transform opacity-0 scale-95"
                                 >
                                     <MenuItems
-                                        class="absolute left-0 z-10 mt-2 w-56 origin-top-left divide-y divide-gray-100 dark:divide-gray-800 rounded-md bg-white dark:bg-[#181717] shadow-lg focus:outline-none"
+                                        class="absolute left-0 z-10 mt-2 w-56 origin-top-left divide-y divide-zinc-100 dark:divide-zinc-800 rounded-md bg-white dark:bg-[#181717] shadow-lg focus:outline-none"
                                     >
                                         <div class="py-1">
                                             <MenuItem
@@ -110,12 +110,12 @@ const openModalUpgrade = () => {
                                                         class="block px-4 py-2 w-full text-left"
                                                     >
                                                         <div
-                                                            class="text-sm font-semibold text-gray-700 dark:text-white"
+                                                            class="text-sm font-semibold text-zinc-700 dark:text-white"
                                                         >
                                                             {{ website.name }}
                                                         </div>
                                                         <div
-                                                            class="text-xs text-gray-700 dark:text-gray-300"
+                                                            class="text-xs text-zinc-700 dark:text-zinc-300"
                                                         >
                                                             {{ website.domain }}
                                                         </div>
@@ -129,7 +129,7 @@ const openModalUpgrade = () => {
                                                     :href="
                                                         route('websites.create')
                                                     "
-                                                    class="block px-4 py-2 w-full text-left text-sm font-semibold text-gray-700 dark:text-white"
+                                                    class="block px-4 py-2 w-full text-left text-sm font-semibold text-zinc-700 dark:text-white"
                                                 >
                                                     Add Website
                                                 </Link>
@@ -147,7 +147,7 @@ const openModalUpgrade = () => {
                         v-if="!user.self_hosted && user.is_trial"
                         @click="openModalUpgrade"
                         type="button"
-                        class="flex items-center space-x-2 rounded-md border border-gray-300 dark:border-gray-800 bg-white dark:bg-gray-900 text-gray-700 dark:text-white hover:bg-gray-50 px-4 py-2 text-sm font-medium focus:outline-none"
+                        class="flex items-center space-x-2 rounded-md border border-zinc-300 dark:border-zinc-800 bg-white dark:bg-zinc-900 text-zinc-700 dark:text-white hover:bg-zinc-50 px-4 py-2 text-sm font-medium focus:outline-none"
                     >
                         <div>Upgrade</div>
                         <div>🚀</div>
@@ -211,7 +211,7 @@ const openModalUpgrade = () => {
                             showingNavigationDropdown =
                                 !showingNavigationDropdown
                         "
-                        class="inline-flex items-center justify-center p-2 rounded-md text-gray-400 hover:text-gray-500 hover:bg-gray-100 focus:outline-none focus:bg-gray-100 focus:text-gray-500 transition duration-150 ease-in-out"
+                        class="inline-flex items-center justify-center p-2 rounded-md text-zinc-400 hover:text-gray-500 hover:bg-gray-100 focus:outline-none focus:bg-gray-100 focus:text-gray-500 transition duration-150 ease-in-out"
                     >
                         <svg
                             class="h-6 w-6"

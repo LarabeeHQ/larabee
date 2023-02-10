@@ -76,7 +76,7 @@ watch(dateRange, (value) => {
 </script>
 <template>
     <div
-        class="overflow-hidden bg-white rounded-lg shadow dark:shadow-none dark:bg-zinc-900 p-6"
+        class="overflow-hidden bg-white rounded-lg shadow dark:shadow-none dark:bg-zinc-800 p-6"
     >
         <div class="grid grid-cols-1 gap-4 sm:grid-cols-4">
             <div
@@ -84,7 +84,7 @@ watch(dateRange, (value) => {
                 :key="data"
                 @click="setChart(data.id)"
                 :class="{
-                    'border-t-4 border-transparent overflow-hidden rounded-md bg-gray-100 dark:bg-zinc-800 px-4 py-5 sm:p-6 cursor-pointer': true,
+                    'border-t-4 border-transparent overflow-hidden rounded-md bg-gray-100 dark:bg-zinc-900 px-4 py-5 sm:p-6 cursor-pointer': true,
                     ' border-green-400': data.id === currentTab,
                 }"
             >

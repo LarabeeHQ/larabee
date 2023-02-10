@@ -35,7 +35,7 @@ Route::group(['middleware' => ['auth', 'verified', 'set.website']], function () 
         Route::get('/dashboard/statistics/countries', [DashboardController::class, 'countries'])->name('dashboard.countries');
         Route::get('/dashboard/statistics/regions', [DashboardController::class, 'regions'])->name('dashboard.regions');
         Route::get('/dashboard/statistics/cities', [DashboardController::class, 'cities'])->name('dashboard.cities');
-        Route::get('/dashboard/chart', [DashboardController::class, 'loadChart'])->name('dashboard.load-chart');
+        Route::get('/dashboard/statistics/chart', [DashboardController::class, 'loadChart'])->name('dashboard.load-chart');
     });
 
     // websites
@@ -51,7 +51,6 @@ Route::group(['middleware' => ['auth', 'verified', 'set.website']], function () 
     Route::delete('/account', [AccountController::class, 'destroy'])->name('account.destroy');
 
     // billing
-    Route::get('/pricing', [BillingController::class, 'pricing'])->name('billing.pricing');
     Route::get('/billing', [BillingController::class, 'index'])->name('billing.index');
     Route::get('/billing/redirect-to-portal', [BillingController::class, 'redirectToPortal'])->name('billing.redirect-to-portal');
     Route::post('/billing/generate-checkout-link', [BillingController::class, 'generateCheckoutLink'])->name('billing.generate-checkout-link');

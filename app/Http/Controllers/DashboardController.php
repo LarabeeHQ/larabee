@@ -27,8 +27,10 @@ class DashboardController extends Controller
 
     public function index()
     {
+        $website = auth()->user()->currentWebsite;
+
         return Inertia::render('Dashboard/Index', [
-            'website' => auth()->user()->currentWebsite
+            'website' => $website
         ]);
     }
 

@@ -60,11 +60,6 @@ class BillingController extends Controller
         return auth()->user()->team->redirectToBillingPortal(route('dashboard'));
     }
 
-    public function pricing()
-    {
-        return Inertia::render('Billing/Pricing');
-    }
-
     public function generateCheckoutLink(Request $request)
     {
         $checkout = $request->user()

@@ -50,7 +50,7 @@ class User extends Authenticatable implements MustVerifyEmail
      */
     protected $casts = [
         'email_verified_at' => 'datetime',
-        'trial_ends_at' => 'datetime',
+        'trial_ends_at' => 'datetime'
     ];
 
     public function isCurrentWebsite($website)
@@ -130,10 +130,5 @@ class User extends Authenticatable implements MustVerifyEmail
     public function websites()
     {
         return $this->belongsToMany(Website::class)->withPivot('role')->as('membership')->withTimestamps();
-    }
-
-    public function getAvatarAttribute()
-    {
-        return 'https://ui-avatars.com/api/?name=' . urlencode($this->name) . '&color=FFFFFF&background=9CA3AF&length=1';
     }
 }

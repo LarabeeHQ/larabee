@@ -15,10 +15,10 @@ class CheckTrial
             return $next($request);
         }
 
-
         if (!auth()->user()->onTrial() && !auth()->user()->subscribed('default')) {
 
-            // redirect
+            // redirect to payment page
+            return redirect()->route('billing.index', ['open-modal' => true]);
         }
         else {
             return $next($request);
