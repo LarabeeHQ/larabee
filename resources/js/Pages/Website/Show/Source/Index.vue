@@ -41,16 +41,16 @@ const setTab = (value) => {
                 :dateRange="dateRange"
                 :website="website"
             />
-            <!-- <Campaign
+            <Campaign
                 v-else-if="tab == 'campaign'"
                 :dateRange="dateRange"
                 :website="website"
-            /> -->
-            <Content
+            />
+            <!-- <Content
                 v-else-if="tab == 'content'"
                 :dateRange="dateRange"
                 :website="website"
-            />
+            /> -->
             <Term
                 v-else-if="tab == 'term'"
                 :dateRange="dateRange"
