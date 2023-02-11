@@ -50,11 +50,6 @@ const setTab = (value) => {
                 :dateRange="dateRange"
                 :website="website"
             />
-            <!-- <Term
-                v-else-if="tab == 'term'"
-                :dateRange="dateRange"
-                :website="website"
-            /> -->
         </div>
     </div>
 </template>
