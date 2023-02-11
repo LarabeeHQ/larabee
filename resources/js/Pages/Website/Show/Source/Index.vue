@@ -6,7 +6,6 @@ import Medium from "./Medium.vue";
 import Source from "./Source.vue";
 import Campaign from "./Campaign.vue";
 import Content from "./Content.vue";
-import Term from "./Term.vue";
 
 const { dateRange, website } = defineProps({
     dateRange: Object,
