@@ -30,9 +30,9 @@ const setTab = (value) => {
                 v-if="tab == 'referrers'"
                 :dateRange="dateRange"
                 :website="website"
-            />
+            /> -->
             <Medium
-                v-else-if="tab == 'medium'"
+                v-if="tab == 'medium'"
                 :dateRange="dateRange"
                 :website="website"
             />
@@ -55,7 +55,7 @@ const setTab = (value) => {
                 v-else-if="tab == 'term'"
                 :dateRange="dateRange"
                 :website="website"
-            /> -->
+            />
         </div>
     </div>
 </template>
