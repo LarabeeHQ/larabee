@@ -11,7 +11,7 @@ const { dateRange, website } = defineProps({
 });
 
 const tabs = ["pages", "entryPages", "exitPages"];
-const tab = ref("pages");
+const tab = ref(tabs[0]);
 
 const setTab = (value) => {
     tab.value = value;

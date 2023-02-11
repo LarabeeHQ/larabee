@@ -13,8 +13,8 @@ const { dateRange, website } = defineProps({
     website: Object,
 });
 
-const tab = ref("referrers");
 const tabs = ["referrers", "medium", "source", "campaign", "content", "term"];
+const tab = ref(tabs[0]);
 
 const setTab = (value) => {
     tab.value = value;

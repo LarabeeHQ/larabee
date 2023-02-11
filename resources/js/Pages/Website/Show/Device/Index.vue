@@ -8,7 +8,7 @@ import Screen from "@/Pages/Website/Show/Device/Screen.vue";
 import Device from "@/Pages/Website/Show/Device/Device.vue";
 
 const tabs = ["devices", "browsers", "OS", "language", "screen"];
-const tab = ref("devices");
+const tab = ref(tabs[0]);
 
 const { dateRange, website } = defineProps({
     dateRange: Object,
