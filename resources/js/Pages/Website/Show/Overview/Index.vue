@@ -1,8 +1,8 @@
 <script setup>
 import helper from "@/helper";
 import { ref, watch, onMounted } from "vue";
-import LineChart from "./LineChart.vue";
-import BarChart from "./BarChart.vue";
+import LineChart from "@/Pages/Website/Show/Overview/LineChart.vue";
+import BarChart from "@/Pages/Website/Show/Overview/BarChart.vue";
 import { ChevronUpIcon, ChevronDownIcon } from "@heroicons/vue/24/outline";
 
 const currentTab = ref("sessions");

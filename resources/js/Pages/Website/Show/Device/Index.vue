@@ -1,11 +1,11 @@
 <script setup>
 import { ref } from "vue";
 import Tab from "@/Components/Tab.vue";
-import Browser from "./Browser.vue";
-import OS from "./OS.vue";
-import Language from "./Language.vue";
-import Screen from "./Screen.vue";
-import Device from "./Device.vue";
+import Browser from "@/Pages/Website/Show/Device/Browser.vue";
+import OS from "@/Pages/Website/Show/Device/OS.vue";
+import Language from "@/Pages/Website/Show/Device/Language.vue";
+import Screen from "@/Pages/Website/Show/Device/Screen.vue";
+import Device from "@/Pages/Website/Show/Device/Device.vue";
 
 const tabs = ["devices", "browsers", "OS", "language", "screen"];
 const tab = ref("devices");

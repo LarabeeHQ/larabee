@@ -1,11 +1,12 @@
 <script setup>
 import { ref } from "vue";
 import Tab from "@/Components/Tab.vue";
-import Referrer from "./Referrer.vue";
-import Medium from "./Medium.vue";
-import Source from "./Source.vue";
-import Campaign from "./Campaign.vue";
-import Content from "./Content.vue";
+import Referrer from "@/Pages/Website/Show/Source/Referrer.vue";
+import Medium from "@/Pages/Website/Show/Source/Medium.vue";
+import Source from "@/Pages/Website/Show/Source/Source.vue";
+import Campaign from "@/Pages/Website/Show/Source/Campaign.vue";
+import Content from "@/Pages/Website/Show/Source/Content.vue";
+import Term from "@/Pages/Website/Show/Source/Term.vue";
 
 const { dateRange, website } = defineProps({
     dateRange: Object,
@@ -50,6 +51,11 @@ const setTab = (value) => {
                 :dateRange="dateRange"
                 :website="website"
             />
+            <!-- <Term
+                v-else-if="tab == 'term'"
+                :dateRange="dateRange"
+                :website="website"
+            /> -->
         </div>
     </div>
 </template>

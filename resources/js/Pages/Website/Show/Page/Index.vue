@@ -1,9 +1,9 @@
 <script setup>
 import { ref, onMounted, watch } from "vue";
 import Tab from "@/Components/Tab.vue";
-import Page from "./Page.vue";
-import EntryPage from "./EntryPage.vue";
-import ExitPage from "./ExitPage.vue";
+import Page from "@/Pages/Website/Show/Page/Page.vue";
+import EntryPage from "@/Pages/Website/Show/Page/EntryPage.vue";
+import ExitPage from "@/Pages/Website/Show/Page/ExitPage.vue";
 
 const { dateRange, website } = defineProps({
     dateRange: Object,

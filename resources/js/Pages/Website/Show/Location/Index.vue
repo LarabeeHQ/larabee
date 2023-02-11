@@ -1,9 +1,9 @@
 <script setup>
 import { ref, onMounted } from "vue";
 import Tab from "@/Components/Tab.vue";
-import City from "./City.vue";
-import Country from "./Country.vue";
-import Region from "./Region.vue";
+import City from "@/Pages/Website/Show/Location/City.vue";
+import Country from "@/Pages/Website/Show/Location/Country.vue";
+import Region from "@/Pages/Website/Show/Location/Region.vue";
 
 const { dateRange, website } = defineProps({
     dateRange: Object,
