@@ -31,11 +31,11 @@ const setTab = (value) => {
                 :dateRange="dateRange"
                 :website="website"
             />
-            <!-- <Medium
+            <Medium
                 v-else-if="tab == 'medium'"
                 :dateRange="dateRange"
                 :website="website"
-            /> -->
+            />
             <!-- <Source
                 v-else-if="tab == 'source'"
                 :dateRange="dateRange"
