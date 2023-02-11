@@ -22,7 +22,7 @@ const setTab = (value) => {
 </script>
 
 <template>
-    <div class="col-span-6 card p-4 min-h-[426px]">
+    <div class="col-span-6 card p-4">
         <Tab :tabs="tabs" @update="setTab" />
 
         <div class="mt-4">
@@ -31,11 +31,11 @@ const setTab = (value) => {
                 :dateRange="dateRange"
                 :website="website"
             />
-            <!-- <Medium
+            <Medium
                 v-else-if="tab == 'medium'"
                 :dateRange="dateRange"
                 :website="website"
-            /> -->
+            />
             <Source
                 v-else-if="tab == 'source'"
                 :dateRange="dateRange"
