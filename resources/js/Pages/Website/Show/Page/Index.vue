@@ -29,12 +29,12 @@ const setTab = (value) => {
             />
             <EntryPage
                 :dateRange="dateRange"
-                v-if="tab == 'entryPages'"
+                v-else-if="tab == 'entryPages'"
                 :website="website"
             />
             <ExitPage
                 :dateRange="dateRange"
-                v-if="tab == 'exitPages'"
+                v-else-if="tab == 'exitPages'"
                 :website="website"
             />
         </div>
