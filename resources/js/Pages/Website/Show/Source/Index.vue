@@ -26,7 +26,7 @@ const setTab = (value) => {
         <Tab :tabs="tabs" @update="setTab" />
 
         <div class="mt-4">
-            <Referrer
+            <!-- <Referrer
                 v-if="tab == 'referrers'"
                 :dateRange="dateRange"
                 :website="website"
@@ -51,7 +51,7 @@ const setTab = (value) => {
                 :dateRange="dateRange"
                 :website="website"
             />
-            <!-- <Term
+            <Term
                 v-else-if="tab == 'term'"
                 :dateRange="dateRange"
                 :website="website"
