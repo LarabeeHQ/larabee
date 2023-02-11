@@ -35,7 +35,7 @@ const setTab = (value) => {
                 v-else-if="tab == 'medium'"
                 :dateRange="dateRange"
                 :website="website"
-            />
+            /> -->
             <Source
                 v-else-if="tab == 'source'"
                 :dateRange="dateRange"
@@ -54,7 +54,7 @@ const setTab = (value) => {
             <Term
                 v-else-if="tab == 'term'"
                 :dateRange="dateRange"
-                :website="website" -->
+                :website="website"
             />
         </div>
     </div>
