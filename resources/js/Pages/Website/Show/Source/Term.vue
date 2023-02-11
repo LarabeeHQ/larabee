@@ -7,7 +7,7 @@ const { dateRange, website } = defineProps({
     website: Object,
 });
 
-const terms = ref(null);
+const data = ref(null);
 
 const loadData = () => {
     axios
@@ -19,7 +19,7 @@ const loadData = () => {
             },
         })
         .then((response) => {
-            terms.value = response.data;
+            data.value = response.data;
         });
 };
 
@@ -32,5 +32,5 @@ watch(dateRange, (value) => {
 });
 </script>
 <template>
-    <Table v-if="terms" :data="terms" />
+    <Table v-if="data" :data="data" />
 </template>

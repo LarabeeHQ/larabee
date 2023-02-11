@@ -37,7 +37,7 @@ onMounted(async () => {
 </script>
 
 <template>
-    <div>
+    <div v-if="data.length >= 1">
         <ul class="space-y-2 relative">
             <li
                 v-for="value in data"
@@ -78,7 +78,7 @@ onMounted(async () => {
                             </div>
                         </div>
                     </div>
-                    <div class="flex items-center justify-between min-w-[4rem]">
+                    <div class="flex items-center justify-between min-w-[3rem]">
                         <div
                             class="invisible group-hover:visible flex text-xs font-semibold text-gray-500 dark:hover:text-gray-300"
                         >
@@ -93,5 +93,13 @@ onMounted(async () => {
                 </div>
             </li>
         </ul>
+    </div>
+    <div
+        v-else
+        class="min-h-[300px] flex flex-col sm:justify-center items-center"
+    >
+        <div class="text-zinc-800 dark:text-zinc-300 font-medium text-sm">
+            No data
+        </div>
     </div>
 </template>

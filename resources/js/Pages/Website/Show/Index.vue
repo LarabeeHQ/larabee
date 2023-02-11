@@ -380,16 +380,16 @@ onMounted(() => {
             </div>
 
             <div class="space-y-4">
-                <Overview :date-range="range" :website="website" />
+                <Overview :dateRange="range" :website="website" />
 
                 <div class="grid grid-cols-12 gap-4">
-                    <Source :date-range="range" :website="website" />
-                    <Page :date-range="range" :website="website" />
+                    <Source :dateRange="range" :website="website" />
+                    <Page :dateRange="range" :website="website" />
                 </div>
 
                 <div class="grid grid-cols-12 gap-4">
-                    <Location :date-range="range" :website="website" />
-                    <Device :date-range="range" :website="website" />
+                    <Location :dateRange="range" :website="website" />
+                    <Device :dateRange="range" :website="website" />
                 </div>
             </div>
         </div>
