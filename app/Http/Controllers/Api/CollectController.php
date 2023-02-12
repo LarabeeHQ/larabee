@@ -30,10 +30,6 @@ class CollectController extends Controller
             return response()->json(null, 404);
         }
 
-        if(!$request->header('user-agent')) {
-            return response()->json(null, 400);
-        }
-
         $data = [
             'ip' => $request->ip(),
             'user_agent' => $request->header('user-agent'),

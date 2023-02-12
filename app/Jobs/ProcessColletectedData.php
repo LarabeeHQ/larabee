@@ -45,6 +45,13 @@ class ProcessColletectedData implements ShouldQueue
      */
     public function handle()
     {
+        // get browser data
+        $browser = Browser::parse($this->data['user_agent']);
+
+        if($browser->isBot()) {
+            return;
+        }
+
         // redis cache key
         $hash = Session::generateHash(
             $this->website['id'],
@@ -64,9 +71,6 @@ class ProcessColletectedData implements ShouldQueue
         else {
             // get geo data
             $geo = geoip($this->data['ip']);
-
-            // get browser data
-            $browser = Browser::parse($this->data['user_agent']);
 
             // get user device
             if ($browser->isMobile()) {
