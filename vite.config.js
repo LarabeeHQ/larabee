@@ -9,7 +9,7 @@ export default defineConfig({
         laravel({
             input: "resources/js/app.js",
             refresh: true,
-            valetTls: "app.wanalytics.test",
+            // valetTls: "app.wanalytics.test",
         }),
         vue({
             template: {
@@ -28,5 +28,5 @@ export default defineConfig({
                 replacement: path.resolve(__dirname, "."),
             },
         ],
-    },
+    }
 });

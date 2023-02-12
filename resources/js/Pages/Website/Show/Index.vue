@@ -183,7 +183,7 @@ onMounted(() => {
                                     leave-to-class="transform opacity-0 scale-95"
                                 >
                                     <MenuItems
-                                        class="absolute left-0 z-10 mt-2 w-56 origin-top-left divide-y divide-zinc-100 dark:divide-zinc-800 rounded-md bg-white dark:bg-[#181717] shadow-lg focus:outline-none"
+                                        class="absolute left-0 z-10 mt-2 w-64 origin-top-left divide-y divide-gray-100 dark:divide-zinc-700 rounded-md bg-white dark:bg-zinc-800 shadow-lg focus:outline-none"
                                     >
                                         <div class="py-1">
                                             <MenuItem
@@ -197,21 +197,18 @@ onMounted(() => {
                                                             id: website.id,
                                                         })
                                                     "
+                                                    class="block px-4 py-2 cursor-pointer hover:bg-gray-100 dark:hover:bg-zinc-700"
                                                 >
-                                                    <button
-                                                        class="block px-4 py-2 w-full text-left"
+                                                    <div
+                                                        class="text-sm font-semibold text-zinc-700 dark:text-white"
                                                     >
-                                                        <div
-                                                            class="text-sm font-semibold text-zinc-700 dark:text-white"
-                                                        >
-                                                            {{ website.name }}
-                                                        </div>
-                                                        <div
-                                                            class="text-xs text-zinc-700 dark:text-zinc-300"
-                                                        >
-                                                            {{ website.domain }}
-                                                        </div>
-                                                    </button>
+                                                        {{ website.name }}
+                                                    </div>
+                                                    <div
+                                                        class="text-xs font-medium text-zinc-400 dark:text-zinc-500"
+                                                    >
+                                                        {{ website.domain }}
+                                                    </div>
                                                 </Link>
                                             </MenuItem>
                                         </div>
@@ -221,7 +218,7 @@ onMounted(() => {
                                                     :href="
                                                         route('websites.create')
                                                     "
-                                                    class="block px-4 py-2 w-full text-left text-sm font-semibold text-zinc-700 dark:text-white"
+                                                    class="text-gray-700 dark:text-white block px-4 py-2 text-sm cursor-pointer hover:bg-gray-100 dark:hover:bg-zinc-700"
                                                 >
                                                     Add Website
                                                 </Link>
