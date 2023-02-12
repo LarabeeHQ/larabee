@@ -124,6 +124,10 @@ watch(dateRange, (value) => {
             </div>
         </div>
 
-        <LineChart :date-range="dateRange" :website="website" />
+        <LineChart
+            key="lineChartIndex"
+            :date-range="dateRange"
+            :website="website"
+        />
     </div>
 </template>

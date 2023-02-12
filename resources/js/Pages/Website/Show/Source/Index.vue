@@ -33,31 +33,31 @@ const setTab = (value) => {
                 :website="website"
             />
             <Medium
-                v-if="tab == 'medium'"
+                v-else-if="tab == 'medium'"
                 key="medium"
                 :dateRange="dateRange"
                 :website="website"
             />
             <Source
-                v-if="tab == 'source'"
+                v-else-if="tab == 'source'"
                 key="source"
                 :dateRange="dateRange"
                 :website="website"
             />
             <Campaign
-                v-if="tab == 'campaign'"
+                v-else-if="tab == 'campaign'"
                 key="campaign"
                 :dateRange="dateRange"
                 :website="website"
             />
             <Content
-                v-if="tab == 'content'"
+                v-else-if="tab == 'content'"
                 key="content"
                 :dateRange="dateRange"
                 :website="website"
             />
             <Term
-                v-if="tab == 'term'"
+                v-else-if="tab == 'term'"
                 key="term"
                 :dateRange="dateRange"
                 :website="website"
