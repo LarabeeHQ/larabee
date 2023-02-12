@@ -25,16 +25,19 @@ const setTab = (value) => {
             <Page
                 :dateRange="dateRange"
                 v-if="tab == 'pages'"
+                key="pages"
                 :website="website"
             />
             <EntryPage
                 :dateRange="dateRange"
                 v-else-if="tab == 'entryPages'"
+                key="entryPages"
                 :website="website"
             />
             <ExitPage
                 :dateRange="dateRange"
                 v-else-if="tab == 'exitPages'"
+                key="exitPages"
                 :website="website"
             />
         </div>

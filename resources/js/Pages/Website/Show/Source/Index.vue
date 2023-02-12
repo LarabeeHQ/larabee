@@ -28,31 +28,37 @@ const setTab = (value) => {
         <div class="mt-4">
             <Referrer
                 v-if="tab == 'referrers'"
+                key="referrers"
                 :dateRange="dateRange"
                 :website="website"
             />
             <Medium
-                v-else-if="tab == 'medium'"
+                v-if="tab == 'medium'"
+                key="medium"
                 :dateRange="dateRange"
                 :website="website"
             />
             <Source
-                v-else-if="tab == 'source'"
+                v-if="tab == 'source'"
+                key="source"
                 :dateRange="dateRange"
                 :website="website"
             />
             <Campaign
-                v-else-if="tab == 'campaign'"
+                v-if="tab == 'campaign'"
+                key="campaign"
                 :dateRange="dateRange"
                 :website="website"
             />
             <Content
-                v-else-if="tab == 'content'"
+                v-if="tab == 'content'"
+                key="content"
                 :dateRange="dateRange"
                 :website="website"
             />
             <Term
-                v-else-if="tab == 'term'"
+                v-if="tab == 'term'"
+                key="term"
                 :dateRange="dateRange"
                 :website="website"
             />

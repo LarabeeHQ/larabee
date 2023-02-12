@@ -26,16 +26,19 @@ const setTab = (value) => {
         <div class="mt-4">
             <Country
                 v-if="tab == 'countries'"
+                key="countries"
                 :dateRange="dateRange"
                 :website="website"
             />
             <Region
                 v-else-if="tab == 'regions'"
+                key="regions"
                 :dateRange="dateRange"
                 :website="website"
             />
             <City
                 v-else-if="tab == 'cities'"
+                key="cities"
                 :dateRange="dateRange"
                 :website="website"
             />

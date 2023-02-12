@@ -27,26 +27,31 @@ const setTab = (value) => {
         <div class="mt-4">
             <Screen
                 v-if="tab == 'screen'"
+                key="screen"
                 :dateRange="dateRange"
                 :website="website"
             />
             <Device
                 v-else-if="tab == 'devices'"
+                key="devices"
                 :dateRange="dateRange"
                 :website="website"
             />
             <Browser
                 v-else-if="tab == 'browsers'"
+                key="browsers"
                 :dateRange="dateRange"
                 :website="website"
             />
             <OS
                 v-else-if="tab == 'OS'"
+                key="OS"
                 :dateRange="dateRange"
                 :website="website"
             />
             <Language
                 v-else-if="tab == 'language'"
+                key="language"
                 :dateRange="dateRange"
                 :website="website"
             />
