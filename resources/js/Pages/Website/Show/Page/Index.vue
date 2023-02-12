@@ -1,5 +1,5 @@
 <script setup>
-import { ref, onMounted, watch } from "vue";
+import { ref } from "vue";
 import Tab from "@/Components/Tab.vue";
 import Page from "@/Pages/Website/Show/Page/Page.vue";
 import EntryPage from "@/Pages/Website/Show/Page/EntryPage.vue";

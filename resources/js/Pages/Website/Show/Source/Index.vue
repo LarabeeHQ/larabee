@@ -14,7 +14,7 @@ const { dateRange, website } = defineProps({
 });
 
 const tabs = ["referrers", "medium", "source", "campaign", "content", "term"];
-const tab = ref("term");
+const tab = ref(tabs[0]);
 
 const setTab = (value) => {
     tab.value = value;
@@ -23,7 +23,7 @@ const setTab = (value) => {
 
 <template>
     <div class="col-span-12 lg:col-span-6 card p-4 min-h-[450px]">
-        <!-- <Tab :tabs="tabs" @update="setTab" /> -->
+        <Tab :tabs="tabs" @update="setTab" />
 
         <div class="mt-4">
             <Referrer
@@ -38,7 +38,7 @@ const setTab = (value) => {
                 :dateRange="dateRange"
                 :website="website"
             />
-            <Source
+            <!-- <Source
                 v-else-if="tab == 'source'"
                 key="source"
                 :dateRange="dateRange"
@@ -61,7 +61,7 @@ const setTab = (value) => {
                 key="term"
                 :dateRange="dateRange"
                 :website="website"
-            />
+            /> -->
         </div>
     </div>
 </template>
