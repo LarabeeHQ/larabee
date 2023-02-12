@@ -88,9 +88,14 @@ class WebsiteController extends Controller
             ->withCount('sessions')
             ->firstOrFail();
 
-            // check if website is public or user is logged in
+        // check if website is public or user is logged in
         if (!auth()->check() && !$website->public) {
             abort(404);
+        }
+
+        // validate if user belongs to website
+        if (auth()->check()) {
+            auth()->user()->belongsToWebsite($website);
         }
 
         return Inertia::render('Website/Show/Index', [
@@ -111,6 +116,11 @@ class WebsiteController extends Controller
         // check if website is public or user is logged in
         if (!auth()->check() && !$website->public) {
             abort(404);
+        }
+
+        // validate if user belongs to website
+        if (auth()->check()) {
+            auth()->user()->belongsToWebsite($website);
         }
 
         $timezone = auth()->check() ? auth()->user()->timezone->value : 'UTC';

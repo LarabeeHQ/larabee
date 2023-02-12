@@ -375,11 +375,11 @@ onMounted(() => {
             </div>
 
             <div class="space-y-4">
-                <Overview
+                <!-- <Overview
                     key="overviewIndex"
                     :dateRange="range"
                     :website="website"
-                />
+                /> -->
 
                 <div class="grid grid-cols-12 gap-4">
                     <Source
