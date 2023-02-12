@@ -11,19 +11,15 @@ Route::get('/', function () {
     return redirect(route('login'));
 });
 
-Route::group(['middleware' => ['auth', 'verified']], function () {
-
-
+Route::group(['middleware' => ['auth', 'verified', 'check.trial']], function () {
 
     // websites
-
-
     Route::get('/websites', [WebsiteController::class, 'index'])->name('websites.index');
     Route::get('/websites/create', [WebsiteController::class, 'create'])->name('websites.create');
     Route::post('/websites', [WebsiteController::class, 'store'])->name('websites.store');
     Route::put('/websites', [WebsiteController::class, 'update'])->name('websites.update');
-    Route::get('/websites/{id}', [WebsiteController::class, 'show'])->name('websites.show');
-    Route::get('/websites/{id}/statistics', [WebsiteController::class, 'statistics'])->name('websites.statistics');
+    Route::get('/websites/{id}', [WebsiteController::class, 'show'])->name('websites.show')->withoutMiddleware(['auth', 'verified', 'check.trial']);
+    Route::get('/websites/{id}/statistics', [WebsiteController::class, 'statistics'])->name('websites.statistics')->withoutMiddleware(['auth', 'verified', 'check.trial']);
 
     // account
     Route::get('/account', [AccountController::class, 'edit'])->name('account.edit');

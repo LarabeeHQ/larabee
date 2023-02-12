@@ -64,18 +64,6 @@ class WebsiteController extends Controller
         return redirect(route('websites.show', $website->id));
     }
 
-    public function show($id)
-    {
-        $website = Website::where('id', $id)
-            ->withCount('sessions')
-            ->firstOrFail();
-
-
-        return Inertia::render('Website/Show/Index', [
-            'website' => $website
-        ]);
-    }
-
     public function update($id, Request $request)
     {
         $request->validate([
@@ -94,6 +82,22 @@ class WebsiteController extends Controller
         return redirect(route('websites.show', $website->id));
     }
 
+    public function show($id)
+    {
+        $website = Website::where('id', $id)
+            ->withCount('sessions')
+            ->firstOrFail();
+
+            // check if website is public or user is logged in
+        if (!auth()->check() && !$website->public) {
+            abort(404);
+        }
+
+        return Inertia::render('Website/Show/Index', [
+            'website' => $website
+        ]);
+    }
+
     public function statistics($id, Request $request)
     {
         $request->validate([
@@ -104,15 +108,22 @@ class WebsiteController extends Controller
 
         $website = Website::find($id);
 
-        $start = Carbon::createFromFormat('Y-m-d', $request->start, auth()->user()->timezone->value)->setTimezone('UTC')->startOfDay();
-        $end = Carbon::createFromFormat('Y-m-d', $request->end, auth()->user()->timezone->value)->setTimezone('UTC')->endOfDay();
+        // check if website is public or user is logged in
+        if (!auth()->check() && !$website->public) {
+            abort(404);
+        }
+
+        $timezone = auth()->check() ? auth()->user()->timezone->value : 'UTC';
+
+        $start = Carbon::createFromFormat('Y-m-d', $request->start, $timezone)->setTimezone('UTC')->startOfDay();
+        $end = Carbon::createFromFormat('Y-m-d', $request->end, $timezone)->setTimezone('UTC')->endOfDay();
 
         switch ($request->metric) {
             case 'overview':
                 $diffInDays = $start->diffInDays($end);
 
-                $prevStartDate = Carbon::createFromFormat('Y-m-d', $request->start, auth()->user()->timezone->value)->setTimezone('UTC')->startOfDay()->subDays($diffInDays)->toDateTimeString();
-                $prevEndDate = Carbon::createFromFormat('Y-m-d', $request->end, auth()->user()->timezone->value)->setTimezone('UTC')->endOfDay()->subDays($diffInDays)->toDateTimeString();
+                $prevStartDate = Carbon::createFromFormat('Y-m-d', $request->start, $timezone)->setTimezone('UTC')->startOfDay()->subDays($diffInDays)->toDateTimeString();
+                $prevEndDate = Carbon::createFromFormat('Y-m-d', $request->end, $timezone)->setTimezone('UTC')->endOfDay()->subDays($diffInDays)->toDateTimeString();
 
                 $data = $this->website->overview($website->id, $start, $end, $prevStartDate, $prevEndDate);
                 break;

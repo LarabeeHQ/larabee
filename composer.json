@@ -36,6 +36,7 @@
         "laravel/sanctum": "^3.2",
         "laravel/tinker": "^2.7",
         "predis/predis": "^2.1",
+        "sentry/sentry-laravel": "^3.2",
         "tightenco/ziggy": "^1.0",
         "torann/geoip": "^3.0"
     },

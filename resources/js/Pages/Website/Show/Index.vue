@@ -15,7 +15,7 @@ import { Head, Link, usePage } from "@inertiajs/vue3";
 import { onMounted, ref, computed, onBeforeMount, watch } from "vue";
 
 const user = usePage().props.auth.user;
-const websites = user.websites;
+const websites = user ? user.websites : [];
 const website = computed(() => usePage().props.website);
 const online = ref(0);
 
@@ -157,7 +157,7 @@ onMounted(() => {
                     <div
                         class="hidden space-x-4 sm:-my-px sm:flex items-center"
                     >
-                        <div>
+                        <div v-if="user">
                             <Menu
                                 as="div"
                                 class="relative inline-block text-left"

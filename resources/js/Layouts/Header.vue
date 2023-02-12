@@ -44,6 +44,7 @@ const openModalUpgrade = () => {
 
 <template>
     <nav
+        v-if="user"
         class="bg-zinc-100 dark:bg-zinc-900 border-b border-zinc-200 dark:border-zinc-700"
     >
         <!-- Primary Navigation Menu -->
