@@ -39,12 +39,9 @@ class HandleInertiaRequests extends Middleware
                     }
 
                     return array_merge($request->user()->toArray(), array_filter([
-                        'is_trial' => auth()->user()->onTrial(),
-                        'self_hosted' => config('app.self_hosted'),
-                        'websites' => $request->user()->websites->loadCount(['sessions' => function ($query) {
-                            $query->whereBetween('created_at', [now()->subHours(24), now()]);
-                        }]),
-                        'timezone' => $request->user()->timezone
+                        // 'is_trial' => auth()->user()->onTrial(),
+                        // 'self_hosted' => config('app.self_hosted'),
+                        // 'timezone' => $request->user()->timezone
                     ]));
                 },
             ],

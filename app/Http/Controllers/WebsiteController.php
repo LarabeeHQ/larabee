@@ -7,13 +7,10 @@ use App\Repositories\WebsiteRepository;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Illuminate\Validation\Rule;
-use Illuminate\Support\Facades\Validator;
 use Inertia\Inertia;
 
 use App\Models\User;
-use App\Models\Session;
 use App\Models\Website;
-use App\Models\PageView;
 
 class WebsiteController extends Controller
 {
@@ -31,7 +28,13 @@ class WebsiteController extends Controller
 
     public function Index()
     {
-        return Inertia::render('Website/Index');
+        $websites = auth()->user()->websites->loadCount(['sessions' => function ($query) {
+            $query->whereBetween('created_at', [now()->subHours(24), now()]);
+        }]);
+
+        return Inertia::render('Website/Index', [
+            'websites' => $websites
+        ]);
     }
 
     public function create()
