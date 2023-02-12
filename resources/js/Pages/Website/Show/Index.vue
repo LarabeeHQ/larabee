@@ -6,7 +6,6 @@ import SnippetCode from "./SnippetCode.vue";
 
 import Source from "./Source/Index.vue";
 import Page from "./Page/Index.vue";
-
 import Overview from "./Overview/Index.vue";
 import Device from "./Device/Index.vue";
 import Location from "./Location/Index.vue";
@@ -18,7 +17,6 @@ import { onMounted, ref, computed, onBeforeMount, watch } from "vue";
 const user = usePage().props.auth.user;
 const websites = user.websites;
 const website = computed(() => usePage().props.website);
-const data = ref(null);
 const online = ref(0);
 
 const range = ref({
@@ -377,16 +375,36 @@ onMounted(() => {
             </div>
 
             <div class="space-y-4">
-                <Overview :dateRange="range" :website="website" />
+                <Overview
+                    key="overviewIndex"
+                    :dateRange="range"
+                    :website="website"
+                />
 
                 <div class="grid grid-cols-12 gap-4">
-                    <Source :dateRange="range" :website="website" />
-                    <Page :dateRange="range" :website="website" />
+                    <Source
+                        key="sourceIndex"
+                        :dateRange="range"
+                        :website="website"
+                    />
+                    <Page
+                        key="pageIndex"
+                        :dateRange="range"
+                        :website="website"
+                    />
                 </div>
 
                 <div class="grid grid-cols-12 gap-4">
-                    <Location :dateRange="range" :website="website" />
-                    <Device :dateRange="range" :website="website" />
+                    <Location
+                        key="locationIndex"
+                        :dateRange="range"
+                        :website="website"
+                    />
+                    <Device
+                        key="deviceIndex"
+                        :dateRange="range"
+                        :website="website"
+                    />
                 </div>
             </div>
         </div>
@@ -418,7 +436,7 @@ onMounted(() => {
                     <div class="text-base font-medium">
                         Paste this snippet in the &lt;head&gt; of your website.
                     </div>
-                    <SnippetCode :website="website" />
+                    <SnippetCode key="snippetIndex" :website="website" />
                 </div>
             </div>
         </div>
