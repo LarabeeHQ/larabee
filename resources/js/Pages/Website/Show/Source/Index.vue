@@ -22,7 +22,7 @@ const setTab = (value) => {
 </script>
 
 <template>
-    <div class="col-span-6 card p-4">
+    <div class="col-span-6 card p-4 min-h-[450px]">
         <Tab :tabs="tabs" @update="setTab" />
 
         <div class="mt-4">

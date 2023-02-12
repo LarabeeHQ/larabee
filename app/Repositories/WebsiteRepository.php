@@ -113,18 +113,18 @@ class WebsiteRepository
             ->count();
     }
 
-    public function pageStats($websiteId, $start, $end)
+    public function pageStats($websiteId, $start,$end, $limit = 10)
     {
         return PageView::where('website_id', $websiteId)
             ->select('url as x', DB::raw('count(*) as y'))
             ->whereBetween('created_at', [$start, $end])
             ->groupBy('url')
             ->orderBy('y', 'desc')
-            ->take(10)
+            ->take($limit)
             ->get();
     }
 
-    public function exitPageStats($websiteId, $start, $end)
+    public function exitPageStats($websiteId, $start, $end, $limit = 10)
     {
         return DB::select("select
                 table_aux.x,
@@ -143,10 +143,10 @@ class WebsiteRepository
                 where sessions.website_id = '$websiteId'
             ) as table_aux
             group by table_aux.x
-            order by y desc");
+            order by y desc limit $limit");
     }
 
-    public function entryPageStats($websiteId, $start, $end)
+    public function entryPageStats($websiteId, $start, $end, $limit = 10)
     {
         return DB::select("select
                 table_aux.x,
@@ -165,10 +165,10 @@ class WebsiteRepository
                 where sessions.website_id = '$websiteId'
             ) as table_aux
             group by table_aux.x
-            order by y desc");
+            order by y desc limit $limit");
     }
 
-    public function referrerStats($websiteId, $start, $end)
+    public function referrerStats($websiteId, $start, $end, $limit = 10)
     {
         return PageView::where('website_id', $websiteId)
             ->select('referrer as x', DB::raw('count(*) as y'))
@@ -176,11 +176,11 @@ class WebsiteRepository
             ->whereNotNull('referrer')
             ->groupBy('referrer')
             ->orderBy('y', 'desc')
-            ->take(10)
+            ->take($limit)
             ->get();
     }
 
-    public function utmSourceStats($websiteId, $start, $end)
+    public function utmSourceStats($websiteId, $start,$end, $limit = 10)
     {
         return Session::where('website_id', $websiteId)
             ->select('utm_source as x', DB::raw('count(*) as y'))
@@ -188,11 +188,11 @@ class WebsiteRepository
             ->whereNotNull('utm_source')
             ->groupBy('utm_source')
             ->orderBy('y', 'desc')
-            ->take(10)
+            ->take($limit)
             ->get();
     }
 
-    public function utmMediumStats($websiteId, $start, $end)
+    public function utmMediumStats($websiteId, $start, $end, $limit = 10)
     {
         return Session::where('website_id', $websiteId)
             ->select('utm_medium as x', DB::raw('count(*) as y'))
@@ -200,11 +200,11 @@ class WebsiteRepository
             ->whereNotNull('utm_medium')
             ->groupBy('utm_medium')
             ->orderBy('y', 'desc')
-            ->take(10)
+            ->take($limit)
             ->get();
     }
 
-    public function utmCampaignStats($websiteId, $start, $end)
+    public function utmCampaignStats($websiteId, $start, $end, $limit = 10)
     {
         return Session::where('website_id', $websiteId)
             ->select('utm_campaign as x', DB::raw('count(*) as y'))
@@ -212,11 +212,11 @@ class WebsiteRepository
             ->whereNotNull('utm_campaign')
             ->groupBy('utm_campaign')
             ->orderBy('y', 'desc')
-            ->take(10)
+            ->take($limit)
             ->get();
     }
 
-    public function utmContentStats($websiteId, $start, $end)
+    public function utmContentStats($websiteId, $start, $end, $limit = 10)
     {
         return Session::where('website_id', $websiteId)
             ->select('utm_content as x', DB::raw('count(*) as y'))
@@ -224,11 +224,11 @@ class WebsiteRepository
             ->whereNotNull('utm_content')
             ->groupBy('utm_content')
             ->orderBy('y', 'desc')
-            ->take(10)
+            ->take($limit)
             ->get();
     }
 
-    public function utmTermStats($websiteId, $start, $end)
+    public function utmTermStats($websiteId, $start, $end, $limit = 10)
     {
         return Session::where('website_id', $websiteId)
             ->select('utm_term as x', DB::raw('count(*) as y'))
@@ -236,11 +236,11 @@ class WebsiteRepository
             ->whereNotNull('utm_term')
             ->groupBy('utm_term')
             ->orderBy('y', 'desc')
-            ->take(10)
+            ->take($limit)
             ->get();
     }
 
-    public function browserStats($websiteId, $start, $end)
+    public function browserStats($websiteId, $start, $end, $limit = 10)
     {
         return Session::where('website_id', $websiteId)
             ->select('browser as x', DB::raw('count(*) as y'))
@@ -248,11 +248,11 @@ class WebsiteRepository
             ->whereNotNull('browser')
             ->groupBy('browser')
             ->orderBy('y', 'desc')
-            ->take(10)
+            ->take($limit)
             ->get();
     }
 
-    public function osStats($websiteId, $start, $end)
+    public function osStats($websiteId, $start, $end, $limit = 10)
     {
         return Session::where('website_id', $websiteId)
             ->select('os as x', DB::raw('count(*) as y'))
@@ -260,11 +260,11 @@ class WebsiteRepository
             ->whereNotNull('os')
             ->groupBy('os')
             ->orderBy('y', 'desc')
-            ->take(10)
+            ->take($limit)
             ->get();
     }
 
-    public function languageStats($websiteId, $start, $end)
+    public function languageStats($websiteId, $start, $end, $limit = 10)
     {
         return Session::where('website_id', $websiteId)
             ->select('language as x', DB::raw('count(*) as y'))
@@ -272,11 +272,11 @@ class WebsiteRepository
             ->whereNotNull('language')
             ->groupBy('language')
             ->orderBy('y', 'desc')
-            ->take(10)
+            ->take($limit)
             ->get();
     }
 
-    public function screenStats($websiteId, $start, $end)
+    public function screenStats($websiteId, $start, $end, $limit = 10)
     {
         return Session::where('website_id', $websiteId)
             ->select('screen as x', DB::raw('count(*) as y'))
@@ -284,11 +284,11 @@ class WebsiteRepository
             ->whereNotNull('screen')
             ->groupBy('screen')
             ->orderBy('y', 'desc')
-            ->take(10)
+            ->take($limit)
             ->get();
     }
 
-    public function deviceStats($websiteId, $start, $end)
+    public function deviceStats($websiteId, $start, $end, $limit = 10)
     {
         return Session::where('website_id', $websiteId)
             ->select('device as x', DB::raw('count(*) as y'))
@@ -296,11 +296,11 @@ class WebsiteRepository
             ->whereNotNull('device')
             ->groupBy('device')
             ->orderBy('y', 'desc')
-            ->take(10)
+            ->take($limit)
             ->get();
     }
 
-    public function countryStats($websiteId, $start, $end)
+    public function countryStats($websiteId, $start, $end, $limit = 10)
     {
         return Session::where('website_id', $websiteId)
             ->select('country as x', DB::raw('count(*) as y'))
@@ -308,11 +308,11 @@ class WebsiteRepository
             ->whereNotNull('country')
             ->groupBy('country')
             ->orderBy('y', 'desc')
-            ->take(10)
+            ->take($limit)
             ->get();
     }
 
-    public function regionStats($websiteId, $start, $end)
+    public function regionStats($websiteId, $start, $end, $limit = 10)
     {
         return Session::where('website_id', $websiteId)
             ->select('region as x', DB::raw('count(*) as y'))
@@ -320,11 +320,11 @@ class WebsiteRepository
             ->whereNotNull('region')
             ->groupBy('region')
             ->orderBy('y', 'desc')
-            ->take(10)
+            ->take($limit)
             ->get();
     }
 
-    public function cityStats($websiteId, $start, $end)
+    public function cityStats($websiteId, $start, $end, $limit = 10)
     {
         return Session::where('website_id', $websiteId)
             ->select('city as x', DB::raw('count(*) as y'))
@@ -332,7 +332,7 @@ class WebsiteRepository
             ->whereNotNull('city')
             ->groupBy('city')
             ->orderBy('y', 'desc')
-            ->take(10)
+            ->take($limit)
             ->get();
     }
 }
