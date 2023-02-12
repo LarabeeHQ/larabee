@@ -3,7 +3,7 @@ import { ref } from "vue";
 import Tab from "@/Components/Tab.vue";
 import ReferrerTable from "@/Pages/Website/Show/Source/Referrer.vue";
 import MediumTable from "@/Pages/Website/Show/Source/Medium.vue";
-import SourceTable from "@/Pages/Website/Show/Source/Source.vue";
+import SourceTable from "@/Pages/Website/Show/Source/SourceTable.vue";
 import CampaignTable from "@/Pages/Website/Show/Source/Campaign.vue";
 import ContentTable from "@/Pages/Website/Show/Source/Content.vue";
 import TermTable from "@/Pages/Website/Show/Source/Term.vue";
@@ -22,10 +22,7 @@ const setTab = (value) => {
 </script>
 
 <template>
-    <div
-        v-if="website"
-        class="col-span-12 lg:col-span-6 card p-4 min-h-[450px]"
-    >
+    <div class="col-span-12 lg:col-span-6 card p-4 min-h-[450px]">
         <Tab :tabs="tabs" @update="setTab" />
 
         <div class="mt-4">
@@ -36,7 +33,7 @@ const setTab = (value) => {
                 :website="website"
             />
             <MediumTable
-                if="tab == 'medium'"
+                v-if="tab == 'medium'"
                 key="medium"
                 :dateRange="dateRange"
                 :website="website"
@@ -47,20 +44,20 @@ const setTab = (value) => {
                 :dateRange="dateRange"
                 :website="website"
             />
-            <!-- <Campaign
-                if="tab == 'campaign'"
+            <!-- <CampaignTable
+                v-if="tab == 'campaign'"
                 key="campaign"
                 :dateRange="dateRange"
                 :website="website"
             />
-            <Content
-                if="tab == 'content'"
+            <ContentTable
+                v-if="tab == 'content'"
                 key="content"
                 :dateRange="dateRange"
                 :website="website"
             />
-            <Term
-                v-else-if="tab == 'term'"
+            <TermTable
+                v-if="tab == 'term'"
                 key="term"
                 :dateRange="dateRange"
                 :website="website"
