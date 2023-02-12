@@ -39,7 +39,7 @@ const setTab = (value) => {
                 :website="website"
             />
             <Source
-                v-else-if="tab == 'source'"
+                v-if="tab == 'source'"
                 key="source"
                 :dateRange="dateRange"
                 :website="website"
