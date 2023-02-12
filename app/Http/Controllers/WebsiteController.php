@@ -98,7 +98,7 @@ class WebsiteController extends Controller
 
         // validate if user belongs to website
         if (auth()->check()) {
-            auth()->user()->belongsToWebsite($website);
+            // auth()->user()->belongsToWebsite($website);
         }
 
         return Inertia::render('Website/Show/Index', [
