@@ -38,7 +38,13 @@ const setTab = (value) => {
                 :dateRange="dateRange"
                 :website="website"
             />
-            <!-- <CampaignTable
+            <!-- <SourceTable
+                v-if="tab == 'source'"
+                key="source"
+                :dateRange="dateRange"
+                :website="website"
+            />
+            <CampaignTable
                 v-if="tab == 'campaign'"
                 key="campaign"
                 :dateRange="dateRange"
@@ -58,6 +64,4 @@ const setTab = (value) => {
             /> -->
         </div>
     </div>
-
-    <SourceTable key="source" :dateRange="dateRange" :website="website" />
 </template>
