@@ -4,7 +4,7 @@ import { ChevronDownIcon } from "@heroicons/vue/20/solid";
 
 import SnippetCode from "./SnippetCode.vue";
 
-import Source from "./Source/Index.vue";
+import SourceIndex from "./Source/Index.vue";
 import Page from "./Page/Index.vue";
 import Overview from "./Overview/Index.vue";
 import Device from "./Device/Index.vue";
@@ -382,7 +382,7 @@ onMounted(() => {
                 />
 
                 <div class="grid grid-cols-12 gap-4">
-                    <Source
+                    <SourceIndex
                         key="sourceIndex"
                         :dateRange="range"
                         :website="website"

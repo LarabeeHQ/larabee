@@ -1,12 +1,12 @@
 <script setup>
 import { ref } from "vue";
 import Tab from "@/Components/Tab.vue";
-import Referrer from "@/Pages/Website/Show/Source/Referrer.vue";
-import Medium from "@/Pages/Website/Show/Source/Medium.vue";
-import Source from "@/Pages/Website/Show/Source/Source.vue";
-import Campaign from "@/Pages/Website/Show/Source/Campaign.vue";
-import Content from "@/Pages/Website/Show/Source/Content.vue";
-import Term from "@/Pages/Website/Show/Source/Term.vue";
+import ReferrerTable from "@/Pages/Website/Show/Source/Referrer.vue";
+import MediumTable from "@/Pages/Website/Show/Source/Medium.vue";
+import SourceTable from "@/Pages/Website/Show/Source/Source.vue";
+import CampaignTable from "@/Pages/Website/Show/Source/Campaign.vue";
+import ContentTable from "@/Pages/Website/Show/Source/Content.vue";
+import TermTable from "@/Pages/Website/Show/Source/Term.vue";
 
 const { dateRange, website } = defineProps({
     dateRange: Object,
@@ -26,32 +26,32 @@ const setTab = (value) => {
         <Tab :tabs="tabs" @update="setTab" />
 
         <div class="mt-4">
-            <Referrer
+            <ReferrerTable
                 v-if="tab == 'referrers'"
                 key="referrers"
                 :dateRange="dateRange"
                 :website="website"
             />
-            <Medium
-                v-else-if="tab == 'medium'"
+            <MediumTable
+                if="tab == 'medium'"
                 key="medium"
                 :dateRange="dateRange"
                 :website="website"
             />
-            <Source
+            <SourceTable
                 v-if="tab == 'source'"
                 key="source"
                 :dateRange="dateRange"
                 :website="website"
             />
             <!-- <Campaign
-                v-else-if="tab == 'campaign'"
+                if="tab == 'campaign'"
                 key="campaign"
                 :dateRange="dateRange"
                 :website="website"
             />
             <Content
-                v-else-if="tab == 'content'"
+                if="tab == 'content'"
                 key="content"
                 :dateRange="dateRange"
                 :website="website"
