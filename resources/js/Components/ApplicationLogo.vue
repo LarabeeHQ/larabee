@@ -1,5 +1,3 @@
 <template>
-    <div>
-        <img src="/images/header-logo.png" alt="wAnalytics" />
-    </div>
+    <img src="/images/header-logo.png" alt="wAnalytics" />
 </template>
