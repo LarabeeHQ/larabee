@@ -1,5 +1,5 @@
 <script setup>
-import { onMounted, ref } from "vue";
+import { computed, ref, watch, onMounted } from "vue";
 import ModalUpgrade from "@/Pages/Billing/ModalUpgrade.vue";
 
 import ApplicationLogo from "@/Components/ApplicationLogo.vue";
