@@ -78,7 +78,7 @@ const openModalUpgrade = () => {
                         <div>🚀</div>
                     </button> -->
 
-                    <button
+                    <!-- <button
                         @click="toggleDarkMode"
                         type="button"
                         class="inline-flex w-full justify-center px-2 py-2 focus:outline-none"
@@ -89,7 +89,7 @@ const openModalUpgrade = () => {
                         <div v-else class="">
                             <SunIcon class="h-6 w-6 stroke-2 text-white" />
                         </div>
-                    </button>
+                    </button> -->
 
                     <div class="relative">
                         <Dropdown align="right" width="48">
@@ -107,9 +107,9 @@ const openModalUpgrade = () => {
                             </template>
 
                             <template #content>
-                                <DropdownLink :href="route('account.edit')">
+                                <!-- <DropdownLink :href="route('account.edit')">
                                     Profile
-                                </DropdownLink>
+                                </DropdownLink> -->
 
                                 <!-- <DropdownLink
                                     v-if="!selfHosted"
@@ -117,13 +117,13 @@ const openModalUpgrade = () => {
                                 >
                                     Billing
                                 </DropdownLink> -->
-                                <DropdownLink
+                                <!-- <DropdownLink
                                     :href="route('logout')"
                                     method="post"
                                     as="button"
                                 >
                                     Log Out
-                                </DropdownLink>
+                                </DropdownLink> -->
                             </template>
                         </Dropdown>
                     </div>
