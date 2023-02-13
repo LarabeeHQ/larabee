@@ -10,12 +10,7 @@ import Overview from "./Overview/Index.vue";
 import Device from "./Device/Index.vue";
 import Location from "./Location/Index.vue";
 
-import ReferrerTable from "@/Pages/Website/Show/Source/Table/Referrer.vue";
-import MediumTable from "@/Pages/Website/Show/Source/Table/Medium.vue";
-import SourceTable from "@/Pages/Website/Show/Source/Table/Source.vue";
-import CampaignTable from "@/Pages/Website/Show/Source/Table/Campaign.vue";
-import ContentTable from "@/Pages/Website/Show/Source/Table/Content.vue";
-import TermTable from "@/Pages/Website/Show/Source/Term.vue";
+import TestIndex from "./Test.vue";
 
 import AuthenticatedLayout from "@/Layouts/AuthenticatedLayout.vue";
 import { Head, Link, usePage } from "@inertiajs/vue3";
@@ -388,7 +383,11 @@ onMounted(() => {
                     :website="website"
                 />
 
-                <ReferrerTable :dateRange="range" :website="website" />
+                <TestIndex
+                    key="testIndex"
+                    :dateRange="range"
+                    :website="website"
+                />
 
                 <div class="grid grid-cols-12 gap-4">
                     <SourceIndex
