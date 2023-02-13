@@ -63,7 +63,7 @@ const modalUpgrade = ref(null);
                 </div> -->
 
                 <div class="hidden sm:flex sm:items-center sm:ml-6 space-x-2">
-                    <!-- <button
+                    <button
                         v-if="!selfHosted && user.is_trial"
                         @click="openModalUpgrade"
                         type="button"
@@ -121,12 +121,12 @@ const modalUpgrade = ref(null);
                                 </DropdownLink>
                             </template>
                         </Dropdown>
-                    </div> -->
+                    </div>
                 </div>
 
                 <!-- Hamburger -->
                 <div class="-mr-2 flex items-center sm:hidden">
-                    <!-- <button
+                    <button
                         @click="
                             showingNavigationDropdown =
                                 !showingNavigationDropdown
@@ -160,13 +160,13 @@ const modalUpgrade = ref(null);
                                 d="M6 18L18 6M6 6l12 12"
                             />
                         </svg>
-                    </button> -->
+                    </button>
                 </div>
             </div>
         </div>
 
         <!-- Responsive Navigation Menu -->
-        <!-- <div
+        <div
             :class="{
                 block: showingNavigationDropdown,
                 hidden: !showingNavigationDropdown,
@@ -205,7 +205,7 @@ const modalUpgrade = ref(null);
                     </ResponsiveNavLink>
                 </div>
             </div>
-        </div> -->
+        </div>
     </nav>
 
     <!-- <ModalUpgrade ref="modalUpgrade" /> -->
