@@ -399,12 +399,12 @@ onMounted(() => {
                         key="locationIndex"
                         :dateRange="range"
                         :website="website"
-                    />
+                    /> -->
                     <Device
                         key="deviceIndex"
                         :dateRange="range"
                         :website="website"
-                    /> -->
+                    />
                 </div>
             </div>
         </div>
