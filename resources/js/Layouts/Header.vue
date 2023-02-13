@@ -67,7 +67,7 @@ const openModalUpgrade = () => {
                 </div>
 
                 <div class="hidden sm:flex sm:items-center sm:ml-6 space-x-2">
-                    <button
+                    <!-- <button
                         v-if="!selfHosted && user.is_trial"
                         @click="openModalUpgrade"
                         type="button"
@@ -125,7 +125,7 @@ const openModalUpgrade = () => {
                                 </DropdownLink>
                             </template>
                         </Dropdown>
-                    </div>
+                    </div> -->
                 </div>
 
                 <!-- Hamburger -->
