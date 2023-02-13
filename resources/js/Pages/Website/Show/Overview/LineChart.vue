@@ -24,9 +24,6 @@ const renderChart = () => {
             backgroundColor: "transparent",
         },
 
-        time: {
-            timezone: user.timezone.value,
-        },
         accessibility: {
             enabled: false,
         },
