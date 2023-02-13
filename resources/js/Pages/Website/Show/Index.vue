@@ -380,7 +380,7 @@ onMounted(() => {
                 </Menu>
             </div>
 
-            <div class="space-y-4">
+            <div v-if="render" class="space-y-4">
                 <Overview
                     key="overviewIndex"
                     :dateRange="range"
@@ -434,7 +434,7 @@ onMounted(() => {
                 </div>
             </div>
 
-            <div v-if="render" class="card p-6">
+            <div class="card p-6">
                 <div class="text-gray-800 dark:text-white">
                     <div class="text-xl font-semibold mb-1">
                         Your javascript code
