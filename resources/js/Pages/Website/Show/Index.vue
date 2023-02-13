@@ -395,11 +395,11 @@ onMounted(() => {
                 </div>
 
                 <div class="grid grid-cols-12 gap-4">
-                    <!-- <Location
+                    <Location
                         key="locationIndex"
                         :dateRange="range"
                         :website="website"
-                    /> -->
+                    />
                     <Device
                         key="deviceIndex"
                         :dateRange="range"
