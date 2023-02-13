@@ -1,8 +1,6 @@
-import { defineConfig } from 'vite';
-import laravel from 'laravel-vite-plugin';
-import vue from '@vitejs/plugin-vue';
-import path from "path";
-import { resolve, dirname } from "node:path";
+import { defineConfig } from "vite";
+import laravel from "laravel-vite-plugin";
+import vue from "@vitejs/plugin-vue";
 
 export default defineConfig({
     plugins: [
@@ -20,13 +18,4 @@ export default defineConfig({
             },
         }),
     ],
-
-    resolve: {
-        alias: [
-            {
-                find: "~",
-                replacement: path.resolve(__dirname, "."),
-            },
-        ],
-    }
 });
