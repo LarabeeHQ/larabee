@@ -15,7 +15,7 @@ const loadData = () => {
             params: {
                 start: dateRange.start,
                 end: dateRange.end,
-                metric: "referrers",
+                metric: "utm-sources",
             },
         })
         .then((response) => {
@@ -32,5 +32,5 @@ watch(dateRange, (value) => {
 });
 </script>
 <template>
-    <Table v-if="data" :data="data" :favicon="true" />
+    <Table v-if="data" :data="data" />
 </template>
