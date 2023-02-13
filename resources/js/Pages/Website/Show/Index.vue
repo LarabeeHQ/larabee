@@ -10,6 +10,8 @@ import Overview from "./Overview/Index.vue";
 import Device from "./Device/Index.vue";
 import Location from "./Location/Index.vue";
 
+import TestIndex from "./Test.vue";
+
 import AuthenticatedLayout from "@/Layouts/AuthenticatedLayout.vue";
 import { Head, Link, usePage } from "@inertiajs/vue3";
 import { onMounted, ref, computed, onBeforeMount, watch } from "vue";
@@ -381,12 +383,18 @@ onMounted(() => {
                     :website="website"
                 />
 
+                <TestIndex
+                    key="testIndex"
+                    :dateRange="range"
+                    :website="website"
+                />
+
                 <div class="grid grid-cols-12 gap-4">
-                    <SourceIndex
+                    <!-- <SourceIndex
                         key="sourceIndex"
                         :dateRange="range"
                         :website="website"
-                    />
+                    /> -->
                     <Page
                         key="pageIndex"
                         :dateRange="range"
