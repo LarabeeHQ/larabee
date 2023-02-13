@@ -15,7 +15,7 @@ const loadData = () => {
             params: {
                 start: dateRange.start,
                 end: dateRange.end,
-                metric: "utm-mediums",
+                metric: "utm-contents",
             },
         })
         .then((response) => {
