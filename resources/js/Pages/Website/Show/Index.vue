@@ -375,11 +375,11 @@ onMounted(() => {
             </div>
 
             <div class="space-y-4">
-                <Overview
+                <!-- <Overview
                     key="overviewIndex"
                     :dateRange="range"
                     :website="website"
-                />
+                /> -->
 
                 <div class="grid grid-cols-12 gap-4">
                     <Source
@@ -387,15 +387,15 @@ onMounted(() => {
                         :dateRange="range"
                         :website="website"
                     />
-                    <Page
+                    <!-- <Page
                         key="pageIndex"
                         :dateRange="range"
                         :website="website"
-                    />
+                    /> -->
                 </div>
 
                 <div class="grid grid-cols-12 gap-4">
-                    <Location
+                    <!-- <Location
                         key="locationIndex"
                         :dateRange="range"
                         :website="website"
@@ -404,7 +404,7 @@ onMounted(() => {
                         key="deviceIndex"
                         :dateRange="range"
                         :website="website"
-                    />
+                    /> -->
                 </div>
             </div>
         </div>
