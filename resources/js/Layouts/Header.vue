@@ -170,7 +170,7 @@ const openModalUpgrade = () => {
         </div>
 
         <!-- Responsive Navigation Menu -->
-        <!-- <div
+        <div
             :class="{
                 block: showingNavigationDropdown,
                 hidden: !showingNavigationDropdown,
@@ -187,7 +187,7 @@ const openModalUpgrade = () => {
             </div>
 
             <!-- Responsive Settings Options -->
-            <div class="pt-4 pb-1 border-t border-gray-200">
+            <!-- <div class="pt-4 pb-1 border-t border-gray-200">
                 <div class="px-4">
                     <div class="font-medium text-base text-gray-800">
                         {{ user.name }}
@@ -209,8 +209,8 @@ const openModalUpgrade = () => {
                         Log Out
                     </ResponsiveNavLink>
                 </div>
-            </div>
-        </div> -->
+            </div> -->
+        </div>
     </nav>
 
     <!-- <ModalUpgrade ref="modalUpgrade" /> -->
