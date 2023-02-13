@@ -49,10 +49,10 @@ const openModalUpgrade = () => {
     >
         <div class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
             <div class="flex justify-between h-16">
-                <!-- <div class="flex">
+                <div class="flex">
                     <div class="shrink-0 flex items-center">
                         <Link :href="route('websites.index')">
-                            <ApplicationLogo class="block h-9 w-auto" />
+                            <!-- <ApplicationLogo class="block h-9 w-auto" /> -->
                         </Link>
                     </div>
                     <div
@@ -60,7 +60,7 @@ const openModalUpgrade = () => {
                     >
                         <div></div>
                     </div>
-                </div> -->
+                </div>
 
                 <div class="hidden sm:flex sm:items-center sm:ml-6 space-x-2">
                     <button
