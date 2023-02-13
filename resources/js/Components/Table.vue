@@ -79,7 +79,7 @@ onMounted(async () => {
                         </div>
                     </div>
                     <div class="flex items-center justify-between min-w-[3rem]">
-                        <div
+                        <!-- <div
                             class="invisible group-hover:visible flex text-xs font-semibold text-gray-500 dark:hover:text-gray-300"
                         >
                             {{ helper.calcPercentage(total, value.y) }}%
@@ -88,7 +88,7 @@ onMounted(async () => {
                             class="text-sm font-semibold text-gray-800 dark:text-white"
                         >
                             {{ helper.kFormatter(value.y) }}
-                        </div>
+                        </div> -->
                     </div>
                 </div>
             </div>
