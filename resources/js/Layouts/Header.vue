@@ -13,7 +13,7 @@ import { MoonIcon, SunIcon } from "@heroicons/vue/20/solid";
 import { UserCircleIcon } from "@heroicons/vue/24/outline";
 
 const darkMode = ref(localStorage.getItem("theme") == "dark" ? true : false);
-const user = usePage().props.auth.user;
+const user = computed(() => usePage().props.auth.user);
 
 const showingNavigationDropdown = ref(false);
 const modalUpgrade = ref(null);
