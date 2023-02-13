@@ -400,6 +400,11 @@ onMounted(() => {
                         :dateRange="range"
                         :website="website"
                     />
+                    <Location
+                        key="locationIndex"
+                        :dateRange="range"
+                        :website="website"
+                    />
                     <!-- <Device
                         key="deviceIndex"
                         :dateRange="range"
