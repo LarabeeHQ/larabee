@@ -1,6 +1,6 @@
 <script setup>
 import { computed, ref, onMounted } from "vue";
-import ModalUpgrade from "@/Pages/Billing/ModalUpgrade.vue";
+// import ModalUpgrade from "@/Pages/Billing/ModalUpgrade.vue";
 
 import ApplicationLogo from "@/Components/ApplicationLogo.vue";
 import Dropdown from "@/Components/Dropdown.vue";
@@ -208,5 +208,5 @@ const openModalUpgrade = () => {
         </div>
     </nav>
 
-    <ModalUpgrade ref="modalUpgrade" />
+    <!-- <ModalUpgrade ref="modalUpgrade" /> -->
 </template>
