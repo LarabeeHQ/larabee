@@ -1,11 +1,11 @@
 <script setup>
 import { ref } from "vue";
 import Tab from "@/Components/Tab.vue";
-import ReferrerTable from "@/Pages/Website/Show/Source/ReferrerTable.vue";
-import MediumTable from "@/Pages/Website/Show/Source/MediumTable.vue";
-import SourceTable from "@/Pages/Website/Show/Source/SourceTable.vue";
-import CampaignTable from "@/Pages/Website/Show/Source/CampaignTable.vue";
-import ContentTable from "@/Pages/Website/Show/Source/ContentTable.vue";
+import ReferrerTable from "@/Pages/Website/Show/Source/Table/Referrer.vue";
+import MediumTable from "@/Pages/Website/Show/Source/Table/Medium.vue";
+import SourceTable from "@/Pages/Website/Show/Source/Table/Source.vue";
+import CampaignTable from "@/Pages/Website/Show/Source/Table/Campaign.vue";
+import ContentTable from "@/Pages/Website/Show/Source/Table/Content.vue";
 import TermTable from "@/Pages/Website/Show/Source/Term.vue";
 
 const { dateRange, website } = defineProps({
