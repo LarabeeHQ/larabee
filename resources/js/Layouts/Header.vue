@@ -130,7 +130,7 @@ const openModalUpgrade = () => {
 
                 <!-- Hamburger -->
                 <div class="-mr-2 flex items-center sm:hidden">
-                    <button
+                    <!-- <button
                         @click="
                             showingNavigationDropdown =
                                 !showingNavigationDropdown
@@ -164,7 +164,7 @@ const openModalUpgrade = () => {
                                 d="M6 18L18 6M6 6l12 12"
                             />
                         </svg>
-                    </button>
+                    </button> -->
                 </div>
             </div>
         </div>
