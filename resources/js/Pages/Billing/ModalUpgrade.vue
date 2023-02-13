@@ -12,8 +12,8 @@ import {
 
 const isLoading = ref(false);
 
-import { plans as plansProd } from "../../../private/plans/prod.js";
-import { plans as plansDev } from "../../../private/plans/dev.js";
+import { plans as plansProd } from "../../../../private/plans/prod.js";
+import { plans as plansDev } from "../../../../private/plans/dev.js";
 
 const plans = ref(
     import.meta.env.VITE_APP_ENV === "local" ? plansDev : plansProd
