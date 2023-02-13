@@ -14,6 +14,7 @@ import { UserCircleIcon } from "@heroicons/vue/24/outline";
 
 const darkMode = ref(false);
 const user = computed(() => usePage().props.auth.user);
+const selfHosted = computed(() => usePage().props.self_hosted);
 
 const showingNavigationDropdown = ref(false);
 const modalUpgrade = ref(null);
@@ -68,7 +69,7 @@ const openModalUpgrade = () => {
 
                 <div class="hidden sm:flex sm:items-center sm:ml-6 space-x-2">
                     <!-- <button
-                        v-if="!user.self_hosted && user.is_trial"
+                        v-if="!selfHosted && user.is_trial"
                         @click="openModalUpgrade"
                         type="button"
                         class="flex items-center space-x-2 rounded-md border border-zinc-200 dark:border-zinc-700 bg-white dark:bg-zinc-800 text-zinc-700 dark:text-white hover:bg-zinc-50 px-4 py-2 text-sm font-medium focus:outline-none"
@@ -110,12 +111,12 @@ const openModalUpgrade = () => {
                                     Profile
                                 </DropdownLink>
 
-                                <DropdownLink
-                                    v-if="!user.self_hosted"
+                                <!-- <DropdownLink
+                                    v-if="!selfHosted"
                                     :href="route('billing.index')"
                                 >
                                     Billing
-                                </DropdownLink>
+                                </DropdownLink> -->
                                 <DropdownLink
                                     :href="route('logout')"
                                     method="post"
@@ -190,10 +191,10 @@ const openModalUpgrade = () => {
             <div class="pt-4 pb-1 border-t border-gray-200">
                 <div class="px-4">
                     <div class="font-medium text-base text-gray-800">
-                        {{ $page.props.auth.user.name }}
+                        {{ user.name }}
                     </div>
                     <div class="font-medium text-sm text-gray-500">
-                        {{ $page.props.auth.user.email }}
+                        {{ user.email }}
                     </div>
                 </div>
 

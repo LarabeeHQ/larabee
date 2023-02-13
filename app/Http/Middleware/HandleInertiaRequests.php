@@ -40,11 +40,11 @@ class HandleInertiaRequests extends Middleware
 
                     return array_merge($request->user()->toArray(), array_filter([
                         'is_trial' => auth()->user()->onTrial(),
-                        'self_hosted' => config('app.self_hosted'),
                         'timezone' => $request->user()->timezone
                     ]));
                 },
             ],
+            'self_hosted' => config('app.self_hosted'),
             'flash' => $request->session()->get('flash', []),
             'locale' => app()->getLocale(),
             'ziggy' => function () use ($request) {
