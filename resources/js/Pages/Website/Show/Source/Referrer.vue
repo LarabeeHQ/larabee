@@ -32,5 +32,5 @@ watch(dateRange, (value) => {
 });
 </script>
 <template>
-    <Table v-if="data" :data="data" />
+    <Table v-if="data" :data="data" :favicon="true" />
 </template>
