@@ -7,7 +7,7 @@ import Dropdown from "@/Components/Dropdown.vue";
 import DropdownLink from "@/Components/DropdownLink.vue";
 import NavLink from "@/Components/NavLink.vue";
 import ResponsiveNavLink from "@/Components/ResponsiveNavLink.vue";
-import { Link, useForm, usePage } from "@inertiajs/vue3";
+import { Link, usePage } from "@inertiajs/vue3";
 
 import { MoonIcon, SunIcon } from "@heroicons/vue/20/solid";
 import { UserCircleIcon } from "@heroicons/vue/24/outline";
@@ -18,23 +18,22 @@ const user = computed(() => usePage().props.auth.user);
 const showingNavigationDropdown = ref(false);
 const modalUpgrade = ref(null);
 
-onMounted(() => {
-    if (darkMode.value) {
-        document.documentElement.classList.add("dark");
-    } else {
-        document.documentElement.classList.remove("dark");
-    }
-});
+// onMounted(() => {
+//     if (darkMode.value) {
+//         document.documentElement.classList.add("dark");
+//     } else {
+//         document.documentElement.classList.remove("dark");
+//     }
+// });
 
 const toggleDarkMode = () => {
-    darkMode.value = !darkMode.value;
-    localStorage.setItem("theme", darkMode.value ? "dark" : "light");
-
-    if (darkMode.value) {
-        document.documentElement.classList.add("dark");
-    } else {
-        document.documentElement.classList.remove("dark");
-    }
+    // darkMode.value = !darkMode.value;
+    // localStorage.setItem("theme", darkMode.value ? "dark" : "light");
+    // if (darkMode.value) {
+    //     document.documentElement.classList.add("dark");
+    // } else {
+    //     document.documentElement.classList.remove("dark");
+    // }
 };
 
 const openModalUpgrade = () => {
