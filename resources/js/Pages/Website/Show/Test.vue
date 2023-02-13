@@ -1,4 +1,5 @@
 <script setup>
+import Table from "@/Components/Table.vue";
 import { ref, onMounted, watch } from "vue";
 
 const { dateRange, website } = defineProps({
@@ -19,7 +20,6 @@ const loadData = () => {
         })
         .then((response) => {
             data.value = response.data;
-            console.log(data.value);
         });
 };
 
