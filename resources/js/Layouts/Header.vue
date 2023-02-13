@@ -53,11 +53,11 @@ const openModalUpgrade = () => {
             <div class="flex justify-between h-16">
                 <div class="flex">
                     <!-- Logo -->
-                    <div class="shrink-0 flex items-center">
+                    <!-- <div class="shrink-0 flex items-center">
                         <Link :href="route('websites.index')">
                             <ApplicationLogo class="block h-9 w-auto" />
                         </Link>
-                    </div>
+                    </div> -->
 
                     <!-- Navigation Links -->
                     <div
@@ -170,8 +170,7 @@ const openModalUpgrade = () => {
             </div>
         </div>
 
-        <!-- Responsive Navigation Menu -->
-        <div
+        <!-- <div
             :class="{
                 block: showingNavigationDropdown,
                 hidden: !showingNavigationDropdown,
@@ -187,7 +186,6 @@ const openModalUpgrade = () => {
                 </ResponsiveNavLink>
             </div>
 
-            <!-- Responsive Settings Options -->
             <div class="pt-4 pb-1 border-t border-gray-200">
                 <div class="px-4">
                     <div class="font-medium text-base text-gray-800">
@@ -211,7 +209,7 @@ const openModalUpgrade = () => {
                     </ResponsiveNavLink>
                 </div>
             </div>
-        </div>
+        </div> -->
     </nav>
 
     <ModalUpgrade v-if="user" ref="modalUpgrade" />
