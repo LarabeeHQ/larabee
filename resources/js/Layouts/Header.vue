@@ -1,6 +1,6 @@
 <script setup>
 import { computed, ref, watch, onMounted } from "vue";
-import ModalUpgrade from "@/Pages/Billing/ModalUpgrade.vue";
+// import ModalUpgrade from "@/Pages/Billing/ModalUpgrade.vue";
 
 import ApplicationLogo from "@/Components/ApplicationLogo.vue";
 import Dropdown from "@/Components/Dropdown.vue";
@@ -27,14 +27,13 @@ onMounted(() => {
 });
 
 const toggleDarkMode = () => {
-    darkMode.value = !darkMode.value;
-    localStorage.setItem("theme", darkMode.value ? "dark" : "light");
-
-    if (darkMode.value) {
-        document.documentElement.classList.add("dark");
-    } else {
-        document.documentElement.classList.remove("dark");
-    }
+    // darkMode.value = !darkMode.value;
+    // localStorage.setItem("theme", darkMode.value ? "dark" : "light");
+    // if (darkMode.value) {
+    //     document.documentElement.classList.add("dark");
+    // } else {
+    //     document.documentElement.classList.remove("dark");
+    // }
 };
 
 const openModalUpgrade = () => {
