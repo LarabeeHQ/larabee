@@ -19,6 +19,8 @@ const websites = user ? user.websites : [];
 const website = computed(() => usePage().props.website);
 const online = ref(0);
 
+const render = ref(false);
+
 const range = ref({
     start: dayjs().subtract(1, "month").format("YYYY-MM-DD"),
     end: dayjs().format("YYYY-MM-DD"),
@@ -144,6 +146,10 @@ const loadOnline = () => {
 
 onMounted(() => {
     loadOnline();
+
+    setTimeout(() => {
+        render.value = true;
+    }, 3000);
 });
 </script>
 
@@ -428,7 +434,7 @@ onMounted(() => {
                 </div>
             </div>
 
-            <div class="card p-6">
+            <div v-if="render" class="card p-6">
                 <div class="text-gray-800 dark:text-white">
                     <div class="text-xl font-semibold mb-1">
                         Your javascript code
