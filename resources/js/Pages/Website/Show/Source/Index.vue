@@ -1,6 +1,6 @@
 <script setup>
 import { ref } from "vue";
-import Tab from "@/Components/Tab.vue";
+
 import Referrer from "@/Pages/Website/Show/Source/Referrer.vue";
 import Medium from "@/Pages/Website/Show/Source/Medium.vue";
 import Source from "@/Pages/Website/Show/Source/Source.vue";
@@ -31,49 +31,12 @@ const setTab = (value) => {
 
 <template>
     <div class="col-span-12 lg:col-span-6 card p-4 min-h-[450px]">
-        <Tab :tabs="tabNames" @update="setTab" />
         <div class="mt-4">
             <component
                 :is="tabs[tab]"
                 :dateRange="dateRange"
                 :website="website"
             />
-            <!-- <Referrer
-                v-if="tab == 'referrers'"
-                key="referrers"
-                :dateRange="dateRange"
-                :website="website"
-            />
-            <Medium
-                v-else-if="tab == 'medium'"
-                key="medium"
-                :dateRange="dateRange"
-                :website="website"
-            />
-            <Source
-                v-else-if="tab == 'source'"
-                key="source"
-                :dateRange="dateRange"
-                :website="website"
-            />
-            <Campaign
-                v-else-if="tab == 'campaign'"
-                key="campaign"
-                :dateRange="dateRange"
-                :website="website"
-            />
-            <Content
-                v-else-if="tab == 'content'"
-                key="content"
-                :dateRange="dateRange"
-                :website="website"
-            />
-            <Term
-                v-else-if="tab == 'term'"
-                key="term"
-                :dateRange="dateRange"
-                :website="website"
-            /> -->
         </div>
     </div>
 </template>
