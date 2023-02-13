@@ -18,22 +18,23 @@ const user = computed(() => usePage().props.auth.user);
 const showingNavigationDropdown = ref(false);
 const modalUpgrade = ref(null);
 
-// onMounted(() => {
-//     if (darkMode.value) {
-//         document.documentElement.classList.add("dark");
-//     } else {
-//         document.documentElement.classList.remove("dark");
-//     }
-// });
+onMounted(() => {
+    if (darkMode.value) {
+        document.documentElement.classList.add("dark");
+    } else {
+        document.documentElement.classList.remove("dark");
+    }
+});
 
 const toggleDarkMode = () => {
-    // darkMode.value = !darkMode.value;
-    // localStorage.setItem("theme", darkMode.value ? "dark" : "light");
-    // if (darkMode.value) {
-    //     document.documentElement.classList.add("dark");
-    // } else {
-    //     document.documentElement.classList.remove("dark");
-    // }
+    darkMode.value = !darkMode.value;
+    localStorage.setItem("theme", darkMode.value ? "dark" : "light");
+
+    if (darkMode.value) {
+        document.documentElement.classList.add("dark");
+    } else {
+        document.documentElement.classList.remove("dark");
+    }
 };
 
 const openModalUpgrade = () => {
@@ -66,7 +67,7 @@ const openModalUpgrade = () => {
                 </div>
 
                 <div class="hidden sm:flex sm:items-center sm:ml-6 space-x-2">
-                    <button
+                    <!-- <button
                         v-if="!user.self_hosted && user.is_trial"
                         @click="openModalUpgrade"
                         type="button"
@@ -74,7 +75,7 @@ const openModalUpgrade = () => {
                     >
                         <div>Upgrade</div>
                         <div>🚀</div>
-                    </button>
+                    </button> -->
 
                     <button
                         @click="toggleDarkMode"
