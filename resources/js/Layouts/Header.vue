@@ -52,7 +52,7 @@ const openModalUpgrade = () => {
                 <div class="flex">
                     <div class="shrink-0 flex items-center">
                         <Link :href="route('websites.index')">
-                            <!-- <ApplicationLogo class="block h-9 w-auto" /> -->
+                            <ApplicationLogo class="block h-9 w-auto" />
                         </Link>
                     </div>
                     <div
