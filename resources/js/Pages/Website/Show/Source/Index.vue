@@ -1,20 +1,28 @@
 <script setup>
 import { ref } from "vue";
 import Tab from "@/Components/Tab.vue";
-import ReferrerTable from "@/Pages/Website/Show/Source/Table/Referrer.vue";
-import MediumTable from "@/Pages/Website/Show/Source/Table/Medium.vue";
-import SourceTable from "@/Pages/Website/Show/Source/Table/Source.vue";
-import CampaignTable from "@/Pages/Website/Show/Source/Table/Campaign.vue";
-import ContentTable from "@/Pages/Website/Show/Source/Table/Content.vue";
-import TermTable from "@/Pages/Website/Show/Source/Term.vue";
+import Referrer from "@/Pages/Website/Show/Source/Referrer.vue";
+import Medium from "@/Pages/Website/Show/Source/Medium.vue";
+import Source from "@/Pages/Website/Show/Source/Source.vue";
+import Campaign from "@/Pages/Website/Show/Source/Campaign.vue";
+import Content from "@/Pages/Website/Show/Source/Content.vue";
+import Term from "@/Pages/Website/Show/Source/Term.vue";
 
 const { dateRange, website } = defineProps({
     dateRange: Object,
     website: Object,
 });
 
-const tabs = ["referrers", "medium", "source", "campaign", "content", "term"];
-const tab = ref(tabs[0]);
+const tabNames = [
+    "Referrer",
+    "Medium",
+    "Source",
+    "Campaign",
+    "Content",
+    "Term",
+];
+const tabs = { Referrer, Medium, Source, Campaign, Content, Term };
+const tab = ref("Referrer");
 
 const setTab = (value) => {
     tab.value = value;
@@ -23,45 +31,49 @@ const setTab = (value) => {
 
 <template>
     <div class="col-span-12 lg:col-span-6 card p-4 min-h-[450px]">
-        <Tab :tabs="tabs" @update="setTab" />
-
+        <Tab :tabs="tabNames" @update="setTab" />
         <div class="mt-4">
-            <ReferrerTable
+            <component
+                :is="tabs[tab]"
+                :dateRange="dateRange"
+                :website="website"
+            />
+            <!-- <Referrer
                 v-if="tab == 'referrers'"
                 key="referrers"
                 :dateRange="dateRange"
                 :website="website"
             />
-            <MediumTable
-                v-if="tab == 'medium'"
+            <Medium
+                v-else-if="tab == 'medium'"
                 key="medium"
                 :dateRange="dateRange"
                 :website="website"
             />
-            <SourceTable
-                v-if="tab == 'source'"
+            <Source
+                v-else-if="tab == 'source'"
                 key="source"
                 :dateRange="dateRange"
                 :website="website"
             />
-            <CampaignTable
-                v-if="tab == 'campaign'"
+            <Campaign
+                v-else-if="tab == 'campaign'"
                 key="campaign"
                 :dateRange="dateRange"
                 :website="website"
             />
-            <ContentTable
-                v-if="tab == 'content'"
+            <Content
+                v-else-if="tab == 'content'"
                 key="content"
                 :dateRange="dateRange"
                 :website="website"
             />
-            <TermTable
-                v-if="tab == 'term'"
+            <Term
+                v-else-if="tab == 'term'"
                 key="term"
                 :dateRange="dateRange"
                 :website="website"
-            />
+            /> -->
         </div>
     </div>
 </template>
