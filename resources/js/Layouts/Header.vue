@@ -170,7 +170,7 @@ const openModalUpgrade = () => {
         </div>
 
         <!-- Responsive Navigation Menu -->
-        <div
+        <!-- <div
             :class="{
                 block: showingNavigationDropdown,
                 hidden: !showingNavigationDropdown,
@@ -210,7 +210,7 @@ const openModalUpgrade = () => {
                     </ResponsiveNavLink>
                 </div>
             </div>
-        </div>
+        </div> -->
     </nav>
 
     <!-- <ModalUpgrade ref="modalUpgrade" /> -->
