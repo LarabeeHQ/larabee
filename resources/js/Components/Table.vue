@@ -37,8 +37,7 @@ onMounted(async () => {
 </script>
 
 <template>
-    <div>table</div>
-    <!-- <div v-if="data.length >= 1">
+    <div v-if="data.length >= 1">
         <div class="space-y-2 relative">
             <div
                 v-for="value in data"
@@ -102,5 +101,5 @@ onMounted(async () => {
         <div class="text-zinc-800 dark:text-zinc-300 font-medium text-sm">
             No data
         </div>
-    </div> -->
+    </div>
 </template>
