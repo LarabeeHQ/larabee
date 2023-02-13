@@ -38,8 +38,8 @@ onMounted(async () => {
 
 <template>
     <div v-if="data.length >= 1">
-        <ul class="space-y-2 relative">
-            <li
+        <div class="space-y-2 relative">
+            <div
                 v-for="value in data"
                 :key="value"
                 class="relative w-full group"
@@ -91,8 +91,8 @@ onMounted(async () => {
                         </div>
                     </div>
                 </div>
-            </li>
-        </ul>
+            </div>
+        </div>
     </div>
     <div
         v-else
