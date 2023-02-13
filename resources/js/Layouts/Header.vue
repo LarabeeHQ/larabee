@@ -1,5 +1,5 @@
 <script setup>
-import { computed, ref, watch, onMounted } from "vue";
+import { computed, ref, onMounted } from "vue";
 // import ModalUpgrade from "@/Pages/Billing/ModalUpgrade.vue";
 
 import ApplicationLogo from "@/Components/ApplicationLogo.vue";
@@ -20,11 +20,11 @@ const showingNavigationDropdown = ref(false);
 const modalUpgrade = ref(null);
 
 onMounted(() => {
-    if (darkMode.value) {
-        document.documentElement.classList.add("dark");
-    } else {
-        document.documentElement.classList.remove("dark");
-    }
+    // if (darkMode.value) {
+    //     document.documentElement.classList.add("dark");
+    // } else {
+    //     document.documentElement.classList.remove("dark");
+    // }
 });
 
 const toggleDarkMode = () => {
