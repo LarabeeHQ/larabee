@@ -7,14 +7,13 @@ import Dropdown from "@/Components/Dropdown.vue";
 import DropdownLink from "@/Components/DropdownLink.vue";
 import NavLink from "@/Components/NavLink.vue";
 import ResponsiveNavLink from "@/Components/ResponsiveNavLink.vue";
-import { Link, usePage } from "@inertiajs/vue3";
+import { Link, useForm, usePage } from "@inertiajs/vue3";
 
 import { MoonIcon, SunIcon } from "@heroicons/vue/20/solid";
 import { UserCircleIcon } from "@heroicons/vue/24/outline";
 
-const darkMode = ref(false);
+const darkMode = ref(localStorage.getItem("theme") == "dark" ? true : false);
 const user = computed(() => usePage().props.auth.user);
-const selfHosted = computed(() => usePage().props.self_hosted);
 
 const showingNavigationDropdown = ref(false);
 const modalUpgrade = ref(null);
@@ -53,11 +52,11 @@ const openModalUpgrade = () => {
             <div class="flex justify-between h-16">
                 <div class="flex">
                     <!-- Logo -->
-                    <!-- <div class="shrink-0 flex items-center">
+                    <div class="shrink-0 flex items-center">
                         <Link :href="route('websites.index')">
                             <ApplicationLogo class="block h-9 w-auto" />
                         </Link>
-                    </div> -->
+                    </div>
 
                     <!-- Navigation Links -->
                     <div
@@ -68,17 +67,17 @@ const openModalUpgrade = () => {
                 </div>
 
                 <div class="hidden sm:flex sm:items-center sm:ml-6 space-x-2">
-                    <!-- <button
-                        v-if="!selfHosted && user.is_trial"
+                    <button
+                        v-if="!user.self_hosted && user.is_trial"
                         @click="openModalUpgrade"
                         type="button"
                         class="flex items-center space-x-2 rounded-md border border-zinc-200 dark:border-zinc-700 bg-white dark:bg-zinc-800 text-zinc-700 dark:text-white hover:bg-zinc-50 px-4 py-2 text-sm font-medium focus:outline-none"
                     >
                         <div>Upgrade</div>
                         <div>🚀</div>
-                    </button> -->
+                    </button>
 
-                    <!-- <button
+                    <button
                         @click="toggleDarkMode"
                         type="button"
                         class="inline-flex w-full justify-center px-2 py-2 focus:outline-none"
@@ -89,7 +88,7 @@ const openModalUpgrade = () => {
                         <div v-else class="">
                             <SunIcon class="h-6 w-6 stroke-2 text-white" />
                         </div>
-                    </button> -->
+                    </button>
 
                     <div class="relative">
                         <Dropdown align="right" width="48">
@@ -107,30 +106,30 @@ const openModalUpgrade = () => {
                             </template>
 
                             <template #content>
-                                <!-- <DropdownLink :href="route('account.edit')">
+                                <DropdownLink :href="route('account.edit')">
                                     Profile
-                                </DropdownLink> -->
+                                </DropdownLink>
 
-                                <!-- <DropdownLink
-                                    v-if="!selfHosted"
+                                <DropdownLink
+                                    v-if="!user.self_hosted"
                                     :href="route('billing.index')"
                                 >
                                     Billing
-                                </DropdownLink> -->
-                                <!-- <DropdownLink
+                                </DropdownLink>
+                                <DropdownLink
                                     :href="route('logout')"
                                     method="post"
                                     as="button"
                                 >
                                     Log Out
-                                </DropdownLink> -->
+                                </DropdownLink>
                             </template>
                         </Dropdown>
                     </div>
                 </div>
 
                 <!-- Hamburger -->
-                <!-- <div class="-mr-2 flex items-center sm:hidden">
+                <div class="-mr-2 flex items-center sm:hidden">
                     <button
                         @click="
                             showingNavigationDropdown =
@@ -166,11 +165,12 @@ const openModalUpgrade = () => {
                             />
                         </svg>
                     </button>
-                </div> -->
+                </div>
             </div>
         </div>
 
-        <!-- <div
+        <!-- Responsive Navigation Menu -->
+        <div
             :class="{
                 block: showingNavigationDropdown,
                 hidden: !showingNavigationDropdown,
@@ -186,13 +186,14 @@ const openModalUpgrade = () => {
                 </ResponsiveNavLink>
             </div>
 
+            <!-- Responsive Settings Options -->
             <div class="pt-4 pb-1 border-t border-gray-200">
                 <div class="px-4">
                     <div class="font-medium text-base text-gray-800">
-                        {{ user.name }}
+                        {{ $page.props.auth.user.name }}
                     </div>
                     <div class="font-medium text-sm text-gray-500">
-                        {{ user.email }}
+                        {{ $page.props.auth.user.email }}
                     </div>
                 </div>
 
@@ -209,8 +210,8 @@ const openModalUpgrade = () => {
                     </ResponsiveNavLink>
                 </div>
             </div>
-        </div> -->
+        </div>
     </nav>
 
-    <!-- <ModalUpgrade v-if="user" ref="modalUpgrade" /> -->
+    <!-- <ModalUpgrade ref="modalUpgrade" /> -->
 </template>
