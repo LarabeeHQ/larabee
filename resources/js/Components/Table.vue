@@ -46,13 +46,13 @@ onMounted(async () => {
             >
                 <div class="flex items-center justify-between">
                     <div class="flex items-center">
-                        <div
+                        <!-- <div
                             :class="`absolute top-0 left-0 h-full dark:bg-opacity-20 rounded-r-md bg-gray-100 dark:bg-gray-500`"
                             :style="`max-width: 85%; width: ${helper.calcPercentage(
                                 total,
                                 value.y
                             )}%`"
-                        ></div>
+                        ></div> -->
                         <div class="flex items-center space-x-2 z-10 px-2 py-1">
                             <img
                                 v-if="favicon"
