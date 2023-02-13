@@ -390,11 +390,11 @@ onMounted(() => {
                 />
 
                 <div class="grid grid-cols-12 gap-4">
-                    <SourceIndex
+                    <!-- <SourceIndex
                         key="sourceIndex"
                         :dateRange="range"
                         :website="website"
-                    />
+                    /> -->
                     <Page
                         key="pageIndex"
                         :dateRange="range"
