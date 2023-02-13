@@ -94,7 +94,7 @@ const openModalUpgrade = () => {
                     <div class="relative">
                         <Dropdown align="right" width="48">
                             <template #trigger>
-                                <!-- <span class="inline-flex rounded-md">
+                                <span class="inline-flex rounded-md">
                                     <button
                                         type="button"
                                         class="inline-flex w-full justify-center px-2 py-2 focus:outline-none"
@@ -103,7 +103,7 @@ const openModalUpgrade = () => {
                                             class="h-6 w-6 stroke-2 text-black dark:text-white"
                                         />
                                     </button>
-                                </span> -->
+                                </span>
                             </template>
 
                             <template #content>
