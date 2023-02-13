@@ -387,11 +387,11 @@ onMounted(() => {
                         :dateRange="range"
                         :website="website"
                     />
-                    <!-- <Page
+                    <Page
                         key="pageIndex"
                         :dateRange="range"
                         :website="website"
-                    /> -->
+                    />
                 </div>
 
                 <div class="grid grid-cols-12 gap-4">
