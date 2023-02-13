@@ -19,27 +19,27 @@ const selfHosted = computed(() => usePage().props.self_hosted);
 const showingNavigationDropdown = ref(false);
 const modalUpgrade = ref(null);
 
-onMounted(() => {
-    // if (darkMode.value) {
-    //     document.documentElement.classList.add("dark");
-    // } else {
-    //     document.documentElement.classList.remove("dark");
-    // }
-});
+// onMounted(() => {
+// if (darkMode.value) {
+//     document.documentElement.classList.add("dark");
+// } else {
+//     document.documentElement.classList.remove("dark");
+// }
+// });
 
-const toggleDarkMode = () => {
-    // darkMode.value = !darkMode.value;
-    // localStorage.setItem("theme", darkMode.value ? "dark" : "light");
-    // if (darkMode.value) {
-    //     document.documentElement.classList.add("dark");
-    // } else {
-    //     document.documentElement.classList.remove("dark");
-    // }
-};
+// const toggleDarkMode = () => {
+// darkMode.value = !darkMode.value;
+// localStorage.setItem("theme", darkMode.value ? "dark" : "light");
+// if (darkMode.value) {
+//     document.documentElement.classList.add("dark");
+// } else {
+//     document.documentElement.classList.remove("dark");
+// }
+// };
 
-const openModalUpgrade = () => {
-    modalUpgrade.value.open();
-};
+// const openModalUpgrade = () => {
+//     modalUpgrade.value.open();
+// };
 </script>
 
 <template>
@@ -47,18 +47,14 @@ const openModalUpgrade = () => {
         v-if="user"
         class="bg-zinc-100 dark:bg-zinc-900 border-b border-zinc-200 dark:border-zinc-700"
     >
-        <!-- Primary Navigation Menu -->
         <div class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
             <div class="flex justify-between h-16">
                 <div class="flex">
-                    <!-- Logo -->
                     <div class="shrink-0 flex items-center">
                         <Link :href="route('websites.index')">
                             <ApplicationLogo class="block h-9 w-auto" />
                         </Link>
                     </div>
-
-                    <!-- Navigation Links -->
                     <div
                         class="hidden space-x-8 sm:-my-px sm:ml-10 sm:flex items-center"
                     >
