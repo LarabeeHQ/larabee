@@ -37,7 +37,8 @@ onMounted(async () => {
 </script>
 
 <template>
-    <div v-if="data.length >= 1">
+    <div>table</div>
+    <!-- <div v-if="data.length >= 1">
         <div class="space-y-2 relative">
             <div
                 v-for="value in data"
@@ -46,13 +47,13 @@ onMounted(async () => {
             >
                 <div class="flex items-center justify-between">
                     <div class="flex items-center">
-                        <!-- <div
+                        <div
                             :class="`absolute top-0 left-0 h-full dark:bg-opacity-20 rounded-r-md bg-gray-100 dark:bg-gray-500`"
                             :style="`max-width: 85%; width: ${helper.calcPercentage(
                                 total,
                                 value.y
                             )}%`"
-                        ></div> -->
+                        ></div>
                         <div class="flex items-center space-x-2 z-10 px-2 py-1">
                             <img
                                 v-if="favicon"
@@ -79,7 +80,7 @@ onMounted(async () => {
                         </div>
                     </div>
                     <div class="flex items-center justify-between min-w-[3rem]">
-                        <!-- <div
+                        <div
                             class="invisible group-hover:visible flex text-xs font-semibold text-gray-500 dark:hover:text-gray-300"
                         >
                             {{ helper.calcPercentage(total, value.y) }}%
@@ -88,7 +89,7 @@ onMounted(async () => {
                             class="text-sm font-semibold text-gray-800 dark:text-white"
                         >
                             {{ helper.kFormatter(value.y) }}
-                        </div> -->
+                        </div>
                     </div>
                 </div>
             </div>
@@ -101,5 +102,5 @@ onMounted(async () => {
         <div class="text-zinc-800 dark:text-zinc-300 font-medium text-sm">
             No data
         </div>
-    </div>
+    </div> -->
 </template>
