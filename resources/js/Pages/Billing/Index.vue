@@ -115,7 +115,9 @@ const openModalUpgrade = () => {
                     <div
                         class="flex w-full justify-between items-center space-x-2"
                     >
-                        <div class="text-sm font-medium text-white">
+                        <div
+                            class="text-sm font-medium text-zinc-800 dark:text-white"
+                        >
                             You are currently on a trial period until
                             {{ formatDate(user.trial_ends_at) }}.
                         </div>
