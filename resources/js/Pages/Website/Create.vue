@@ -20,7 +20,7 @@ const submit = () => {
 
 <template>
     <AuthenticatedLayout>
-        <Head title="Register" />
+        <Head title="New Website" />
 
         <div class="flex flex-col sm:justify-center items-center">
             <div

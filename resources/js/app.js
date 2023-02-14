@@ -10,9 +10,16 @@ import { ZiggyVue } from '../../vendor/tightenco/ziggy/dist/vue.m';
 import VCalendar from "v-calendar";
 import 'v-calendar/dist/style.css';
 
+const appName =
+    window.document.getElementsByTagName("title")[0]?.innerText || "wAnalytics";
+
 createInertiaApp({
-    title: (title) => title,
-    resolve: (name) => resolvePageComponent(`./Pages/${name}.vue`, import.meta.glob('./Pages/**/*.vue')),
+    title: (title) => `${title} - ${appName}`,
+    resolve: (name) =>
+        resolvePageComponent(
+            `./Pages/${name}.vue`,
+            import.meta.glob("./Pages/**/*.vue")
+        ),
     setup({ el, App, props, plugin }) {
         return createApp({ render: () => h(App, props) })
             .use(plugin)
@@ -21,6 +28,6 @@ createInertiaApp({
             .mount(el);
     },
     progress: {
-        color: '#4B5563',
+        color: "#4B5563",
     },
 });

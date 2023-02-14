@@ -148,7 +148,7 @@ onMounted(() => {
 </script>
 
 <template>
-    <Head :title="`${website.name} - Analytics`" />
+    <Head :title="website.name" />
 
     <AuthenticatedLayout>
         <div v-if="website.sessions_count >= 1">

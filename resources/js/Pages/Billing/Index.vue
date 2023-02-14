@@ -9,7 +9,7 @@ import {
 } from "@heroicons/vue/20/solid";
 import Highcharts from "highcharts";
 
-import { usePage } from "@inertiajs/vue3";
+import { usePage, Head } from "@inertiajs/vue3";
 
 const chart = ref(null);
 const user = usePage().props.auth.user;
@@ -101,6 +101,7 @@ const openModalUpgrade = () => {
 };
 </script>
 <template>
+    <Head title="Billing" />
     <AuthenticatedLayout>
         <!-- <div>
             <div>
