@@ -1,6 +1,6 @@
 <script setup>
 import { computed, ref, onMounted } from "vue";
-import ModalUpgrade from "@/Pages/Billing/ModalUpgrade.vue";
+// import ModalUpgrade from "@/Pages/Billing/ModalUpgrade.vue";
 
 import ApplicationLogo from "@/Components/ApplicationLogo.vue";
 import Dropdown from "@/Components/Dropdown.vue";
@@ -19,27 +19,27 @@ const selfHosted = computed(() => usePage().props.self_hosted);
 const showingNavigationDropdown = ref(false);
 const modalUpgrade = ref(null);
 
-onMounted(() => {
-    if (darkMode.value) {
-        document.documentElement.classList.add("dark");
-    } else {
-        document.documentElement.classList.remove("dark");
-    }
-});
+// onMounted(() => {
+//     if (darkMode.value) {
+//         document.documentElement.classList.add("dark");
+//     } else {
+//         document.documentElement.classList.remove("dark");
+//     }
+// });
 
-const toggleDarkMode = () => {
-    darkMode.value = !darkMode.value;
-    localStorage.setItem("theme", darkMode.value ? "dark" : "light");
-    if (darkMode.value) {
-        document.documentElement.classList.add("dark");
-    } else {
-        document.documentElement.classList.remove("dark");
-    }
-};
+// const toggleDarkMode = () => {
+//     darkMode.value = !darkMode.value;
+//     localStorage.setItem("theme", darkMode.value ? "dark" : "light");
+//     if (darkMode.value) {
+//         document.documentElement.classList.add("dark");
+//     } else {
+//         document.documentElement.classList.remove("dark");
+//     }
+// };
 
-const openModalUpgrade = () => {
-    modalUpgrade.value.open();
-};
+// const openModalUpgrade = () => {
+//     modalUpgrade.value.open();
+// };
 </script>
 
 <template>
@@ -207,5 +207,5 @@ const openModalUpgrade = () => {
         </div>
     </nav>
 
-    <ModalUpgrade ref="modalUpgrade" />
+    <!-- <ModalUpgrade ref="modalUpgrade" /> -->
 </template>
