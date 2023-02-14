@@ -71,7 +71,7 @@ class AccountController extends Controller
 
         session()->flash('flash.banner', 'Password updated.');
         session()->flash('flash.bannerStyle', 'success');
-        return back();
+        return redirect(route('account.edit'));
     }
 
     /**

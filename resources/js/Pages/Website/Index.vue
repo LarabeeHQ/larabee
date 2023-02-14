@@ -2,10 +2,10 @@
 import AuthenticatedLayout from "@/Layouts/AuthenticatedLayout.vue";
 import { Head, Link, usePage } from "@inertiajs/vue3";
 import PrimaryButton from "@/Components/PrimaryButton.vue";
-import { onMounted, ref, computed, onBeforeMount, watch } from "vue";
+import { computed } from "vue";
 
-const user = usePage().props.auth.user;
-const websites = user.websites;
+const user = computed(() => usePage().props.auth.user);
+const websites = user.value.websites;
 </script>
 
 <template>

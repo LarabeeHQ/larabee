@@ -5,7 +5,7 @@ import FormSection from "@/Components/FormSection.vue";
 import PrimaryButton from "@/Components/PrimaryButton.vue";
 import Input from "@/Components/Input.vue";
 import Select from "@/Components/Select.vue";
-import { ref } from "vue";
+import { ref, computed } from "vue";
 import { Link, useForm, usePage } from "@inertiajs/vue3";
 
 defineProps({
@@ -14,12 +14,12 @@ defineProps({
     timezones: Object,
 });
 
-const user = usePage().props.auth.user;
+const user = computed(() => usePage().props.auth.user);
 
 const form = useForm({
-    name: user.name,
-    email: user.email,
-    timezone_id: user.timezone_id,
+    name: user.value.name,
+    email: user.value.email,
+    timezone_id: user.value.timezone_id,
 });
 
 const verificationLinkSent = ref(null);

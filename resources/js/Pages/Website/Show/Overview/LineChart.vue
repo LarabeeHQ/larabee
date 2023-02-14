@@ -1,8 +1,9 @@
 <script setup>
-import { ref, onMounted } from "vue";
+import { ref, onMounted, computed } from "vue";
 import Highcharts from "highcharts";
 import { usePage } from "@inertiajs/vue3";
-const user = usePage().props.auth.user;
+
+const user = computed(() => usePage().props.auth.user);
 
 const chartElement = ref(null);
 const cycle = ref("day");

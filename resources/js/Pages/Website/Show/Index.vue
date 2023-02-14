@@ -14,8 +14,8 @@ import AuthenticatedLayout from "@/Layouts/AuthenticatedLayout.vue";
 import { Head, Link, usePage } from "@inertiajs/vue3";
 import { onMounted, ref, computed } from "vue";
 
-const user = usePage().props.auth.user;
-const websites = user ? user.websites : [];
+const user = computed(() => usePage().props.auth.user);
+const websites = user.value ? user.value.websites : [];
 const website = computed(() => usePage().props.website);
 const online = ref(0);
 
