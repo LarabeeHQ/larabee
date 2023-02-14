@@ -103,32 +103,6 @@ const openModalUpgrade = () => {
 <template>
     <Head title="Billing" />
     <AuthenticatedLayout>
-        <div>
-            <div class="card p-4">
-                <div class="flex flex-col space-y-4">
-                    <div class="px-4 sm:px-0">
-                        <h3
-                            class="text-lg font-medium text-zinc-800 dark:text-gray-100"
-                        >
-                            <div class="flex items-center">Billing Portal</div>
-                        </h3>
-                        <p
-                            class="mt-1 text-sm text-zinc-700 dark:text-gray-300 font-medium"
-                        >
-                            Click on the link below to manage your subscription,
-                            update your credit card and see your invoices
-                        </p>
-                    </div>
-                    <div class="px-4 sm:px-0">
-                        <PrimaryButton
-                            :href="route('billing.redirect-to-portal')"
-                        >
-                            Go To Portal
-                        </PrimaryButton>
-                    </div>
-                </div>
-            </div>
-        </div>
         <div class="space-y-4">
             <div v-if="user.plan.name == 'trial'" class="card p-4">
                 <div class="flex items-center w-full space-x-2">
@@ -161,7 +135,30 @@ const openModalUpgrade = () => {
                     </div>
                 </div>
             </div>
-            <div v-else></div>
+            <div v-else class="card p-4">
+                <div class="flex flex-col space-y-4">
+                    <div class="px-4 sm:px-0">
+                        <h3
+                            class="text-lg font-medium text-zinc-800 dark:text-gray-100"
+                        >
+                            <div class="flex items-center">Billing Portal</div>
+                        </h3>
+                        <p
+                            class="mt-1 text-sm text-zinc-700 dark:text-gray-300 font-medium"
+                        >
+                            Click on the link below to manage your subscription,
+                            update your credit card and see your invoices
+                        </p>
+                    </div>
+                    <div class="px-4 sm:px-0">
+                        <PrimaryButton
+                            :href="route('billing.redirect-to-portal')"
+                        >
+                            Go To Portal
+                        </PrimaryButton>
+                    </div>
+                </div>
+            </div>
 
             <div class="card p-6">
                 <div class="mb-4 text-sm">
