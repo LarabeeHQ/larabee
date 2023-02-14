@@ -16,7 +16,10 @@ import { onMounted, ref, computed } from "vue";
 
 const user = computed(() => usePage().props.auth.user);
 const websites = user.value ? user.value.websites : [];
-const website = computed(() => usePage().props.website);
+
+const { website } = defineProps({
+    website: Object,
+});
 
 const online = ref(0);
 
@@ -131,7 +134,7 @@ const formatDate = (date) => {
 
 const loadOnline = () => {
     axios
-        .get(route("websites.statistics", website.value.id), {
+        .get(route("websites.statistics", website.id), {
             params: {
                 start: range.value.start,
                 end: range.value.end,
