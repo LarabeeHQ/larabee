@@ -151,8 +151,8 @@ onMounted(() => {
     <Head :title="website.name" />
 
     <AuthenticatedLayout>
-        <div v-if="website.sessions_count >= 1">
-            <!-- <div class="flex items-center justify-between mb-2">
+        <!-- <div v-if="website.sessions_count >= 1"> -->
+        <!-- <div class="flex items-center justify-between mb-2">
                 <div class="min-w-0 flex-1">
                     <div
                         class="hidden space-x-4 sm:-my-px sm:flex items-center"
@@ -374,40 +374,36 @@ onMounted(() => {
                 </Menu>
             </div> -->
 
-            <div class="space-y-4">
-                <Overview
-                    key="overviewIndex"
+        <div class="space-y-4">
+            <Overview
+                key="overviewIndex"
+                :dateRange="range"
+                :website="website"
+            />
+
+            <div class="grid grid-cols-12 gap-4">
+                <Source
+                    key="sourceIndex"
                     :dateRange="range"
                     :website="website"
                 />
+                <Page key="pageIndex" :dateRange="range" :website="website" />
+            </div>
 
-                <div class="grid grid-cols-12 gap-4">
-                    <Source
-                        key="sourceIndex"
-                        :dateRange="range"
-                        :website="website"
-                    />
-                    <Page
-                        key="pageIndex"
-                        :dateRange="range"
-                        :website="website"
-                    />
-                </div>
-
-                <div class="grid grid-cols-12 gap-4">
-                    <Location
-                        key="locationIndex1"
-                        :dateRange="range"
-                        :website="website"
-                    />
-                    <Device
-                        key="deviceIndex"
-                        :dateRange="range"
-                        :website="website"
-                    />
-                </div>
+            <div class="grid grid-cols-12 gap-4">
+                <Location
+                    key="locationIndex1"
+                    :dateRange="range"
+                    :website="website"
+                />
+                <Device
+                    key="deviceIndex"
+                    :dateRange="range"
+                    :website="website"
+                />
             </div>
         </div>
-        <NoDataPlaceholder v-else :website="website" />
+        <!-- </div>
+        <NoDataPlaceholder v-else :website="website" /> -->
     </AuthenticatedLayout>
 </template>
