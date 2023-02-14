@@ -152,6 +152,7 @@ onMounted(() => {
     <Head :title="website.name" />
 
     <AuthenticatedLayout>
+        {{ website }}
         <div>
             <div class="flex items-center justify-between mb-2">
                 <!-- <div class="min-w-0 flex-1">

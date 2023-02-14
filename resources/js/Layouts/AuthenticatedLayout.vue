@@ -10,7 +10,6 @@ const user = computed(() => usePage().props.auth.user);
 
 <template>
     <div>
-        {{ user }}
         <!-- <Header v-if="user" />
         <Banner v-if="user" /> -->
         <div class="min-h-screen bg-zinc-100 dark:bg-zinc-900">
