@@ -11,7 +11,7 @@ const user = computed(() => usePage().props.auth.user);
 <template>
     <div>
         <Header v-if="user" />
-        <Banner />
+        <Banner v-if="user" />
         <div class="min-h-screen bg-zinc-100 dark:bg-zinc-900">
             <main class="max-w-6xl mx-auto sm:px-6 lg:px-8 space-y-4 py-12">
                 <slot />
