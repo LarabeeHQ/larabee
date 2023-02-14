@@ -21,6 +21,8 @@ const { website } = defineProps({
     website: Object,
 });
 
+const loaded = ref(false);
+
 const online = ref(0);
 
 const range = ref({
@@ -148,6 +150,10 @@ const loadOnline = () => {
 
 onMounted(() => {
     loadOnline();
+
+    setTimeout(() => {
+        loaded.value = true;
+    }, 3000);
 });
 </script>
 
@@ -155,7 +161,8 @@ onMounted(() => {
     <Head :title="website.name" />
 
     <AuthenticatedLayout>
-        <div v-if="website.sessions_count >= 1">
+        <!-- <div v-if="website.sessions_count >= 1"> -->
+        <div v-if="loaded">
             <div class="flex items-center justify-between mb-2">
                 <div class="min-w-0 flex-1">
                     <div
@@ -392,8 +399,9 @@ onMounted(() => {
                 </div>
             </div>
         </div>
-        <div v-else>
+        <!-- </div> -->
+        <!-- <div v-else>
             <NoDataPlaceholder :website="website" />
-        </div>
+        </div> -->
     </AuthenticatedLayout>
 </template>
