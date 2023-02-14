@@ -38,12 +38,21 @@ class HandleInertiaRequests extends Middleware
                         return;
                     }
 
+
+                    // if ($request->user()->subscription('default')->onTrial()) {
+                    //     dd('ok');
+                    // }
+
+                    // dd($request->user()->plan);
+
                     return array_merge($request->user()->toArray(), array_filter([
-                        'is_trial' => auth()->user()->onTrial(),
-                        'timezone' => $request->user()->timezone
+                        'is_trial' => $request->user()->onTrial(),
+                        'timezone' => $request->user()->timezone,
+                        'plan' => $request->user()->plan,
                     ]));
                 },
             ],
+            'plans' => config('plans.index'),
             'self_hosted' => config('app.self_hosted'),
             'flash' => $request->session()->get('flash', []),
             'locale' => app()->getLocale(),

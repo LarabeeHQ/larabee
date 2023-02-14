@@ -1,5 +1,6 @@
 <script setup>
-import { ref } from "vue";
+import { ref, computed } from "vue";
+import { usePage } from "@inertiajs/vue3";
 import DialogModal from "@/Components/DialogModal.vue";
 import PrimaryButton from "@/Components/PrimaryButton.vue";
 
@@ -12,14 +13,9 @@ import {
 
 const isLoading = ref(false);
 
-import { plans as plansProd } from "../../../../private/plans/prod.js";
-import { plans as plansDev } from "../../../../private/plans/dev.js";
+const plans = computed(() => usePage().props.plans);
 
-const plans = ref(
-    import.meta.env.VITE_APP_ENV === "local" ? plansDev : plansProd
-);
-
-const selectedPlan = ref(plans.value[0]);
+const selectedPlan = ref(plans[0]);
 const yearly = ref(false);
 
 const generateCheckout = () => {
@@ -66,14 +62,15 @@ defineExpose({
             <div class="mb-4">
                 <div class="sm:flex sm:flex-col sm:align-center">
                     <div
-                        class="relative self-center rounded-md border border-gray-100 p-1 flex"
+                        class="relative self-center rounded-md border border-zinc-100 p-1 flex"
                     >
                         <div
                             @click="yearly = false"
                             :class="{
-                                'relative w-1/2 rounded py-1.5 text-sm font-bold  whitespace-nowrap focus:outline-none focus:z-10 sm:w-auto sm:px-6 cursor-pointer': true,
-                                'bg-gray-100 text-gray-800': !yearly,
-                                'text-black': yearly,
+                                'relative w-1/2 rounded py-1.5 text-sm font-bold whitespace-nowrap focus:outline-none focus:z-10 sm:w-auto sm:px-6 cursor-pointer': true,
+                                'bg-zinc-100 text-zinc-800 dark:text-white dark:bg-zinc-700':
+                                    !yearly,
+                                'text-black dark:text-white': yearly,
                             }"
                         >
                             Monthly
@@ -82,8 +79,9 @@ defineExpose({
                             @click="yearly = true"
                             :class="{
                                 'relative w-1/2 rounded py-1.5 text-sm font-bold  whitespace-nowrap focus:outline-none focus:z-10 sm:w-auto sm:px-6 cursor-pointer': true,
-                                'bg-gray-100 text-gray-800': yearly,
-                                'text-black': !yearly,
+                                'bg-zinc-100 text-zinc-800 dark:text-white dark:bg-zinc-700':
+                                    yearly,
+                                'text-black dark:text-white': !yearly,
                             }"
                         >
                             Yearly
@@ -95,7 +93,9 @@ defineExpose({
                 <RadioGroupLabel class="sr-only">
                     Pricing plans
                 </RadioGroupLabel>
-                <div class="relative -space-y-px rounded-md bg-white">
+                <div
+                    class="relative -space-y-px rounded-md bg-white dark:bg-zinc-800"
+                >
                     <RadioGroupOption
                         as="template"
                         v-for="(plan, planIdx) in plans"
@@ -112,35 +112,19 @@ defineExpose({
                                     ? 'rounded-bl-md rounded-br-md'
                                     : '',
                                 checked
-                                    ? 'bg-indigo-50 border-indigo-200 z-10'
-                                    : 'border-gray-200',
+                                    ? 'bg-zinc-100 dark:bg-zinc-700 border-zinc-200 z-10'
+                                    : 'border-zinc-200 dark:border-zinc-700',
                                 'relative border p-4 flex flex-col cursor-pointer md:pl-4 md:pr-6 md:grid md:grid-cols-2 focus:outline-none',
                             ]"
                         >
                             <span class="flex items-center text-sm">
-                                <span
-                                    :class="[
-                                        checked
-                                            ? 'bg-indigo-600 border-transparent'
-                                            : 'bg-white border-gray-300',
-                                        active
-                                            ? 'ring-2 ring-offset-2 ring-indigo-500'
-                                            : '',
-                                        'h-4 w-4 rounded-full border flex items-center justify-center',
-                                    ]"
-                                    aria-hidden="true"
-                                >
-                                    <span
-                                        class="rounded-full bg-white w-1.5 h-1.5"
-                                    />
-                                </span>
                                 <RadioGroupLabel
                                     as="span"
                                     :class="[
                                         checked
-                                            ? 'text-indigo-900'
-                                            : 'text-gray-900',
-                                        'ml-3 font-medium',
+                                            ? 'text-zinc-800 dark:text-white'
+                                            : 'text-gray-900 dark:text-zinc-500',
+                                        'font-medium',
                                     ]"
                                 >
                                     {{ plan.name }} / page views per month

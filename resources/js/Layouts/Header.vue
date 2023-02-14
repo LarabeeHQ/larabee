@@ -63,7 +63,7 @@ const openModalUpgrade = () => {
 
                 <div class="hidden sm:flex sm:items-center sm:ml-6 space-x-2">
                     <button
-                        v-if="!selfHosted && user.is_trial"
+                        v-if="!selfHosted && user.plan.name == 'trial'"
                         @click="openModalUpgrade"
                         type="button"
                         class="flex items-center space-x-2 rounded-md border border-zinc-200 dark:border-zinc-700 bg-white dark:bg-zinc-800 text-zinc-700 dark:text-white hover:bg-zinc-50 px-4 py-2 text-sm font-medium focus:outline-none"

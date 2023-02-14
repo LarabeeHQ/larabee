@@ -2,6 +2,7 @@
 
 namespace App\Models;
 
+use Illuminate\Support\Str;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Contracts\Auth\MustVerifyEmail;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
@@ -51,6 +52,26 @@ class User extends Authenticatable implements MustVerifyEmail
         'email_verified_at' => 'datetime',
         'trial_ends_at' => 'datetime'
     ];
+
+    public function getPlanAttribute()
+    {
+        if (!$this->subscription('default')) {
+            return ['name' => 'trial'];
+        };
+
+        $plans = config('plans.index');
+        $stripeId = $this->subscription('default')->items->first()->stripe_price;
+
+        foreach($plans as $plan) {
+            if ($plan['stripeIdMonthly'] === $stripeId) {
+                return $plan;
+            }
+
+            else if ($plan['stripeIdYearly'] === $stripeId) {
+                return $plan;
+            }
+        }
+    }
 
     public function belongsToWebsite($website)
     {

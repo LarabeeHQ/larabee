@@ -3,7 +3,7 @@
 namespace App\Providers;
 
 use Laravel\Cashier\Cashier;
-use App\Models\Cashier\User;
+use App\Models\User;
 use Illuminate\Support\ServiceProvider;
 
 class AppServiceProvider extends ServiceProvider

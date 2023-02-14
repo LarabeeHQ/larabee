@@ -22,7 +22,7 @@
                         @click="close"
                     >
                         <div
-                            class="absolute inset-0 bg-zinc-600/75 dark:bg-zinc-800/80"
+                            class="absolute inset-0 bg-zinc-600/75 dark:bg-zinc-300/20"
                         ></div>
                     </div>
                 </transition>
@@ -38,7 +38,7 @@
                     <div class="flex items-center justify-center h-screen p-4">
                         <div
                             v-show="show"
-                            class="mx-auto mb-6 bg-white rounded-lg shadow-xl transform transition-all sm:w-full sm:mx-auto"
+                            class="mx-auto mb-6 bg-white dark:bg-zinc-800 dark:text-white rounded-lg shadow-xl transform transition-all sm:w-full sm:mx-auto"
                             :class="maxWidthClass"
                         >
                             <slot v-if="show"></slot>

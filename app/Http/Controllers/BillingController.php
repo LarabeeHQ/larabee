@@ -53,11 +53,14 @@ class BillingController extends Controller
 
     public function redirectToPortal()
     {
-        if (!auth()->user()->team->subscribed('default')) {
+        if (!auth()->user()->subscribed('default')) {
             abort(404);
         }
 
-        return auth()->user()->team->redirectToBillingPortal(route('websites.index'));
+        $url = auth()->user()->billingPortalUrl(route('websites.index'));
+
+        return Inertia::location($url);
+
     }
 
     public function generateCheckoutLink(Request $request)

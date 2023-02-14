@@ -84,8 +84,9 @@ watch(dateRange, (value) => {
                 :key="data"
                 @click="setChart(data.id)"
                 :class="{
-                    'border-t-4 border-transparent overflow-hidden rounded-md bg-zinc-100 dark:bg-zinc-900 px-4 py-5 sm:p-6 cursor-pointer': true,
-                    ' border-green-400': data.id === currentTab,
+                    'border-t-4 overflow-hidden rounded-md bg-zinc-100 dark:bg-zinc-900 px-4 py-5 sm:p-6 cursor-pointer': true,
+                    ' border-green-400': data.id == currentTab,
+                    ' border-transparent': data.id != currentTab,
                 }"
             >
                 <div
