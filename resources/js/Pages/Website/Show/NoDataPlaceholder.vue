@@ -1,3 +1,10 @@
+<script setup>
+import SnippetCode from "./SnippetCode.vue";
+
+const { website } = defineProps({
+    website: Object,
+});
+</script>
 <template>
     <div class="space-y-4">
         <div class="card p-6">
@@ -24,17 +31,11 @@
                 <div class="text-xl font-semibold mb-1">
                     Your javascript code
                 </div>
-                <!-- <div class="text-base font-medium">
+                <div class="text-base font-medium">
                     Paste this snippet in the &lt;head&gt; of your website.
-                </div> -->
-                <!-- <SnippetCode key="snippetIndex" :website="website" /> -->
+                </div>
+                <SnippetCode :website="website" />
             </div>
         </div>
     </div>
 </template>
-
-<script>
-export default {
-    props: ["website"],
-};
-</script>
