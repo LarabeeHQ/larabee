@@ -1,8 +1,3 @@
-<script setup>
-const { website } = defineProps({
-    website: Object,
-});
-</script>
 <template>
     <div class="space-y-4">
         <div class="card p-6">
@@ -37,3 +32,9 @@ const { website } = defineProps({
         </div>
     </div>
 </template>
+
+<script>
+export default {
+    props: ["website"],
+};
+</script>
