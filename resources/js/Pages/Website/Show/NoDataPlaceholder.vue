@@ -34,7 +34,7 @@ const { website } = defineProps({
                 <div class="text-base font-medium">
                     <!-- Paste this snippet in the &lt;head&gt; of your website. -->
                 </div>
-                <SnippetCode :website="website" />
+                <!-- <SnippetCode :website="website" /> -->
             </div>
         </div>
     </div>
