@@ -21,7 +21,7 @@ const { website } = defineProps({
                     class="ml-7 flex items-center space-x-1 text-gray-800 dark:text-white text-sm font-medium"
                 >
                     <div>Waiting for first pageview on</div>
-                    <div class="font-bold">{{ website.domain }}</div>
+                    <div class="font-bold">{{ website?.domain }}</div>
                 </div>
             </div>
         </div>
