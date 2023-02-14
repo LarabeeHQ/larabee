@@ -392,6 +392,6 @@ onMounted(() => {
                 </div>
             </div>
         </div>
-        <NoDataPlaceholder v-else :website="website" />
+        <!-- <NoDataPlaceholder v-else :website="website" /> -->
     </AuthenticatedLayout>
 </template>
