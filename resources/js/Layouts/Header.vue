@@ -12,7 +12,7 @@ import { Link, useForm, usePage } from "@inertiajs/vue3";
 import { MoonIcon, SunIcon } from "@heroicons/vue/20/solid";
 import { UserCircleIcon } from "@heroicons/vue/24/outline";
 
-const darkMode = ref(false);
+const darkMode = ref(localStorage.getItem("theme") == "dark" ? true : false);
 const user = computed(() => usePage().props.auth.user);
 const selfHosted = computed(() => usePage().props.self_hosted);
 
