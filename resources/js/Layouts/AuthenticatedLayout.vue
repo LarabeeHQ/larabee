@@ -2,7 +2,7 @@
 import { computed } from "vue";
 import { usePage } from "@inertiajs/vue3";
 
-import Header from "./Header.vue";
+import Header from "./Header2.vue";
 import Banner from "@/Components/Banner.vue";
 
 const user = computed(() => usePage().props.auth.user);
