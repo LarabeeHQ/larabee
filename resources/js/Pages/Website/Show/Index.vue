@@ -152,7 +152,7 @@ onMounted(() => {
     <Head :title="website.name" />
 
     <AuthenticatedLayout>
-        <div v-if="website.sessions_count >= 1">
+        <div>
             <div class="flex items-center justify-between mb-2">
                 <!-- <div class="min-w-0 flex-1">
                 <div class="hidden space-x-4 sm:-my-px sm:flex items-center">
@@ -380,6 +380,6 @@ onMounted(() => {
                 </div>
             </div>
         </div>
-        <NoDataPlaceholder v-else :website="website" />
+        <!-- <NoDataPlaceholder v-else :website="website" /> -->
     </AuthenticatedLayout>
 </template>

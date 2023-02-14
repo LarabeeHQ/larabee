@@ -207,5 +207,5 @@ const openModalUpgrade = () => {
         </div>
     </nav>
 
-    <ModalUpgrade ref="modalUpgrade" />
+    <!-- <ModalUpgrade ref="modalUpgrade" /> -->
 </template>
