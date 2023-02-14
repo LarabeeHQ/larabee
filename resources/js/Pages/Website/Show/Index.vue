@@ -153,7 +153,7 @@ onMounted(() => {
     <AuthenticatedLayout>
         <div v-if="website.sessions_count >= 1">
             <div class="flex items-center justify-between mb-2">
-                <div class="min-w-0 flex-1">
+                <!-- <div class="min-w-0 flex-1">
                     <div
                         class="hidden space-x-4 sm:-my-px sm:flex items-center"
                     >
@@ -237,7 +237,7 @@ onMounted(() => {
                             </div>
                         </div>
                     </div>
-                </div>
+                </div> -->
 
                 <Menu as="div" class="relative inline-block text-left">
                     <div>
