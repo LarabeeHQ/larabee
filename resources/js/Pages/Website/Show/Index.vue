@@ -1,6 +1,7 @@
 <script setup>
 import { Menu, MenuButton, MenuItem, MenuItems } from "@headlessui/vue";
 import { ChevronDownIcon } from "@heroicons/vue/20/solid";
+import { Cog6ToothIcon } from "@heroicons/vue/24/outline";
 
 import NoDataPlaceholder from "./NoDataPlaceholder.vue";
 
@@ -165,7 +166,7 @@ onMounted(() => {
             <div class="flex items-center justify-between mb-2">
                 <div class="min-w-0 flex-1">
                     <div
-                        class="hidden space-x-4 sm:-my-px sm:flex items-center"
+                        class="space-x-2 xl:space-x-4 -my-px flex items-center"
                     >
                         <div v-if="user">
                             <Menu
@@ -236,14 +237,23 @@ onMounted(() => {
                                 </transition>
                             </Menu>
                         </div>
+
+                        <Link :href="route('websites.edit', website.id)">
+                            <Cog6ToothIcon
+                                class="h-5 w-5 text-zinc-600 stroke-2"
+                            />
+                        </Link>
+
                         <div class="flex items-center space-x-1.5">
                             <div
                                 class="h-2 w-2 bg-green-500 rounded-full"
                             ></div>
                             <div
-                                class="text-gray-800 dark:text-white text-sm font-medium"
+                                class="flex items-center space-x-1 text-gray-800 dark:text-white text-sm font-medium"
                             >
-                                {{ online }} active users
+                                <div>{{ online }}</div>
+                                <div class="hidden xl:flex">active</div>
+                                <div>users</div>
                             </div>
                         </div>
                     </div>

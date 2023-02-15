@@ -26,7 +26,7 @@ const websites = user.value.websites;
                 </PrimaryButton>
             </div>
         </div>
-        <div class="grid grid-cols-3 gap-4">
+        <div class="grid xl:grid-cols-3 gap-4">
             <Link
                 as="div"
                 v-for="website in websites"

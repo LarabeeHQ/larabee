@@ -16,13 +16,13 @@ const setCurrentTab = (tab) => {
 </script>
 
 <template>
-    <div class="flex items-center space-x-3">
+    <div class="flex items-center space-x-1.5 xl:space-x-3">
         <div
             v-for="tab in tabs"
             :key="tab"
             @click="setCurrentTab(tab)"
             :class="{
-                'cursor-pointer text-base  capitalize': true,
+                'cursor-pointer capitalize text-sm xl:text-base': true,
                 'text-black dark:text-white font-bold border-b-2 border-black dark:border-white':
                     currentTab == tab,
                 'text-gray-600 dark:text-gray-400 font-medium':

@@ -64,14 +64,26 @@ class WebsiteController extends Controller
             'role' => User::ROLE_OWNER,
         ]);
 
+        session()->flash('flash.banner', 'Website created');
+        session()->flash('flash.bannerStyle', 'success');
+
         return redirect(route('websites.show', $website->id));
+    }
+
+    public function edit($id, Request $request)
+    {
+        $website = Website::find($id);
+
+        return Inertia::render('Website/Edit', [
+            'website' => $website
+        ]);
     }
 
     public function update($id, Request $request)
     {
         $request->validate([
             'name' => 'required|min:2',
-            'domain' => 'required|url',
+            'domain' => 'required',
         ]);
 
         $website = Website::find($id);
@@ -82,7 +94,10 @@ class WebsiteController extends Controller
         $website->public = $request->public;
         $website->save();
 
-        return redirect(route('websites.show', $website->id));
+        session()->flash('flash.banner', 'Website updated');
+        session()->flash('flash.bannerStyle', 'success');
+
+        return back();
     }
 
     public function show($id)
