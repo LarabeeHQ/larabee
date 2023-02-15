@@ -1,5 +1,5 @@
 <script setup>
-import SnippetCode from "./SnippetCode.vue";
+import SnippetCode from "@/Pages/Website/SnippetCode.vue";
 
 const { website } = defineProps({
     website: Object,
@@ -26,16 +26,6 @@ const { website } = defineProps({
             </div>
         </div>
 
-        <div class="card p-6">
-            <div class="text-gray-800 dark:text-white">
-                <div class="text-xl font-semibold mb-1">
-                    Your javascript code
-                </div>
-                <div class="text-base font-medium">
-                    Paste this snippet in the head of your website.
-                </div>
-                <SnippetCode :website="website" />
-            </div>
-        </div>
+        <SnippetCode :website="website" />
     </div>
 </template>

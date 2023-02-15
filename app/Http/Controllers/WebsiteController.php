@@ -91,6 +91,7 @@ class WebsiteController extends Controller
         $website->name = $request->name;
         $website->domain = $request->domain;
         $website->allowed_domains = $request->allowed_domains;
+        $website->session_duration = $request->session_duration;
         $website->public = $request->public;
         $website->save();
 

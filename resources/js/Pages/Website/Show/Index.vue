@@ -22,12 +22,10 @@ const { website } = defineProps({
     website: Object,
 });
 
-const loaded = ref(false);
-
 const online = ref(0);
 
 const range = ref({
-    start: dayjs().subtract(1, "month").format("YYYY-MM-DD"),
+    start: dayjs().format("YYYY-MM-DD"),
     end: dayjs().format("YYYY-MM-DD"),
 });
 
@@ -151,10 +149,6 @@ const loadOnline = () => {
 
 onMounted(() => {
     loadOnline();
-
-    setTimeout(() => {
-        loaded.value = true;
-    }, 3000);
 });
 </script>
 
@@ -284,7 +278,7 @@ onMounted(() => {
                         leave-to-class="transform opacity-0 scale-95"
                     >
                         <MenuItems
-                            class="absolute right-0 z-10 mt-2 w-52 origin-top-right divide-y divide-gray-100 dark:divide-zinc-700 rounded-md bg-white dark:bg-zinc-800 shadow-lg focus:outline-none"
+                            class="absolute right-0 z-10 mt-2 w-44 origin-top-right divide-y divide-gray-100 dark:divide-zinc-700 rounded-md bg-white dark:bg-zinc-800 shadow-lg focus:outline-none"
                         >
                             <div
                                 v-for="periodFilter in periodFilters"

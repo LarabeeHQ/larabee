@@ -3,15 +3,12 @@ import { onMounted, ref } from "vue";
 import ApplicationLogo from "@/Components/ApplicationLogo.vue";
 import { Link } from "@inertiajs/vue3";
 
-const darkMode = ref(localStorage.getItem("theme") == "dark" ? true : false);
-
-onMounted(() => {
-    if (darkMode.value) {
-        document.documentElement.classList.add("dark");
-    } else {
-        document.documentElement.classList.remove("dark");
-    }
-});
+if (
+    window.matchMedia &&
+    window.matchMedia("(prefers-color-scheme: dark)").matches
+) {
+    document.documentElement.classList.add("dark");
+}
 </script>
 
 <template>

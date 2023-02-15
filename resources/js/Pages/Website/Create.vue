@@ -23,6 +23,13 @@ const submit = () => {
         <Head title="New Website" />
 
         <div class="flex flex-col sm:justify-center items-center">
+            <div class="sm:mx-auto sm:w-full sm:max-w-md mb-4">
+                <h1
+                    class="mt-6 text-center text-3xl font-bold tracking-tight text-zinc-900 dark:text-white"
+                >
+                    New Website
+                </h1>
+            </div>
             <div
                 class="w-full sm:max-w-md px-6 py-4 card overflow-hidden sm:rounded-lg"
             >
@@ -62,6 +69,12 @@ const submit = () => {
                     </div>
 
                     <div class="flex items-center justify-end mt-4">
+                        <Link
+                            :href="route('websites.index')"
+                            class="text-sm dark:text-gray-300 dark:hover:text-white hover:underline"
+                        >
+                            Cancel
+                        </Link>
                         <PrimaryButton
                             class="ml-4"
                             :class="{ 'opacity-25': form.processing }"

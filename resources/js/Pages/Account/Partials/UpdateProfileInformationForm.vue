@@ -20,6 +20,7 @@ const form = useForm({
     name: user.value.name,
     email: user.value.email,
     timezone_id: user.value.timezone_id,
+    theme: user.value.theme,
 });
 
 const verificationLinkSent = ref(null);
@@ -94,6 +95,19 @@ const sendEmailVerification = () => {
                         address.
                     </div>
                 </div>
+            </div>
+
+            <div class="col-span-6 sm:col-span-4">
+                <Label for="theme" value="Theme" />
+                <Select
+                    id="theme"
+                    :placeholder="false"
+                    :values="{ light: 'Light', dark: 'Dark', system: 'System' }"
+                    class="mt-1 block w-full"
+                    v-model="form.theme"
+                />
+
+                <InputError :message="form.errors.theme" class="mt-2" />
             </div>
 
             <div class="col-span-6 sm:col-span-4">

@@ -20,6 +20,8 @@ return new class extends Migration
             $table->timestamp('email_verified_at')->nullable();
             $table->string('password');
 
+            $table->enum('theme', ['light', 'dark', 'system'])->default('system');
+
             $table->foreignUuid('timezone_id');
 
             $table->string('stripe_id')->nullable()->index();

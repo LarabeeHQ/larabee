@@ -38,7 +38,7 @@
                     <div class="flex items-center justify-center h-screen p-4">
                         <div
                             v-show="show"
-                            class="mx-auto mb-6 bg-white dark:bg-zinc-800 dark:text-white rounded-lg shadow-xl transform transition-all sm:w-full sm:mx-auto"
+                            class="w-full mx-auto mb-6 bg-white dark:bg-zinc-800 dark:text-white rounded-lg shadow-xl transform transition-all sm:w-full sm:mx-auto"
                             :class="maxWidthClass"
                         >
                             <slot v-if="show"></slot>

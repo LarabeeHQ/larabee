@@ -15,8 +15,8 @@ const isLoading = ref(false);
 
 const plans = computed(() => usePage().props.plans);
 
-const selectedPlan = ref(plans[0]);
-const yearly = ref(false);
+const selectedPlan = ref(plans.value[0]);
+const yearly = ref(true);
 
 const generateCheckout = () => {
     isLoading.value = true;
@@ -60,31 +60,31 @@ defineExpose({
 
         <template #content>
             <div class="mb-4">
-                <div class="sm:flex sm:flex-col sm:align-center">
+                <div class="flex flex-col align-center">
                     <div
                         class="relative self-center rounded-md border border-zinc-100 p-1 flex"
                     >
                         <div
                             @click="yearly = false"
                             :class="{
-                                'relative w-1/2 rounded py-1.5 text-sm font-bold whitespace-nowrap focus:outline-none focus:z-10 sm:w-auto sm:px-6 cursor-pointer': true,
+                                'relative rounded py-1.5 text-sm font-bold whitespace-nowrap focus:outline-none focus:z-10 w-auto px-6 cursor-pointer': true,
                                 'bg-zinc-100 text-zinc-800 dark:text-white dark:bg-zinc-700':
                                     !yearly,
                                 'text-black dark:text-white': yearly,
                             }"
                         >
-                            Monthly
+                            Pay Monthly
                         </div>
                         <div
                             @click="yearly = true"
                             :class="{
-                                'relative w-1/2 rounded py-1.5 text-sm font-bold  whitespace-nowrap focus:outline-none focus:z-10 sm:w-auto sm:px-6 cursor-pointer': true,
+                                'relative rounded py-1.5 text-sm font-bold  whitespace-nowrap focus:outline-none focus:z-10 w-auto px-6 cursor-pointer': true,
                                 'bg-zinc-100 text-zinc-800 dark:text-white dark:bg-zinc-700':
                                     yearly,
                                 'text-black dark:text-white': !yearly,
                             }"
                         >
-                            Yearly
+                            Pay Annually
                         </div>
                     </div>
                 </div>
@@ -96,6 +96,12 @@ defineExpose({
                 <div
                     class="relative -space-y-px rounded-md bg-white dark:bg-zinc-800"
                 >
+                    <div
+                        class="px-4 py-2 text-[11px] uppercase font-bold border border-zinc-200 dark:border-zinc-700 rounded-tl-md rounded-tr-md flex items-center justify-between"
+                    >
+                        <div>Monthly Pageviews</div>
+                        <div class="mr-8">Price</div>
+                    </div>
                     <RadioGroupOption
                         as="template"
                         v-for="(plan, planIdx) in plans"
@@ -105,16 +111,13 @@ defineExpose({
                     >
                         <div
                             :class="[
-                                planIdx === 0
-                                    ? 'rounded-tl-md rounded-tr-md'
-                                    : '',
                                 planIdx === plans.length - 1
                                     ? 'rounded-bl-md rounded-br-md'
                                     : '',
                                 checked
                                     ? 'bg-zinc-100 dark:bg-zinc-700 border-zinc-200 z-10'
                                     : 'border-zinc-200 dark:border-zinc-700',
-                                'relative border p-4 flex flex-col cursor-pointer md:pl-4 md:pr-6 md:grid md:grid-cols-2 focus:outline-none',
+                                'relative border p-2 xl:p-4 cursor-pointer pl-4 pr-6 grid grid-cols-2 focus:outline-none',
                             ]"
                         >
                             <span class="flex items-center text-sm">
@@ -127,19 +130,24 @@ defineExpose({
                                         'font-medium',
                                     ]"
                                 >
-                                    {{ plan.name }} / page views per month
+                                    {{ plan.name }}
                                 </RadioGroupLabel>
                             </span>
                             <RadioGroupDescription
                                 as="span"
-                                class="text-sm md:ml-0 md:pl-0 md:text-right"
+                                :class="[
+                                    checked
+                                        ? 'text-zinc-800 dark:text-white'
+                                        : 'text-gray-900 dark:text-zinc-500',
+                                    'text-sm ml-0 pl-0 text-right',
+                                ]"
                             >
                                 {{
                                     yearly
                                         ? `$${plan.priceYearly}`
                                         : `$${plan.priceMonthly}`
                                 }}
-                                {{ yearly ? "/year" : "/month" }}
+                                {{ yearly ? "/ yr" : "/ mo" }}
                             </RadioGroupDescription>
                         </div>
                     </RadioGroupOption>
