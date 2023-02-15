@@ -13,8 +13,8 @@ const loadData = () => {
     axios
         .get(route("websites.statistics", website.id), {
             params: {
-                start: dateRange.start,
-                end: dateRange.end,
+                start: dateRange.date.start,
+                end: dateRange.date.end,
                 metric: "countries",
             },
         })

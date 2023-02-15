@@ -1,11 +1,9 @@
 <script setup>
+import Chart from "chart.js/auto";
 import helper from "@/helper";
 import { ref, watch, onMounted } from "vue";
-import LineChart from "@/Pages/Website/Show/Overview/LineChart.vue";
-import BarChart from "@/Pages/Website/Show/Overview/BarChart.vue";
 import { ChevronUpIcon, ChevronDownIcon } from "@heroicons/vue/24/outline";
 
-const currentTab = ref("sessions");
 const tabs = ref([
     {
         id: "sessions",
@@ -15,14 +13,14 @@ const tabs = ref([
         helperFunction: helper.kFormatter,
     },
     {
-        id: "pageViews",
+        id: "page-views",
         name: "Page Views",
         value: null,
         change: null,
         helperFunction: helper.kFormatter,
     },
     {
-        id: "bounceRate",
+        id: "bounce",
         name: "Bounce Rate",
         value: null,
         change: null,
@@ -31,29 +29,36 @@ const tabs = ref([
         },
     },
     {
-        id: "avgSessionDuration",
+        id: "session-avg",
         name: "Session Duration",
         value: null,
         change: null,
         helperFunction: helper.secondsToTime,
     },
 ]);
+const currentTab = ref(tabs.value[0]);
 
-const setChart = (stat) => {
+const chartType = ref("line");
+const setCurrentTab = (stat) => {
     currentTab.value = stat;
 };
 
-const { dateRange, website } = defineProps({
+const { dateRange, website, selectedFilter } = defineProps({
     dateRange: Object,
     website: Object,
+    selectedFilter: Object,
 });
+
+const chartElementRef = ref(null);
+const chartElement = ref(null);
+const chartData = ref(null);
 
 const loadData = () => {
     axios
         .get(route("websites.statistics", website.id), {
             params: {
-                start: dateRange.start,
-                end: dateRange.end,
+                start: dateRange.date.start,
+                end: dateRange.date.end,
                 metric: "overview",
             },
         })
@@ -68,13 +73,85 @@ const loadData = () => {
         });
 };
 
-onMounted(() => {
-    loadData();
-});
+const cycle = ref("day");
 
-watch(dateRange, (value) => {
-    loadData();
-});
+const setCycle = (cycle) => {
+    cycle.value = cycle;
+    loadChartData();
+};
+
+const renderChart = () => {
+    const backgroundColorPositive = "rgba(204, 240, 227, 0.3)";
+    const borderColorPositive = "#32C48D";
+    const backgroundColorNegative = "rgba(247, 0, 160, 0.1)";
+    const borderColorNegative = "#f700a0";
+
+    // clear canva
+    if (chartElement.value) {
+        chartElement.value.destroy();
+    }
+
+    chartElement.value = new Chart(chartElementRef.value, {
+        type: "line",
+        data: {
+            labels: chartData.value.labels,
+            datasets: [
+                {
+                    label: chartData.value.label,
+                    data: chartData.value.data,
+                    fill: true,
+                    backgroundColor: backgroundColorPositive,
+                    borderColor: borderColorPositive,
+                    tension: 0.06,
+                },
+            ],
+        },
+        options: {
+            responsive: true,
+            plugins: {
+                legend: {
+                    display: false,
+                },
+            },
+            scales: {
+                x: {
+                    grid: {
+                        display: false,
+                    },
+                },
+                y: {
+                    stacked: true,
+                },
+            },
+        },
+    });
+};
+
+const loadChartData = () => {
+    console.log(dateRange.group);
+    axios
+        .get(route("websites.statistics", website.id), {
+            params: {
+                start: dateRange.date.start,
+                end: dateRange.date.end,
+                metric: "chart",
+                group: dateRange.group,
+            },
+        })
+        .then((response) => {
+            chartData.value = response.data;
+            renderChart();
+        });
+};
+
+watch(
+    dateRange,
+    () => {
+        loadData();
+        loadChartData();
+    },
+    { immediate: true }
+);
 </script>
 <template>
     <div class="card p-6">
@@ -82,11 +159,11 @@ watch(dateRange, (value) => {
             <div
                 v-for="data in tabs"
                 :key="data"
-                @click="setChart(data.id)"
+                @click="setCurrentTab(data)"
                 :class="{
                     'border-t-4 overflow-hidden rounded-md bg-zinc-100 dark:bg-zinc-900 px-4 py-5 sm:p-6 cursor-pointer': true,
-                    ' border-green-400': data.id == currentTab,
-                    ' border-transparent': data.id != currentTab,
+                    ' border-green-400': data.id == currentTab.id,
+                    ' border-transparent': data.id != currentTab.id,
                 }"
             >
                 <div
@@ -125,10 +202,47 @@ watch(dateRange, (value) => {
             </div>
         </div>
 
-        <LineChart
-            key="lineChartIndex"
-            :date-range="dateRange"
-            :website="website"
-        />
+        <div class="space-y-4">
+            <div class="px-4 py-4">
+                <div
+                    class="flex flex-col sm:flex-row justify-between items-baseline mb-4"
+                >
+                    <!-- <h2 class="font-medium text-sm text-gray-600"></h2>
+                <div
+                    class="bg-gray-100 flex items-baseline px-1.5 py-1 text-sm rounded-lg font-medium"
+                >
+                    <div
+                        @click="setCycle('day')"
+                        :class="{
+                            'rounded-md px-3 py-1.5 cursor-pointer transition': true,
+                            'bg-white shadow text-blue-600': cycle == 'day',
+                        }"
+                    >
+                        Hour
+                    </div>
+                    <div
+                        @click="setCycle('week')"
+                        :class="{
+                            'rounded-md px-3 py-1.5 cursor-pointer transition': true,
+                            'bg-white shadow text-blue-600': cycle == 'week',
+                        }"
+                    >
+                        Day
+                    </div>
+                    <div
+                        @click="setCycle('month')"
+                        :class="{
+                            'rounded-md px-3 py-1.5 cursor-pointer transition': true,
+                            'bg-white shadow text-blue-600': cycle == 'month',
+                        }"
+                    >
+                        Week
+                    </div>
+                </div> -->
+                </div>
+
+                <canvas ref="chartElementRef"></canvas>
+            </div>
+        </div>
     </div>
 </template>

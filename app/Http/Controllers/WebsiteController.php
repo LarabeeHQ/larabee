@@ -117,7 +117,7 @@ class WebsiteController extends Controller
             auth()->user()->belongsToWebsite($website);
         }
 
-        return Inertia::render('Website/Show/Index', [
+        return Inertia::render('Website/Show/Home/Index', [
             'website' => $website
         ]);
     }
@@ -128,6 +128,10 @@ class WebsiteController extends Controller
             'start' => ['required', 'max:255', 'date_format:Y-m-d'],
             'end' => ['required', 'max:255', 'date_format:Y-m-d'],
             'metric' => ['required', 'max:255', Rule::in(Website::METRICS)],
+            'group' => [
+                'required_if:metric,chart',
+                'max:255',
+                'in:hour,day,month']
         ]);
 
         $website = Website::find($id);
@@ -157,9 +161,22 @@ class WebsiteController extends Controller
                 $data = $this->website->overview($website->id, $start, $end, $prevStartDate, $prevEndDate);
                 break;
 
-            case 'chart':
-                $data = $this->website->chart($website->id, $start, $end);
+            case 'chart-sessions':
+                $data = $this->website->chartSession($website->id, $request->period);
                 break;
+
+            case 'chart-page-views':
+                $data = $this->website->chartPageView($website->id, $request->period);
+                break;
+
+            case 'chart-bounce':
+                $data = $this->website->chartBounce($website->id, $request->period);
+                break;
+
+            case 'chart-session-avg':
+                $data = $this->website->chartSessionAvg($website->id, $request->period);
+                break;
+
 
             case 'online':
                 $data = $this->website->online($website);

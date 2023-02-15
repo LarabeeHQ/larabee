@@ -69,40 +69,27 @@ class WebsiteRepository
                 'change' => $firstData->sessions - $previousData->sessions,
                 'value' => $firstData->sessions
             ],
-            'pageViews' => [
+            'page-views' => [
                 'change' => $firstData->views - $previousData->views,
                 'value' => $firstData->views ? $firstData->views : 0
             ],
-            'bounceRate' => [
-                'change' => $firstData->sessions && $firstData->bounces ? ($firstData->bounces / $firstData->sessions) * 100 : 0,
-                'value' => $previousData->sessions && $previousData->bounces ? ($previousData->bounces / $previousData->sessions) * 100 : 0,
+            'bounce' => [
+                'change' => $firstData->sessions && $firstData->bounces ? round((($firstData->bounces / $firstData->sessions) * 100), 2) : 0,
+                'value' => $previousData->sessions && $previousData->bounces ? round((($previousData->bounces / $previousData->sessions) * 100), 2) : 0,
             ],
-            'avgSessionDuration' => [
+            'session-avg' => [
                 'value' => $firstData->totaltime && $firstData->sessions ? ceil(($firstData->totaltime / 60) / $firstData->sessions * 100) : 0,
                 'change' => $previousData->totaltime && $previousData->sessions ? ceil(($previousData->totaltime / 60) / $previousData->sessions * 100) : 0,
             ],
         ];
     }
 
-    public function chart($websiteId, $start, $end)
+    public function chart($websiteId, $start, $end, $group)
     {
-        $pointInterval = 60 * 1000 * 60 * 24; // 1day
-
-        $data = [
-            [
-                'name' => 'Installation & Developers',
-                'data' => [43934, 48656, 65165, 81827, 112143, 142383, 171533, 165174, 155157, 161454, 154610]
-            ]
-        ];
-
         return [
-            'data' => $data,
-            'pointStart' => $start->getTimestampMs(),
-            'pointInterval' => $pointInterval,
-            'min' => $start->getTimestampMs(),
-            'max' => $end->getTimestampMs(),
-            'color' =>  '#000000',
-            'fillOpacity' => 0.1,
+            'data' => [20, 40, 80, 81, 56, 55, 40],
+            'label' => 'Sessions',
+            'labels' => [1, 2, 3, 4, 5, 6, 7]
         ];
     }
 
