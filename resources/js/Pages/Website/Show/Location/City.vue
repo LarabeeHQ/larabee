@@ -16,6 +16,8 @@ const loadData = async () => {
                 start: dateRange.date.start,
                 end: dateRange.date.end,
                 metric: "cities",
+                group: dateRange.group,
+                key: dateRange.key,
             },
         })
         .then((response) => {

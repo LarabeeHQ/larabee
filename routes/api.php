@@ -7,7 +7,9 @@ use App\Http\Controllers\Api\CollectController;
 
 // open routes
 Route::group(['middleware' => []], function () {
-    Route::post('/collect', [CollectController::class, 'store'])->name('public-api.events.store');
+
+    // events
+    Route::post('/collect', [CollectController::class, 'store'])->name('api.events.store');
 });
 
 

@@ -16,6 +16,8 @@ const loadData = () => {
                 start: dateRange.date.start,
                 end: dateRange.date.end,
                 metric: "languages",
+                group: dateRange.group,
+                key: dateRange.key,
             },
         })
         .then((response) => {

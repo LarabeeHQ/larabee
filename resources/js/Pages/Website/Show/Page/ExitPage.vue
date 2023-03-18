@@ -16,6 +16,8 @@ const loadData = () => {
                 start: dateRange.date.start,
                 end: dateRange.date.end,
                 metric: "exit-pages",
+                group: dateRange.group,
+                key: dateRange.key,
             },
         })
         .then((response) => {

@@ -22,7 +22,7 @@ const periodFilters = [
         {
             name: "Live",
             key: "live",
-            group: "hour",
+            group: "minute",
         },
         {
             name: "Today",
@@ -73,7 +73,7 @@ const setCurrentFilter = (filter) => {
         case "live":
             range.key = filter.key;
             range.name = filter.name;
-            range.group = "hour";
+            range.group = "minute";
             range.date = {
                 start: dayjs().format("YYYY-MM-DD"),
                 end: dayjs().format("YYYY-MM-DD"),
@@ -183,6 +183,8 @@ const loadOnline = () => {
                 start: range.date.start,
                 end: range.date.end,
                 metric: "online",
+                group: range.group,
+                key: range.key,
             },
         })
         .then((response) => {

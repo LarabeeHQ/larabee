@@ -3,6 +3,7 @@ import Chart from "chart.js/auto";
 import helper from "@/helper";
 import { ref, watch, onMounted } from "vue";
 import { ChevronUpIcon, ChevronDownIcon } from "@heroicons/vue/24/outline";
+import { current } from "tailwindcss/colors";
 
 const tabs = ref([
     {
@@ -50,7 +51,7 @@ const { dateRange, website, selectedFilter } = defineProps({
 });
 
 const chartElementRef = ref(null);
-const chartElement = ref(null);
+let chartElement;
 const chartData = ref(null);
 
 const loadData = () => {
@@ -60,6 +61,8 @@ const loadData = () => {
                 start: dateRange.date.start,
                 end: dateRange.date.end,
                 metric: "overview",
+                group: dateRange.group,
+                key: dateRange.key,
             },
         })
         .then((response) => {
@@ -86,19 +89,53 @@ const renderChart = () => {
     const backgroundColorNegative = "rgba(247, 0, 160, 0.1)";
     const borderColorNegative = "#f700a0";
 
-    // clear canva
-    if (chartElement.value) {
-        chartElement.value.destroy();
+    let chartDataData;
+    let chartDataLabel;
+    let chartDataLabels;
+
+    switch (currentTab.value.id) {
+        case "sessions":
+            chartDataData = chartData.value.sessions.data;
+            chartDataLabel = chartData.value.sessions.label;
+            chartDataLabels = chartData.value.sessions.labels;
+            break;
+
+        case "page-views":
+            chartDataData = chartData.value.pageViews.data;
+            chartDataLabel = chartData.value.pageViews.label;
+            chartDataLabels = chartData.value.pageViews.labels;
+            break;
+
+        case "bounce":
+            chartDataData = chartData.value.bounceRate.data;
+            chartDataLabel = chartData.value.bounceRate.label;
+            chartDataLabels = chartData.value.bounceRate.labels;
+            break;
+
+        case "session-avg":
+            chartDataData = chartData.value.sessionDuration.data;
+            chartDataLabel = chartData.value.sessionDuration.label;
+            chartDataLabels = chartData.value.sessionDuration.labels;
+            break;
     }
 
-    chartElement.value = new Chart(chartElementRef.value, {
+    // clear canva
+    if (chartElement) {
+        chartElement.data.labels = chartDataLabels;
+        chartElement.data.datasets[0].data = chartDataData;
+        chartElement.data.datasets[0].label = chartDataLabel;
+        chartElement.update();
+        return;
+    }
+
+    chartElement = new Chart(chartElementRef.value, {
         type: "line",
         data: {
-            labels: chartData.value.labels,
+            labels: chartDataLabels,
             datasets: [
                 {
-                    label: chartData.value.label,
-                    data: chartData.value.data,
+                    label: chartDataLabel,
+                    data: chartDataData,
                     fill: true,
                     backgroundColor: backgroundColorPositive,
                     borderColor: borderColorPositive,
@@ -128,7 +165,7 @@ const renderChart = () => {
 };
 
 const loadChartData = () => {
-    console.log(dateRange.group);
+    console.log(dateRange);
     axios
         .get(route("websites.statistics", website.id), {
             params: {
@@ -136,6 +173,7 @@ const loadChartData = () => {
                 end: dateRange.date.end,
                 metric: "chart",
                 group: dateRange.group,
+                key: dateRange.key,
             },
         })
         .then((response) => {
@@ -152,6 +190,10 @@ watch(
     },
     { immediate: true }
 );
+
+watch(currentTab, () => {
+    renderChart();
+});
 </script>
 <template>
     <div class="card p-6">

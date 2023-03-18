@@ -128,10 +128,8 @@ class WebsiteController extends Controller
             'start' => ['required', 'max:255', 'date_format:Y-m-d'],
             'end' => ['required', 'max:255', 'date_format:Y-m-d'],
             'metric' => ['required', 'max:255', Rule::in(Website::METRICS)],
-            'group' => [
-                'required_if:metric,chart',
-                'max:255',
-                'in:hour,day,month']
+            'group' => ['required', 'max:255', 'in:minute,hour,day,month'],
+            'key' => ['required', 'in:live,today,yesterday,this_month,last_month,this_year,last_12_months,all_time,custom']
         ]);
 
         $website = Website::find($id);
@@ -147,9 +145,14 @@ class WebsiteController extends Controller
         }
 
         $timezone = auth()->check() ? auth()->user()->timezone->value : 'UTC';
-
         $start = Carbon::createFromFormat('Y-m-d', $request->start, $timezone)->setTimezone('UTC')->startOfDay();
         $end = Carbon::createFromFormat('Y-m-d', $request->end, $timezone)->setTimezone('UTC')->endOfDay();
+
+        // if it's live
+        if ($request->key == 'live') {
+            $start = now()->subMinutes($website->session_duration);
+            $end = now();
+        }
 
         switch ($request->metric) {
             case 'overview':
@@ -161,22 +164,9 @@ class WebsiteController extends Controller
                 $data = $this->website->overview($website->id, $start, $end, $prevStartDate, $prevEndDate);
                 break;
 
-            case 'chart-sessions':
-                $data = $this->website->chartSession($website->id, $request->period);
+            case 'chart':
+                $data = $this->website->chart($website, $start, $end, $request->group);
                 break;
-
-            case 'chart-page-views':
-                $data = $this->website->chartPageView($website->id, $request->period);
-                break;
-
-            case 'chart-bounce':
-                $data = $this->website->chartBounce($website->id, $request->period);
-                break;
-
-            case 'chart-session-avg':
-                $data = $this->website->chartSessionAvg($website->id, $request->period);
-                break;
-
 
             case 'online':
                 $data = $this->website->online($website);

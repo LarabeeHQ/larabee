@@ -32,6 +32,8 @@ return new class extends Migration
             $table->string('utm_term')->nullable();
             $table->dateTime('created_at', 0);
 
+            $table->index(['website_id']);
+            $table->index(['created_at']);
         });
     }
 

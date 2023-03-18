@@ -38,13 +38,6 @@ class HandleInertiaRequests extends Middleware
                         return;
                     }
 
-
-                    // if ($request->user()->subscription('default')->onTrial()) {
-                    //     dd('ok');
-                    // }
-
-                    // dd($request->user()->plan);
-
                     return array_merge($request->user()->toArray(), array_filter([
                         'is_trial' => $request->user()->onTrial(),
                         'timezone' => $request->user()->timezone,

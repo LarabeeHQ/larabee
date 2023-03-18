@@ -21,8 +21,8 @@ return new class extends Migration
             $table->json('allowed_domains')->nullable();
             $table->boolean('public')->default(false);
             $table->integer('session_duration')->default(30);
+
             $table->timestamps();
-            $table->softDeletes('deleted_at', 0);
         });
     }
 

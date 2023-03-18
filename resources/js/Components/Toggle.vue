@@ -49,7 +49,9 @@ const proxyChecked = computed({
             />
         </Switch>
         <SwitchLabel as="span" class="ml-3">
-            <span class="text-sm font-medium text-gray-900">{{ label }}</span>
+            <span class="text-sm font-medium text-zinc-700 dark:text-white">{{
+                label
+            }}</span>
         </SwitchLabel>
     </SwitchGroup>
 </template>

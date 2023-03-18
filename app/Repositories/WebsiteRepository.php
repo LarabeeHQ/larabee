@@ -74,8 +74,8 @@ class WebsiteRepository
                 'value' => $firstData->views ? $firstData->views : 0
             ],
             'bounce' => [
-                'change' => $firstData->sessions && $firstData->bounces ? round((($firstData->bounces / $firstData->sessions) * 100), 2) : 0,
-                'value' => $previousData->sessions && $previousData->bounces ? round((($previousData->bounces / $previousData->sessions) * 100), 2) : 0,
+                'change' => $previousData->sessions && $previousData->bounces ? round((($previousData->bounces / $previousData->sessions) * 100), 2) : 0,
+                'value' => $firstData->sessions && $firstData->bounces ? round((($firstData->bounces / $firstData->sessions) * 100), 2) : 0,
             ],
             'session-avg' => [
                 'value' => $firstData->totaltime && $firstData->sessions ? ceil(($firstData->totaltime / 60) / $firstData->sessions * 100) : 0,
@@ -84,12 +84,115 @@ class WebsiteRepository
         ];
     }
 
-    public function chart($websiteId, $start, $end, $group)
+    public function chart($website, $start, $end, $group)
     {
+        switch ($group) {
+            case 'minute':
+                $format = "to_char(date_trunc('$group', created_at), 'HH24:MI')";
+                break;
+            case 'hour':
+                $format = "to_char(date_trunc('$group', created_at), 'HH24:00')";
+                break;
+            case 'day':
+                $format = "to_char(date_trunc('$group', created_at), 'DD')";
+                break;
+            case 'month':
+                $format = "to_char(date_trunc('$group', created_at), 'YY-MM')";
+                break;
+        }
+
+        $sessions = collect(DB::select("SELECT
+                            $format as $group,
+                            count(*) as value
+                        FROM
+                            sessions
+                        WHERE
+                            website_id = '$website->id'
+                            AND created_at BETWEEN '$start' AND '$end'
+                        GROUP BY
+                            $group
+                        order by $group asc"));
+
+        $pageViews = collect(DB::select("SELECT
+                            $format as $group,
+                            count(*) as value
+                        FROM
+                            page_views
+                        WHERE
+                            website_id = '$website->id'
+                            AND created_at BETWEEN '$start' AND '$end'
+                        GROUP BY
+                            $group
+                        order by $group asc
+                    "));
+
+
+
+        $bounce = DB::select("SELECT
+                        date,
+                        round(((totalPageViews::NUMERIC / totalSessions) * 100), 2) AS bounceRate
+                    FROM (
+                        SELECT
+                            to_char(date_trunc('day', sessions.created_at), 'YYYY-MM-DD') AS date,
+                            (
+                                SELECT
+                                    count(*)
+                                FROM
+                                    page_views
+                                WHERE
+                                    session_id = sessions.id
+                            )
+                            AS totalPageViews,
+                            (
+                                SELECT
+                                    count(*)
+                                FROM
+                                    sessions AS subSession
+                                WHERE
+                                    subSession.website_id = '9877ab2f-d01f-42f7-b6ac-73023ef849e0'
+                                            AND
+                                                subSession.created_at
+                                            BETWEEN
+                                                CONCAT(to_char(sessions.created_at, 'YYYY-MM-DD'), ' 00:00:00')::TIMESTAMP
+                                            AND
+                                                CONCAT(to_char(sessions.created_at, 'YYYY-MM-DD'), ' 23:59:59')::TIMESTAMP
+                            ) AS totalSessions
+                            FROM
+                                sessions
+                            WHERE
+                                website_id = '9877ab2f-d01f-42f7-b6ac-73023ef849e0'
+                                AND sessions.created_at BETWEEN '2023-02-01 00:00:00'
+                                AND '2023-02-25 23:59:59') AS x
+                    WHERE
+                        totalPageViews = 1
+                    group by date, bounceRate");
+
+        dd($bounce);
+
+
+
         return [
-            'data' => [20, 40, 80, 81, 56, 55, 40],
-            'label' => 'Sessions',
-            'labels' => [1, 2, 3, 4, 5, 6, 7]
+
+            'sessions' => [
+                'data' => $sessions->pluck('value')->toArray(),
+                'label' => 'Sessions',
+                'labels' => $sessions->pluck($group)->toArray()
+            ],
+            'pageViews' => [
+                'data' => $pageViews->pluck('value')->toArray(),
+                'label' => 'Page Views',
+                'labels' => $pageViews->pluck($group)->toArray()
+            ],
+            'bounceRate' => [
+                'data' => [],
+                'label' => 'Bounce Rate',
+                'labels' => []
+            ],
+            'sessionDuration' => [
+                'data' => [],
+                'label' => 'Session Duration',
+                'labels' => []
+            ]
         ];
     }
 
@@ -116,21 +219,22 @@ class WebsiteRepository
         return DB::select("select
                 table_aux.x,
                 count(*) as y
-            from (
-                select
-                    sessions.id,
-                    (
-                        select page_views.url from page_views
-                        where page_views.session_id = sessions.id
-                        AND page_views.created_at BETWEEN '$start' AND '$end'
-                        order by created_at desc
-                        limit 1
-                    ) as x
-                from sessions
-                where sessions.website_id = '$websiteId'
-            ) as table_aux
-            group by table_aux.x
-            order by y desc limit $limit");
+                from (
+                    select
+                        sessions.id,
+                        (
+                            select page_views.url from page_views
+                            where page_views.session_id = sessions.id
+                            AND page_views.created_at BETWEEN '$start' AND '$end'
+                            order by page_views.created_at desc
+                            limit 1
+                        ) as x
+                    from sessions
+                    where sessions.website_id = '$websiteId'
+                ) as table_aux
+                where table_aux.x is not null
+                group by table_aux.x
+                order by y desc limit $limit");
     }
 
     public function entryPageStats($websiteId, $start, $end, $limit = 10)
@@ -151,6 +255,7 @@ class WebsiteRepository
                 from sessions
                 where sessions.website_id = '$websiteId'
             ) as table_aux
+            where table_aux.x is not null
             group by table_aux.x
             order by y desc limit $limit");
     }
