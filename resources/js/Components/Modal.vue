@@ -3,7 +3,7 @@
         <transition leave-active-class="duration-200">
             <div
                 v-show="show"
-                class="fixed inset-0 overflow-y-auto z-10"
+                class="fixed inset-0 overflow-y-auto z-50"
                 :class="left"
                 scroll-region
             >

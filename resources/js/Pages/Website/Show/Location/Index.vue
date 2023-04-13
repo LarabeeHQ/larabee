@@ -20,7 +20,7 @@ const setTab = (value) => {
 
 <template>
     <div class="col-span-12 lg:col-span-6 card p-4 min-h-[450px]">
-        <Tab :tabs="tabs" @update="setTab" />
+        <Tab :currentTab="tab" :tabs="tabs" @update="setTab" :title="tab" />
         <div class="mt-4">
             <Country
                 v-if="tab == 'countries'"

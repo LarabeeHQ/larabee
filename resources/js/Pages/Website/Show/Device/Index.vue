@@ -4,11 +4,10 @@ import Tab from "@/Components/Tab.vue";
 import Browser from "@/Pages/Website/Show/Device/Browser.vue";
 import OS from "@/Pages/Website/Show/Device/OS.vue";
 import Language from "@/Pages/Website/Show/Device/Language.vue";
-import Screen from "@/Pages/Website/Show/Device/Screen.vue";
 import Device from "@/Pages/Website/Show/Device/Device.vue";
 
-const tabs = ["devices", "browsers", "OS", "language", "screen"];
-const tab = ref("language");
+const tabs = ["devices", "browsers", "OS", "language"];
+const tab = ref("devices");
 
 const { dateRange, website } = defineProps({
     dateRange: Object,
@@ -22,17 +21,11 @@ const setTab = (value) => {
 
 <template>
     <div class="col-span-12 lg:col-span-6 card p-4 min-h-[450px]">
-        <Tab :tabs="tabs" @update="setTab" />
+        <Tab :currentTab="tab" :tabs="tabs" @update="setTab" :title="tab" />
 
         <div class="mt-4">
-            <Screen
-                v-if="tab == 'screen'"
-                key="screen"
-                :dateRange="dateRange"
-                :website="website"
-            />
             <Device
-                v-else-if="tab == 'devices'"
+                v-if="tab == 'devices'"
                 key="devices"
                 :dateRange="dateRange"
                 :website="website"

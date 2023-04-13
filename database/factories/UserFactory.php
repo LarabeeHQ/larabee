@@ -27,6 +27,7 @@ class UserFactory extends Factory
             'password' => Hash::make('admin'),
             'remember_token' => Str::random(10),
             'timezone_id' => Timezone::factory(),
+            'trial_ends_at' => now()->addMonth()
         ];
     }
 

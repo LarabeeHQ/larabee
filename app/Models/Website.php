@@ -30,7 +30,6 @@ class Website extends Model
         'browsers',
         'os',
         'devices',
-        'screens',
         'languages',
         'countries',
         'regions',

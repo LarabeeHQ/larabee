@@ -57,7 +57,7 @@ class BillingController extends Controller
             abort(404);
         }
 
-        $url = auth()->user()->billingPortalUrl(route('websites.index'));
+        $url = auth()->user()->billingPortalUrl(route('dashboard'));
 
         return Inertia::location($url);
 
@@ -69,8 +69,8 @@ class BillingController extends Controller
             ->newSubscription('default', $request->stripePlan)
             ->allowPromotionCodes()
             ->checkout([
-                'success_url' => route('websites.index'),
-                'cancel_url' => route('websites.index')
+                'success_url' => route('dashboard'),
+                'cancel_url' => route('dashboard')
             ]);
 
         return response()->json($checkout->id);

@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="{{ str_replace('_', '-', app()->getLocale()) }}">
+<html lang="{{ str_replace('_', '-', app()->getLocale()) }}" class="h-full">
 
 <head>
     <meta charset="utf-8">
@@ -20,7 +20,7 @@
     <script src="https://js.stripe.com/v3/" defer></script>
 </head>
 
-<body class="font-sans antialiased">
+<body class="font-sans antialiased h-full bg-zinc-100 dark:bg-zinc-900">
     @inertia
 </body>
 

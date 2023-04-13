@@ -26,17 +26,6 @@ class WebsiteController extends Controller
         $this->website = $website;
     }
 
-    public function Index()
-    {
-        $websites = auth()->user()->websites->loadCount(['sessions' => function ($query) {
-            $query->whereBetween('created_at', [now()->subHours(24), now()]);
-        }]);
-
-        return Inertia::render('Website/Index', [
-            'websites' => $websites
-        ]);
-    }
-
     public function create()
     {
         return Inertia::render('Website/Create');
@@ -218,10 +207,6 @@ class WebsiteController extends Controller
 
             case 'devices':
                 $data = $this->website->deviceStats($website->id, $start, $end);
-                break;
-
-            case 'screens':
-                $data = $this->website->screenStats($website->id, $start, $end);
                 break;
 
             case 'languages':

@@ -34,15 +34,13 @@ class LocalDevelopmentSeeder extends Seeder
 
         $website = Website::first();
 
-        User::where('id', $user->id)->update(['current_website_id' => $website->id]);
-
         $dates = CarbonPeriod::create(now()->subMonths(4), '5 minutes', now());
 
         foreach($dates as $date) {
             Session::factory(['created_at' => $date])
                 ->count(rand(1, 2))
                 ->for($website)
-                ->has(PageView::factory(['created_at' => $date])->count(rand(1, 6))->for($website))
+                ->has(PageView::factory(['created_at' => $date])->count(rand(1, 4))->for($website))
                 ->create();
         }
     }

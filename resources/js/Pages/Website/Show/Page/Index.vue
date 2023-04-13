@@ -1,5 +1,5 @@
 <script setup>
-import { ref } from "vue";
+import { ref, computed } from "vue";
 import Tab from "@/Components/Tab.vue";
 import Page from "@/Pages/Website/Show/Page/Page.vue";
 import EntryPage from "@/Pages/Website/Show/Page/EntryPage.vue";
@@ -16,11 +16,22 @@ const tab = ref(tabs[0]);
 const setTab = (value) => {
     tab.value = value;
 };
+
+const title = computed(() => {
+    switch (tab.value) {
+        case "pages":
+            return "Pages";
+        case "entryPages":
+            return "Entry Pages";
+        case "exitPages":
+            return "Exit Pages";
+    }
+});
 </script>
 
 <template>
     <div class="col-span-12 lg:col-span-6 card p-4 min-h-[450px]">
-        <Tab :tabs="tabs" @update="setTab" />
+        <Tab :currentTab="tab" :tabs="tabs" @update="setTab" :title="title" />
         <div class="mt-4">
             <Page
                 :dateRange="dateRange"

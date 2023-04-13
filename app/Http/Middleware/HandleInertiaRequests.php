@@ -39,6 +39,7 @@ class HandleInertiaRequests extends Middleware
                     }
 
                     return array_merge($request->user()->toArray(), array_filter([
+                        'websites' => $request->user()->websites,
                         'is_trial' => $request->user()->onTrial(),
                         'timezone' => $request->user()->timezone,
                         'plan' => $request->user()->plan,

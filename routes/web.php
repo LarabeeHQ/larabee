@@ -1,8 +1,8 @@
 <?php
 
 use Illuminate\Support\Facades\Route;
-use Inertia\Inertia;
 
+use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\AccountController;
 use App\Http\Controllers\WebsiteController;
 use App\Http\Controllers\BillingController;
@@ -13,8 +13,10 @@ Route::get('/', function () {
 
 Route::group(['middleware' => ['auth', 'verified', 'check.trial']], function () {
 
+    // dashboard
+    Route::get('/dashboard', [DashboardController::class, 'index'])->name('dashboard');
+
     // websites
-    Route::get('/websites', [WebsiteController::class, 'index'])->name('websites.index');
     Route::get('/websites/create', [WebsiteController::class, 'create'])->name('websites.create');
     Route::post('/websites', [WebsiteController::class, 'store'])->name('websites.store');
     Route::get('/websites/{id}/edit', [WebsiteController::class, 'edit'])->name('websites.edit');
@@ -33,10 +35,7 @@ Route::group(['middleware' => ['auth', 'verified', 'check.trial']], function () 
     Route::get('/billing/redirect-to-portal', [BillingController::class, 'redirectToPortal'])->name('billing.redirect-to-portal');
     Route::post('/billing/generate-checkout-link', [BillingController::class, 'generateCheckoutLink'])->name('billing.generate-checkout-link');
     Route::get('/billing/upgrade-success', [BillingController::class, 'index'])->name('billing.upgrade-success');
-
-    Route::get('/billing/upgrade-success', function () {
-        return Inertia::render('Billing/success');
-    });
+    Route::inertia('/billing/upgrade-success', 'Billing/success');
 });
 
 require __DIR__.'/auth.php';

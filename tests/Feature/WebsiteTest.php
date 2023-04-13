@@ -13,7 +13,7 @@ class WebsiteTest extends TestCase
 
         $response = $this
             ->actingAs($user)
-            ->get(route('websites.index'));
+            ->get(route('dashboard'));
 
         $response->assertOk();
     }

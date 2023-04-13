@@ -5,31 +5,36 @@ const emit = defineEmits(["update"]);
 
 const { tabs } = defineProps({
     tabs: Array,
+    title: String,
+    currentTab: String,
 });
 
-const currentTab = ref(tabs[0]);
-
 const setCurrentTab = (tab) => {
-    currentTab.value = tab;
     emit("update", tab);
 };
 </script>
 
 <template>
-    <div class="flex items-center space-x-1.5 xl:space-x-3">
-        <div
-            v-for="tab in tabs"
-            :key="tab"
-            @click="setCurrentTab(tab)"
-            :class="{
-                'cursor-pointer capitalize text-sm xl:text-base': true,
-                'text-black dark:text-white font-bold border-b-2 border-black dark:border-white':
-                    currentTab == tab,
-                'text-gray-600 dark:text-gray-400 font-medium':
-                    currentTab != tab,
-            }"
-        >
-            {{ tab }}
+    <div class="flex items-center justify-between">
+        <div class="capitalize font-bold">{{ title }}</div>
+
+        <div class="flex items-center space-x-1.5 xl:space-x-3">
+            <div
+                v-for="tab in tabs"
+                :key="tab"
+                @click="setCurrentTab(tab)"
+                :class="{
+                    'cursor-pointer capitalize text-xs xl:text-base font-semibold border-b-2': true,
+                    'text-black dark:text-white border-black dark:border-white':
+                        currentTab == tab,
+                    'text-gray-600 dark:text-gray-400 border-transparent':
+                        currentTab != tab,
+                }"
+            >
+                {{ tab }}
+            </div>
+
+            <slot name="right" />
         </div>
     </div>
 </template>

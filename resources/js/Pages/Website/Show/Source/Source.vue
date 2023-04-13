@@ -34,5 +34,10 @@ watch(dateRange, (value) => {
 });
 </script>
 <template>
-    <Table v-if="data" :data="data" />
+    <Table
+        v-if="data"
+        :data="data"
+        title="Sources"
+        :titles="{ key: 'Sources', value: 1 }"
+    />
 </template>

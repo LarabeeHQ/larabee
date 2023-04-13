@@ -170,7 +170,6 @@ class WebsiteRepository
         dd($bounce);
 
 
-
         return [
 
             'sessions' => [
@@ -368,17 +367,6 @@ class WebsiteRepository
             ->get();
     }
 
-    public function screenStats($websiteId, $start, $end, $limit = 10)
-    {
-        return Session::where('website_id', $websiteId)
-            ->select('screen as x', DB::raw('count(*) as y'))
-            ->whereBetween('created_at', [$start, $end])
-            ->whereNotNull('screen')
-            ->groupBy('screen')
-            ->orderBy('y', 'desc')
-            ->take($limit)
-            ->get();
-    }
 
     public function deviceStats($websiteId, $start, $end, $limit = 10)
     {

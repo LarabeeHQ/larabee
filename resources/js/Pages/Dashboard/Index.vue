@@ -1,7 +1,6 @@
 <script setup>
 import AuthenticatedLayout from "@/Layouts/AuthenticatedLayout.vue";
 import { Head, Link, usePage } from "@inertiajs/vue3";
-import PrimaryButton from "@/Components/PrimaryButton.vue";
 import { computed } from "vue";
 
 const user = computed(() => usePage().props.auth.user);
@@ -17,13 +16,8 @@ const websites = user.value.websites;
                 <h1
                     class="text-2xl font-semibold text-gray-900 dark:text-white"
                 >
-                    Websites
+                    Dashboard
                 </h1>
-            </div>
-            <div class="mt-4 sm:mt-0 sm:ml-16 sm:flex-none">
-                <PrimaryButton :href="route('websites.create')">
-                    Add website
-                </PrimaryButton>
             </div>
         </div>
         <div class="grid xl:grid-cols-3 gap-4">

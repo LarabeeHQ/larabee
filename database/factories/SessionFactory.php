@@ -24,14 +24,12 @@ class SessionFactory extends Factory
         $ips = json_decode(file_get_contents(database_path('factories/data/ip.json')));
         $hostnames = json_decode(file_get_contents(database_path('factories/data/hostname.json')));
         $userAgents = json_decode(file_get_contents(database_path('factories/data/user_agent.json')));
-        $screens = json_decode(file_get_contents(database_path('factories/data/screen.json')));
         $languages = json_decode(file_get_contents(database_path('factories/data/language.json')));
         $devices = json_decode(file_get_contents(database_path('factories/data/device.json')));
 
         // definitions
         $ip = collect($ips)->random();
         $userAgent = collect($userAgents)->random();
-        $screen = collect($screens)->random();
         $language = collect($languages)->random();
         $device = collect($devices)->random();
         $hostname = collect($hostnames)->random();
@@ -49,7 +47,6 @@ class SessionFactory extends Factory
 
         return [
             'website_id' => Website::factory(),
-            'hash' => Session::generateHash(fake()->uuid, $hostname, $ip, $userAgent),
             'hostname' => $hostname,
             'browser' => $browser->browserFamily(),
             'os' => $browser->platformFamily(),
