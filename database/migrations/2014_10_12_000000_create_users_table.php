@@ -19,10 +19,15 @@ return new class extends Migration
             $table->string('email')->unique();
             $table->timestamp('email_verified_at')->nullable();
             $table->string('password');
+            $table->string('photo')->nullable();
 
-            $table->enum('theme', ['light', 'dark', 'system'])->default('system');
+            $table->enum('theme', ['LIGHT', 'DARK', 'SYSTEM']);
 
             $table->foreignUuid('timezone_id');
+            $table->foreignUuid('language_id');
+            $table->foreignUuid('current_website_id')->nullable();
+
+            $table->dateTime('accepted_terms_at')->nullable();
 
             $table->string('stripe_id')->nullable()->index();
             $table->string('pm_type')->nullable();

@@ -11,15 +11,15 @@ use Illuminate\Notifications\Notifiable;
 use Laravel\Sanctum\HasApiTokens;
 use Illuminate\Database\Eloquent\Concerns\HasUuids;
 use Laravel\Cashier\Billable;
+use Illuminate\Support\Facades\Storage;
 
+use App\Models\Traits\HasWebsites;
+
+use App\Enums\UserTheme;
 
 class User extends Authenticatable implements MustVerifyEmail
 {
-    use HasApiTokens, HasFactory, Notifiable, HasUuids, Billable;
-
-    const ROLE_OWNER = 'OWNER';
-    const ROLE_ADMIN = 'ADMIN';
-    const ROLE_USER = 'USER';
+    use HasApiTokens, HasFactory, Notifiable, HasUuids, Billable, HasWebsites;
 
     /**
      * The attributes that are mass assignable.
@@ -31,7 +31,8 @@ class User extends Authenticatable implements MustVerifyEmail
         'email',
         'password',
         'timezone_id',
-        'theme'
+        'theme',
+        'current_website_id'
     ];
 
     /**
@@ -51,8 +52,25 @@ class User extends Authenticatable implements MustVerifyEmail
      */
     protected $casts = [
         'email_verified_at' => 'datetime',
-        'trial_ends_at' => 'datetime'
+        'trial_ends_at' => 'datetime',
+        'theme' => UserTheme::class,
     ];
+
+    /**
+     * The accessors to append to the model's array form.
+     *
+     * @var array<int, string>
+     */
+    protected $appends = [
+        'photo_url',
+    ];
+
+    public function getPhotoUrlAttribute()
+    {
+        return $this->photo
+            ? Storage::url($this->photo)
+            : 'https://ui-avatars.com/api/?name=' . urlencode($this->name) . '&color=FFFFFF&background=9CA3AF&length=1';
+    }
 
     public function getPlanAttribute()
     {
@@ -74,20 +92,13 @@ class User extends Authenticatable implements MustVerifyEmail
         }
     }
 
-    public function belongsToWebsite($website)
-    {
-        return $this->websites->contains(function ($t) use ($website) {
-            return $t->id === $website->id;
-        });
-    }
-
     public function timezone()
     {
         return $this->belongsTo(Timezone::class);
     }
 
-    public function websites()
+    public function language()
     {
-        return $this->belongsToMany(Website::class)->withPivot('role')->as('membership')->withTimestamps();
+        return $this->belongsTo(Language::class);
     }
 }

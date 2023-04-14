@@ -2,9 +2,6 @@
 
 namespace App\Http\Controllers\Auth;
 
-use App\Http\Controllers\Controller;
-
-use App\Providers\RouteServiceProvider;
 use Illuminate\Auth\Events\Registered;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
@@ -12,18 +9,16 @@ use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Validation\Rules;
 use Inertia\Inertia;
-use Inertia\Response;
 
+use App\Enums\UserTheme;
 use App\Models\User;
 use App\Models\Timezone;
+use App\Models\Language;
 
 class RegisteredUserController extends Controller
 {
     public function create()
     {
-        if(config('app.self_hosted')) {
-            return redirect(route('login'));
-        }
         return Inertia::render('Auth/Register');
     }
 
@@ -38,6 +33,7 @@ class RegisteredUserController extends Controller
             'name' => 'required|string|max:255',
             'email' => 'required|string|email|max:255|unique:'.User::class,
             'password' => ['required', Rules\Password::defaults()],
+            'terms' => ['required', 'accepted'],
         ]);
 
         $user = new User;
@@ -45,7 +41,10 @@ class RegisteredUserController extends Controller
         $user->email = $request->email;
         $user->password = Hash::make($request->password);
         $user->timezone_id = Timezone::where('value', 'America/Sao_Paulo')->first()->id;
+        $user->language_id = Language::where('locale', 'en')->first()->id;
+        $user->theme = UserTheme::THEME_SYSTEM;
         $user->trial_ends_at = now()->addMonth();
+        $user->accepted_terms_at = now();
         $user->save();
 
         event(new Registered($user));

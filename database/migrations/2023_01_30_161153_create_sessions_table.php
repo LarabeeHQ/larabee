@@ -32,8 +32,14 @@ return new class extends Migration
             $table->string('utm_term')->nullable();
             $table->dateTime('created_at', 0);
 
-            $table->index(['website_id']);
-            $table->index(['created_at']);
+            $table->string('name')->nullable();
+            $table->string('email')->nullable();
+            $table->string('unique_id')->nullable();
+
+            $table->index(['created_at', 'website_id']);
+            $table->index('name');
+            $table->index('email');
+            $table->index('unique_id');
         });
     }
 

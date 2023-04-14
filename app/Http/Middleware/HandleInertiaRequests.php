@@ -39,6 +39,7 @@ class HandleInertiaRequests extends Middleware
                     }
 
                     return array_merge($request->user()->toArray(), array_filter([
+                        'current_website' => $request->user()->current_website_id ? $request->user()->currentWebsite : null,
                         'websites' => $request->user()->websites,
                         'is_trial' => $request->user()->onTrial(),
                         'timezone' => $request->user()->timezone,
@@ -47,8 +48,8 @@ class HandleInertiaRequests extends Middleware
                 },
             ],
             'plans' => config('plans.index'),
-            'self_hosted' => config('app.self_hosted'),
             'flash' => $request->session()->get('flash', []),
+            'env' => config('app.env'),
             'locale' => app()->getLocale(),
             'ziggy' => function () use ($request) {
                 return array_merge((new Ziggy)->toArray(), [

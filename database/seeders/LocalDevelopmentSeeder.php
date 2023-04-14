@@ -7,11 +7,12 @@ use Illuminate\Database\Seeder;
 
 use Carbon\CarbonPeriod;
 
+use App\Enums\UserRole;
+
 use App\Models\User;
 use App\Models\Website;
 use App\Models\Session;
 use App\Models\PageView;
-use App\Models\Timezone;
 
 class LocalDevelopmentSeeder extends Seeder
 {
@@ -28,7 +29,7 @@ class LocalDevelopmentSeeder extends Seeder
             ])
             ->hasAttached(
                 Website::factory(),
-                ['role' => User::ROLE_OWNER]
+                ['role' => UserRole::ROLE_OWNER]
             )
             ->create();
 

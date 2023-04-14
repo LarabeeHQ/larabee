@@ -1,9 +1,10 @@
 <script setup>
-import GuestLayout from "@/Layouts/GuestLayout.vue";
+import GuestLayout from "@/Layouts/Auth/Master.vue";
 import InputError from "@/Components/InputError.vue";
 import Label from "@/Components/Label.vue";
 import PrimaryButton from "@/Components/PrimaryButton.vue";
 import TextInput from "@/Components/Input.vue";
+import Checkbox from "@/Components/Checkbox.vue";
 import { Head, Link, useForm } from "@inertiajs/vue3";
 
 const form = useForm({
@@ -69,6 +70,37 @@ const submit = () => {
                 />
 
                 <InputError class="mt-2" :message="form.errors.password" />
+            </div>
+
+            <div class="mt-4">
+                <Label for="terms">
+                    <div class="flex items-center">
+                        <Checkbox
+                            name="terms"
+                            id="terms"
+                            v-model:checked="form.terms"
+                        />
+
+                        <div class="ml-2">
+                            I agree to the
+                            <a
+                                target="_blank"
+                                :href="route('site.terms')"
+                                class="underline underline-offset-2 text-sm text-gray-600 hover:text-gray-900 dark:text-gray-300 dark:hover:text-gray-400"
+                                >Terms of Service</a
+                            >
+                            and
+                            <a
+                                target="_blank"
+                                :href="route('site.privacy')"
+                                class="underline underline-offset-2 text-sm text-gray-600 hover:text-gray-900 dark:text-gray-300 dark:hover:text-gray-400"
+                                >Privacy Policy</a
+                            >
+                        </div>
+                    </div>
+                </Label>
+
+                <InputError class="mt-2" :message="form.errors.terms" />
             </div>
 
             <div class="flex items-center justify-end mt-4">

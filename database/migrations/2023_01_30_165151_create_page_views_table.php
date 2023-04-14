@@ -22,9 +22,8 @@ return new class extends Migration
             $table->string('referrer', 900)->nullable();
             $table->dateTime('created_at', 0);
 
-            $table->index(['website_id']);
+            $table->index(['website_id', 'created_at']);
             $table->index(['session_id']);
-            $table->index(['created_at']);
         });
     }
 

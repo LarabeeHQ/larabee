@@ -48,6 +48,18 @@ class Kernel extends HttpKernel
     ];
 
     /**
+     * The priority-sorted list of middleware.
+     *
+     * This forces non-global middleware to always be in the given order.
+     *
+     * @var array
+     */
+    protected $middlewarePriority = [
+        \App\Http\Middleware\App\SetLocale::class,
+        \App\Http\Middleware\HandleInertiaRequests::class,
+    ];
+
+    /**
      * The application's route middleware.
      *
      * These middleware may be assigned to groups or used individually.
@@ -67,5 +79,9 @@ class Kernel extends HttpKernel
         'verified' => \Illuminate\Auth\Middleware\EnsureEmailIsVerified::class,
 
         'check.trial' => \App\Http\Middleware\CheckTrial::class,
+
+        // app middlewares
+        'app.set-website' => \App\Http\Middleware\App\SetWebsite::class,
+        'app.set-locale' => \App\Http\Middleware\App\SetLocale::class,
     ];
 }

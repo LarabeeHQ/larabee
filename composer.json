@@ -43,9 +43,12 @@
     "require-dev": {
         "fakerphp/faker": "^1.9.1",
         "laravel/breeze": "^1.18",
+        "laravel/dusk": "^7.7",
+        "laravel/envoy": "^2.8",
         "laravel/pint": "^1.0",
         "laravel/sail": "^1.20",
         "laravel/telescope": "^4.13",
+        "librenms/laravel-vue-i18n-generator": "^0.1.48",
         "mockery/mockery": "^1.4.4",
         "nunomaduro/collision": "^6.1",
         "phpunit/phpunit": "^9.5.10",

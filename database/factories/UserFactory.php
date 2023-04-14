@@ -6,6 +6,12 @@ use Illuminate\Database\Eloquent\Factories\Factory;
 use Illuminate\Support\Str;
 use Illuminate\Support\Facades\Hash;
 
+use App\Enums\UserRole;
+use App\Enums\UserTheme;
+
+use App\Models\User;
+use App\Models\Website;
+use App\Models\Language;
 use App\Models\Timezone;
 
 /**
@@ -27,7 +33,9 @@ class UserFactory extends Factory
             'password' => Hash::make('admin'),
             'remember_token' => Str::random(10),
             'timezone_id' => Timezone::factory(),
-            'trial_ends_at' => now()->addMonth()
+            'trial_ends_at' => now()->addMonth(),
+            'theme' => UserTheme::THEME_SYSTEM,
+            'language_id' => Language::where('locale', 'en')->first()->id,
         ];
     }
 
@@ -41,5 +49,21 @@ class UserFactory extends Factory
         return $this->state(fn (array $attributes) => [
             'email_verified_at' => null,
         ]);
+    }
+
+    public function withWebsiteAndAdmin()
+    {
+        return $this->afterCreating(function (User $user) {
+
+            // create a website
+            $website = Website::factory()->create();
+
+            // add the user to the team
+            $user->teams()->attach($website->id, ['role' => UserRole::ROLE_OWNER, 'onboarding' => false]);
+
+            // set the current team
+            $user->current_website_id = $website->id;
+            $user->save();
+        });
     }
 }

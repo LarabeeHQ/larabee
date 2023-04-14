@@ -6,6 +6,10 @@ import { createInertiaApp } from '@inertiajs/vue3';
 import { resolvePageComponent } from 'laravel-vite-plugin/inertia-helpers';
 import { ZiggyVue } from '../../vendor/tightenco/ziggy/dist/vue.m';
 
+// locales
+import { createI18n } from "vue-i18n";
+import localeMessages from "./vue-i18n-locales.generated";
+
 // calendar
 import VCalendar from "v-calendar";
 import 'v-calendar/dist/style.css';
@@ -21,8 +25,17 @@ createInertiaApp({
             import.meta.glob("./Pages/**/*.vue")
         ),
     setup({ el, App, props, plugin }) {
+         const i18n = createI18n({
+             locale: props.initialPage.props.locale
+                 ? props.initialPage.props.locale
+                 : "en",
+             fallbackLocale: "en", // set fallback locale
+             messages: localeMessages, // set locale messages
+         });
+
         return createApp({ render: () => h(App, props) })
             .use(plugin)
+            .use(i18n)
             .use(VCalendar)
             .use(ZiggyVue, Ziggy)
             .mount(el);
