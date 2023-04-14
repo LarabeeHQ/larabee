@@ -3,93 +3,17 @@
 namespace App\Repositories;
 
 use Illuminate\Support\Facades\DB;
-use Carbon\CarbonPeriod;
+
+use Carbon\Carbon;
 
 use App\Models\Session;
 use App\Models\PageView;
 
 class WebsiteRepository
 {
-    public function overview($websiteId, $start, $end, $prevStart, $prevEnd)
-    {
-        $firstData = collect(DB::select("SELECT
-            count(DISTINCT table_aux.session_id) as sessions,
-            sum(table_aux.c) as views,
-            sum(
-                CASE WHEN table_aux.c = 1 THEN
-                    1
-                ELSE
-                    0
-                END) as bounces,
-            sum(table_aux.time) as totaltime
-        FROM (
-            select
-                page_views.session_id,
-                to_char(date_trunc('hour', page_views.created_at), 'YYYY-MM-DD HH24:00:00'),
-                count(*) c,
-                floor(extract(epoch from max(page_views.created_at) - min(page_views.created_at))) as time
-            FROM
-                page_views
-            WHERE
-                page_views.website_id = '$websiteId'
-                AND page_views.created_at BETWEEN '$start' AND '$end'
-            GROUP BY
-                1, 2
-                ) table_aux
-        "))->first();
-
-        $previousData = collect(DB::select("SELECT
-            count(DISTINCT table_aux.session_id) as sessions,
-            sum(table_aux.c) as views,
-            sum(
-                CASE WHEN table_aux.c = 1 THEN
-                    1
-                ELSE
-                    0
-                END) as bounces,
-            sum(table_aux.time) as totaltime
-        FROM (
-            select
-                page_views.session_id,
-                to_char(date_trunc('hour', page_views.created_at), 'YYYY-MM-DD HH24:00:00'),
-                count(*) c,
-                floor(extract(epoch from max(page_views.created_at) - min(page_views.created_at))) as time
-            FROM
-                page_views
-            WHERE
-                page_views.website_id = '$websiteId'
-                AND page_views.created_at BETWEEN '$prevStart' AND '$prevEnd'
-            GROUP BY
-                1, 2
-                ) table_aux
-        "))->first();
-
-        return [
-            'sessions' => [
-                'change' => $firstData->sessions - $previousData->sessions,
-                'value' => $firstData->sessions
-            ],
-            'page-views' => [
-                'change' => $firstData->views - $previousData->views,
-                'value' => $firstData->views ? $firstData->views : 0
-            ],
-            'bounce' => [
-                'change' => $previousData->sessions && $previousData->bounces ? round((($previousData->bounces / $previousData->sessions) * 100), 2) : 0,
-                'value' => $firstData->sessions && $firstData->bounces ? round((($firstData->bounces / $firstData->sessions) * 100), 2) : 0,
-            ],
-            'session-avg' => [
-                'value' => $firstData->totaltime && $firstData->sessions ? ceil(($firstData->totaltime / 60) / $firstData->sessions * 100) : 0,
-                'change' => $previousData->totaltime && $previousData->sessions ? ceil(($previousData->totaltime / 60) / $previousData->sessions * 100) : 0,
-            ],
-        ];
-    }
-
-    public function chart($website, $start, $end, $group)
+    public function uniqueUsers($website, $start, $end, $startPrevious, $endPrevious, $group)
     {
         switch ($group) {
-            case 'minute':
-                $format = "to_char(date_trunc('$group', created_at), 'HH24:MI')";
-                break;
             case 'hour':
                 $format = "to_char(date_trunc('$group', created_at), 'HH24:00')";
                 break;
@@ -102,16 +26,59 @@ class WebsiteRepository
         }
 
         $sessions = collect(DB::select("SELECT
-                            $format as $group,
-                            count(*) as value
-                        FROM
-                            sessions
-                        WHERE
-                            website_id = '$website->id'
-                            AND created_at BETWEEN '$start' AND '$end'
-                        GROUP BY
-                            $group
-                        order by $group asc"));
+                        $format as $group,
+                        count(*) as value
+                    FROM
+                        sessions
+                    WHERE
+                        website_id = '$website->id'
+                        AND created_at BETWEEN '$start' AND '$end'
+                    GROUP BY
+                        $group
+                    order by $group asc"));
+
+        $total = Session::where('website_id', $website->id)->whereBetween('created_at', [$start, $end])->count();
+        $totalPrevious = Session::where('website_id', $website->id)->whereBetween('created_at', [$startPrevious, $endPrevious])->count();
+
+        $labels = $sessions->pluck($group)->map(function (string $label) use ($group) {
+            switch ($group) {
+                case 'hour':
+                    return Carbon::createFromFormat('Y-m-d H:i', date("Y-m-d " . $label))->format('ga');
+                case 'day':
+                    return $label;
+                case 'month':
+                    return Carbon::createFromFormat('Y-m', $label)->format('M');
+            }
+
+            return $label;
+        });
+
+        $data = [
+            'total' => $total,
+            'totalPrevious' => $total == 0 || $totalPrevious == 0 ? 0 : round(((1 - $total / $totalPrevious) * 100) , 2),
+            'chart' => [
+                'data' => $sessions->pluck('value')->toArray(),
+                'label' => 'Users',
+                'labels' => $labels
+            ]
+        ];
+
+        return $data;
+    }
+
+    public function pageViews($website, $start, $end, $startPrevious, $endPrevious, $group)
+    {
+        switch ($group) {
+            case 'hour':
+                $format = "to_char(date_trunc('$group', created_at), 'HH24:00')";
+                break;
+            case 'day':
+                $format = "to_char(date_trunc('$group', created_at), 'DD')";
+                break;
+            case 'month':
+                $format = "to_char(date_trunc('$group', created_at), 'YY-MM')";
+                break;
+        }
 
         $pageViews = collect(DB::select("SELECT
                             $format as $group,
@@ -126,73 +93,33 @@ class WebsiteRepository
                         order by $group asc
                     "));
 
+        $total = PageView::where('website_id', $website->id)->whereBetween('created_at', [$start, $end])->count();
+        $totalPrevious = PageView::where('website_id', $website->id)->whereBetween('created_at', [$startPrevious, $endPrevious])->count();
 
+        $labels = $pageViews->pluck($group)->map(function (string $label) use ($group) {
+            switch ($group) {
+                case 'hour':
+                    return Carbon::createFromFormat('Y-m-d H:i', date("Y-m-d " . $label))->format('ga');
+                case 'day':
+                    return $label;
+                case 'month':
+                    return Carbon::createFromFormat('Y-m', $label)->format('M');
+            }
 
-        $bounce = DB::select("SELECT
-                        date,
-                        round(((totalPageViews::NUMERIC / totalSessions) * 100), 2) AS bounceRate
-                    FROM (
-                        SELECT
-                            to_char(date_trunc('day', sessions.created_at), 'YYYY-MM-DD') AS date,
-                            (
-                                SELECT
-                                    count(*)
-                                FROM
-                                    page_views
-                                WHERE
-                                    session_id = sessions.id
-                            )
-                            AS totalPageViews,
-                            (
-                                SELECT
-                                    count(*)
-                                FROM
-                                    sessions AS subSession
-                                WHERE
-                                    subSession.website_id = '9877ab2f-d01f-42f7-b6ac-73023ef849e0'
-                                            AND
-                                                subSession.created_at
-                                            BETWEEN
-                                                CONCAT(to_char(sessions.created_at, 'YYYY-MM-DD'), ' 00:00:00')::TIMESTAMP
-                                            AND
-                                                CONCAT(to_char(sessions.created_at, 'YYYY-MM-DD'), ' 23:59:59')::TIMESTAMP
-                            ) AS totalSessions
-                            FROM
-                                sessions
-                            WHERE
-                                website_id = '9877ab2f-d01f-42f7-b6ac-73023ef849e0'
-                                AND sessions.created_at BETWEEN '2023-02-01 00:00:00'
-                                AND '2023-02-25 23:59:59') AS x
-                    WHERE
-                        totalPageViews = 1
-                    group by date, bounceRate");
+            return $label;
+        });
 
-        dd($bounce);
-
-
-        return [
-
-            'sessions' => [
-                'data' => $sessions->pluck('value')->toArray(),
-                'label' => 'Sessions',
-                'labels' => $sessions->pluck($group)->toArray()
-            ],
-            'pageViews' => [
+        $data = [
+            'total' => $total,
+            'totalPrevious' => $total == 0 || $totalPrevious == 0 ? 0 : round(((1 - $total / $totalPrevious) * 100), 2),
+            'chart' => [
                 'data' => $pageViews->pluck('value')->toArray(),
                 'label' => 'Page Views',
-                'labels' => $pageViews->pluck($group)->toArray()
-            ],
-            'bounceRate' => [
-                'data' => [],
-                'label' => 'Bounce Rate',
-                'labels' => []
-            ],
-            'sessionDuration' => [
-                'data' => [],
-                'label' => 'Session Duration',
-                'labels' => []
+                'labels' => $labels
             ]
         ];
+
+        return $data;
     }
 
     public function online($website)
@@ -367,6 +294,17 @@ class WebsiteRepository
             ->get();
     }
 
+    public function screenStats($websiteId, $start, $end, $limit = 10)
+    {
+        return Session::where('website_id', $websiteId)
+            ->select('screen as x', DB::raw('count(*) as y'))
+            ->whereBetween('created_at', [$start, $end])
+            ->whereNotNull('screen')
+            ->groupBy('screen')
+            ->orderBy('y', 'desc')
+            ->take($limit)
+            ->get();
+    }
 
     public function deviceStats($websiteId, $start, $end, $limit = 10)
     {

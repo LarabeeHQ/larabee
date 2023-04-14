@@ -9,6 +9,19 @@ const user = computed(() => usePage().props.auth.user);
 const darkMode = ref(localStorage.getItem("theme") == "dark" ? true : false);
 
 onMounted(() => {
+    // guest
+    if (!user.value) {
+        if (
+            window.matchMedia &&
+            window.matchMedia("(prefers-color-scheme: dark)").matches
+        ) {
+            document.documentElement.classList.add("dark");
+        }
+
+        return;
+    }
+
+    // authenticated user
     setTheme(user.value.theme);
 
     if (user.value.theme == "system") {
@@ -54,14 +67,12 @@ watch(user, () => {
 </script>
 
 <template>
-    <div class="">
-        <Sidebar />
-        <Banner />
+    <Sidebar v-if="user" />
+    <Banner />
 
-        <main class="py-10 lg:pl-72">
-            <div class="px-4 sm:px-6 lg:px-8">
-                <slot />
-            </div>
-        </main>
-    </div>
+    <main :class="{ 'py-4 xl:py-8': true, 'lg:pl-72': user }">
+        <div class="px-4 xl:px-8">
+            <slot />
+        </div>
+    </main>
 </template>

@@ -16,18 +16,21 @@ const setCurrentTab = (tab) => {
 
 <template>
     <div class="flex items-center justify-between">
-        <div class="capitalize font-bold">{{ title }}</div>
+        <div
+            class="capitalize text-base font-semibold text-black dark:text-white"
+        >
+            {{ title }}
+        </div>
 
-        <div class="flex items-center space-x-1.5 xl:space-x-3">
+        <div class="flex items-center">
             <div
                 v-for="tab in tabs"
                 :key="tab"
                 @click="setCurrentTab(tab)"
                 :class="{
-                    'cursor-pointer capitalize text-xs xl:text-base font-semibold border-b-2': true,
-                    'text-black dark:text-white border-black dark:border-white':
-                        currentTab == tab,
-                    'text-gray-600 dark:text-gray-400 border-transparent':
+                    'cursor-pointer capitalize text-xs font-medium rounded-md px-2 py-1 border': true,
+                    'text-black dark:text-white card': currentTab == tab,
+                    'text-zinc-600 dark:text-zinc-400 border-transparent':
                         currentTab != tab,
                 }"
             >

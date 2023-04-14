@@ -20,6 +20,7 @@ return new class extends Migration
             $table->string('browser')->nullable();
             $table->string('os')->nullable();
             $table->string('device')->nullable();
+            $table->string('screen')->nullable();
             $table->string('language')->nullable();
             $table->string('country')->nullable();
             $table->string('region')->nullable();

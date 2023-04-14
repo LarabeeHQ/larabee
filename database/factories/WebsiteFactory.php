@@ -20,8 +20,7 @@ class WebsiteFactory extends Factory
         return [
             'name' => fake()->name(),
             'domain' => fake()->domainName(),
-            'public' => false,
-            'allowed_domains' => null
+            'public' => false
         ];
     }
 

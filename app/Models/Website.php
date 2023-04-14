@@ -16,8 +16,8 @@ class Website extends Model
 
     const METRICS = [
         'online',
-        'overview',
-        'chart',
+        'unique-users',
+        'page-views',
         'pages',
         'entry-pages',
         'exit-pages',

@@ -13,17 +13,10 @@ const { website } = defineProps({
     website: Object,
 });
 
-const online = ref(0);
-
 const range = reactive({});
 
 const periodFilters = [
     [
-        {
-            name: "Live",
-            key: "live",
-            group: "minute",
-        },
         {
             name: "Today",
             key: "today",
@@ -59,27 +52,10 @@ const periodFilters = [
             group: "month",
         },
     ],
-    [
-        {
-            name: "All Time",
-            key: "all_time",
-            group: "month",
-        },
-    ],
 ];
 
 const setCurrentFilter = (filter) => {
     switch (filter.key) {
-        case "live":
-            range.key = filter.key;
-            range.name = filter.name;
-            range.group = "minute";
-            range.date = {
-                start: dayjs().format("YYYY-MM-DD"),
-                end: dayjs().format("YYYY-MM-DD"),
-            };
-            break;
-
         case "today":
             range.key = filter.key;
             range.name = filter.name;
@@ -88,6 +64,9 @@ const setCurrentFilter = (filter) => {
             range.date = {
                 start: dayjs().format("YYYY-MM-DD"),
                 end: dayjs().format("YYYY-MM-DD"),
+
+                start_previous: dayjs().subtract(1, "day").format("YYYY-MM-DD"),
+                end_previous: dayjs().subtract(1, "day").format("YYYY-MM-DD"),
             };
             break;
 
@@ -99,6 +78,9 @@ const setCurrentFilter = (filter) => {
             range.date = {
                 start: dayjs().subtract(1, "day").format("YYYY-MM-DD"),
                 end: dayjs().subtract(1, "day").format("YYYY-MM-DD"),
+
+                start_previous: dayjs().subtract(2, "day").format("YYYY-MM-DD"),
+                end_previous: dayjs().subtract(2, "day").format("YYYY-MM-DD"),
             };
             break;
 
@@ -109,6 +91,15 @@ const setCurrentFilter = (filter) => {
             range.date = {
                 start: dayjs().startOf("month").format("YYYY-MM-DD"),
                 end: dayjs().format("YYYY-MM-DD"),
+
+                start_previous: dayjs()
+                    .startOf("month")
+                    .subtract(1, "month")
+                    .format("YYYY-MM-DD"),
+                end_previous: dayjs()
+                    .startOf("month")
+                    .subtract(1, "month")
+                    .format("YYYY-MM-DD"),
             };
             break;
 
@@ -126,6 +117,15 @@ const setCurrentFilter = (filter) => {
                     .subtract(1, "month")
                     .endOf("month")
                     .format("YYYY-MM-DD"),
+
+                start_previous: dayjs()
+                    .subtract(2, "month")
+                    .startOf("month")
+                    .format("YYYY-MM-DD"),
+                end_previous: dayjs()
+                    .subtract(2, "month")
+                    .endOf("month")
+                    .format("YYYY-MM-DD"),
             };
 
             break;
@@ -138,6 +138,15 @@ const setCurrentFilter = (filter) => {
             range.date = {
                 start: dayjs().startOf("year").format("YYYY-MM-DD"),
                 end: dayjs().format("YYYY-MM-DD"),
+
+                start_previous: dayjs()
+                    .startOf("year")
+                    .subtract(1, "year")
+                    .format("YYYY-MM-DD"),
+                end_previous: dayjs()
+                    .endOf("year")
+                    .subtract(1, "year")
+                    .format("YYYY-MM-DD"),
             };
             break;
 
@@ -148,24 +157,15 @@ const setCurrentFilter = (filter) => {
             range.date = {
                 start: dayjs().subtract(12, "month").format("YYYY-MM-DD"),
                 end: dayjs().format("YYYY-MM-DD"),
+
+                start_previous: dayjs()
+                    .subtract(24, "month")
+                    .format("YYYY-MM-DD"),
+                end_previous: dayjs()
+                    .subtract(24, "month")
+                    .format("YYYY-MM-DD"),
             };
 
-            break;
-
-        case "all_time":
-            range.key = filter.key;
-            range.name = filter.name;
-            range.group = "day";
-            range.date = {
-                start: dayjs("2023-01-01 00:00").format("YYYY-MM-DD"),
-                end: dayjs().format("YYYY-MM-DD"),
-            };
-            break;
-
-        case "custom":
-            range.key = filter.key;
-            range.name = filter.name;
-            range.group = "day";
             break;
     }
 
@@ -176,46 +176,25 @@ const formatDate = (date) => {
     return dayjs(date).format("YYYY-MM-DD");
 };
 
-const loadOnline = () => {
-    axios
-        .get(route("websites.statistics", website.id), {
-            params: {
-                start: range.date.start,
-                end: range.date.end,
-                metric: "online",
-                group: range.group,
-                key: range.key,
-            },
-        })
-        .then((response) => {
-            online.value = response.data;
-        });
-};
-
 onMounted(() => {
     setCurrentFilter(periodFilters[0][1]);
-    loadOnline();
 });
 </script>
 <template>
-    <div class="flex items-center justify-between mb-2">
+    <div class="flex items-center justify-between mb-4">
         <div class="min-w-0 flex-1">
-            <div class="space-x-2 xl:space-x-4 -my-px flex items-center">
-                <div class="flex items-center space-x-1.5">
-                    <div class="h-2 w-2 bg-green-500 rounded-full"></div>
-                    <div
-                        class="flex items-center space-x-1 text-gray-800 dark:text-white text-sm font-medium"
-                    >
-                        <div>{{ online }}</div>
-                        <div class="hidden xl:flex">active</div>
-                        <div>users</div>
-                    </div>
+            <div class="-my-px">
+                <div class="text-4xl font-bold text-black dark:text-white">
+                    Analytics
+                </div>
+                <div class="text-sm font-medium text-zinc-800 dark:text-white">
+                    {{ website.domain }}
                 </div>
             </div>
         </div>
 
         <div class="space-x-2 lg:space-x-4 flex items-center">
-            <Link :href="route('websites.edit', website.id)">
+            <Link v-if="user" :href="route('websites.edit', website.id)">
                 <Cog6ToothIcon
                     class="h-5 w-5 text-zinc-600 dark:text-zinc-400 stroke-2"
                 />
@@ -224,12 +203,7 @@ onMounted(() => {
             <Menu as="div" class="relative inline-block text-left">
                 <div>
                     <MenuButton class="inline-flex w-full btn-dropdown">
-                        {{
-                            range.key == "custom"
-                                ? `${formatDate(range.start)}
-                            - ${formatDate(range.end)}`
-                                : range.name
-                        }}
+                        {{ range.name }}
                         <ChevronDownIcon
                             class="-mr-1 ml-2 h-5 w-5"
                             aria-hidden="true"
@@ -263,88 +237,6 @@ onMounted(() => {
                                     class="text-gray-700 dark:text-white block px-4 py-2 text-sm cursor-pointer hover:bg-gray-100 dark:hover:bg-zinc-700"
                                 >
                                     {{ filter.name }}
-                                </div>
-                            </MenuItem>
-                        </div>
-
-                        <div class="p-1">
-                            <MenuItem
-                                @click.prevent="
-                                    setCurrentFilter({
-                                        key: 'custom',
-                                        name: 'Custom',
-                                        group: 'day',
-                                    })
-                                "
-                                v-slot="{ active }"
-                            >
-                                <div
-                                    class="text-gray-700 dark:text-white block px-4 py-2 text-sm cursor-pointer hover:bg-gray-100 dark:hover:bg-zinc-700"
-                                >
-                                    Custom
-                                </div>
-                            </MenuItem>
-                        </div>
-                        <div v-if="range.key == 'custom'" class="py-1">
-                            <MenuItem v-slot="{ active }">
-                                <div class="">
-                                    <div>
-                                        <v-date-picker
-                                            v-model="range.date"
-                                            is-range
-                                            color="black"
-                                            is-dark
-                                            mode="date"
-                                            title-position="center"
-                                            :popover="{
-                                                visibility: 'click',
-                                            }"
-                                            timezone="UTC"
-                                        >
-                                            <template
-                                                v-slot="{
-                                                    inputValue,
-                                                    inputEvents,
-                                                }"
-                                            >
-                                                <div class="flex flex-col">
-                                                    <div class="px-4 py-2">
-                                                        <div
-                                                            class="text-xs dark:text-gray-300 font-medium mb-1"
-                                                        >
-                                                            Start date
-                                                        </div>
-                                                        <input
-                                                            :value="
-                                                                inputValue.start
-                                                            "
-                                                            v-on="
-                                                                inputEvents.start
-                                                            "
-                                                            class="px-2 py-1 w-full rounded focus:outline-none bg-gray-100 dark:bg-zinc-700 dark:text-white"
-                                                        />
-                                                    </div>
-
-                                                    <div class="px-4 py-2">
-                                                        <div
-                                                            class="text-xs dark:text-gray-300 font-medium mb-1"
-                                                        >
-                                                            End date
-                                                        </div>
-                                                        <input
-                                                            :value="
-                                                                inputValue.end
-                                                            "
-                                                            v-on="
-                                                                inputEvents.end
-                                                            "
-                                                            class="px-2 py-1 w-full rounded focus:outline-none bg-gray-100 dark:bg-zinc-700 dark:text-white"
-                                                        />
-                                                    </div>
-                                                </div>
-                                            </template>
-                                        </v-date-picker>
-                                    </div>
                                 </div>
                             </MenuItem>
                         </div>

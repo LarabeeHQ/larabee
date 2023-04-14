@@ -10,44 +10,33 @@ const { dateRange, website } = defineProps({
     website: Object,
 });
 
-const tabs = ["pages", "entryPages", "exitPages"];
+const tabs = ["Pages", "Entry Pages", "Exit Pages"];
 const tab = ref(tabs[0]);
 
 const setTab = (value) => {
     tab.value = value;
 };
-
-const title = computed(() => {
-    switch (tab.value) {
-        case "pages":
-            return "Pages";
-        case "entryPages":
-            return "Entry Pages";
-        case "exitPages":
-            return "Exit Pages";
-    }
-});
 </script>
 
 <template>
     <div class="col-span-12 lg:col-span-6 card p-4 min-h-[450px]">
-        <Tab :currentTab="tab" :tabs="tabs" @update="setTab" :title="title" />
+        <Tab :currentTab="tab" :tabs="tabs" @update="setTab" :title="tab" />
         <div class="mt-4">
             <Page
                 :dateRange="dateRange"
-                v-if="tab == 'pages'"
+                v-if="tab == 'Pages'"
                 key="pages"
                 :website="website"
             />
             <EntryPage
                 :dateRange="dateRange"
-                v-else-if="tab == 'entryPages'"
+                v-else-if="tab == 'Entry Pages'"
                 key="entryPages"
                 :website="website"
             />
             <ExitPage
                 :dateRange="dateRange"
-                v-else-if="tab == 'exitPages'"
+                v-else-if="tab == 'Exit Pages'"
                 key="exitPages"
                 :website="website"
             />

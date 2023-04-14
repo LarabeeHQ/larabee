@@ -5,7 +5,8 @@ import Header from "./Header.vue";
 
 import Source from "../Source/Index.vue";
 import Page from "../Page/Index.vue";
-import Overview from "../Overview/Index.vue";
+import UniqueUser from "../UniqueUser/Index.vue";
+import PageView from "../PageView/Index.vue";
 import Device from "../Device/Index.vue";
 import Location from "../Location/Index.vue";
 
@@ -37,7 +38,10 @@ const setRange = (data) => {
             <Header :website="website" @update="setRange" />
 
             <div class="space-y-4" v-if="range.data">
-                <Overview :dateRange="range.data" :website="website" />
+                <div class="grid grid-cols-12 gap-4">
+                    <UniqueUser :dateRange="range.data" :website="website" />
+                    <PageView :dateRange="range.data" :website="website" />
+                </div>
 
                 <div class="grid grid-cols-12 gap-4">
                     <Source :dateRange="range.data" :website="website" />

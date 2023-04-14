@@ -15,6 +15,8 @@ const loadData = async () => {
             params: {
                 start: dateRange.date.start,
                 end: dateRange.date.end,
+                start_previous: dateRange.date.start_previous,
+                end_previous: dateRange.date.end_previous,
                 metric: "cities",
                 group: dateRange.group,
                 key: dateRange.key,

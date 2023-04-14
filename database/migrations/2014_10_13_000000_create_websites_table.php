@@ -18,7 +18,6 @@ return new class extends Migration
 
             $table->string('name');
             $table->string('domain');
-            $table->json('allowed_domains')->nullable();
             $table->boolean('public')->default(false);
             $table->integer('session_duration')->default(30);
 

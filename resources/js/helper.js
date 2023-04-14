@@ -1,3 +1,5 @@
+import colorLib from '@kurkle/color';
+
 export default {
     kFormatter(num) {
         return Math.abs(num) > 999
@@ -25,5 +27,11 @@ export default {
     calcPercentage(total, value)
     {
         return ((value/total) * 100).toFixed(0);
+    },
+
+    transparentize(value, opacity)
+    {
+        var alpha = opacity === undefined ? 0.5 : 1 - opacity;
+        return colorLib(value).alpha(alpha).rgbString();
     }
 };

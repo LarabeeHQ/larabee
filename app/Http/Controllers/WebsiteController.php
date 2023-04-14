@@ -4,6 +4,8 @@ namespace App\Http\Controllers;
 
 use App\Repositories\WebsiteRepository;
 
+use Illuminate\Support\Facades\Gate;
+
 use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Illuminate\Validation\Rule;
@@ -79,7 +81,6 @@ class WebsiteController extends Controller
 
         $website->name = $request->name;
         $website->domain = $request->domain;
-        $website->allowed_domains = $request->allowed_domains;
         $website->session_duration = $request->session_duration;
         $website->public = $request->public;
         $website->save();
@@ -92,6 +93,8 @@ class WebsiteController extends Controller
 
     public function show($id)
     {
+        Gate::forUser(auth()->user())->authorize('view', auth()->user());
+
         $website = Website::where('id', $id)
             ->withCount('sessions')
             ->firstOrFail();
@@ -116,9 +119,11 @@ class WebsiteController extends Controller
         $request->validate([
             'start' => ['required', 'max:255', 'date_format:Y-m-d'],
             'end' => ['required', 'max:255', 'date_format:Y-m-d'],
+            'start_previous' => ['required', 'max:255', 'date_format:Y-m-d'],
+            'end_previous' => ['required', 'max:255', 'date_format:Y-m-d'],
             'metric' => ['required', 'max:255', Rule::in(Website::METRICS)],
             'group' => ['required', 'max:255', 'in:minute,hour,day,month'],
-            'key' => ['required', 'in:live,today,yesterday,this_month,last_month,this_year,last_12_months,all_time,custom']
+            'key' => ['required', 'in:today,yesterday,this_month,last_month,this_year,last_12_months']
         ]);
 
         $website = Website::find($id);
@@ -137,24 +142,16 @@ class WebsiteController extends Controller
         $start = Carbon::createFromFormat('Y-m-d', $request->start, $timezone)->setTimezone('UTC')->startOfDay();
         $end = Carbon::createFromFormat('Y-m-d', $request->end, $timezone)->setTimezone('UTC')->endOfDay();
 
-        // if it's live
-        if ($request->key == 'live') {
-            $start = now()->subMinutes($website->session_duration);
-            $end = now();
-        }
+        $startPrevious = Carbon::createFromFormat('Y-m-d', $request->start_previous, $timezone)->setTimezone('UTC')->startOfDay();
+        $endPrevious = Carbon::createFromFormat('Y-m-d', $request->end_previous, $timezone)->setTimezone('UTC')->endOfDay();
 
         switch ($request->metric) {
-            case 'overview':
-                $diffInDays = $start->diffInDays($end);
-
-                $prevStartDate = Carbon::createFromFormat('Y-m-d', $request->start, $timezone)->setTimezone('UTC')->startOfDay()->subDays($diffInDays)->toDateTimeString();
-                $prevEndDate = Carbon::createFromFormat('Y-m-d', $request->end, $timezone)->setTimezone('UTC')->endOfDay()->subDays($diffInDays)->toDateTimeString();
-
-                $data = $this->website->overview($website->id, $start, $end, $prevStartDate, $prevEndDate);
+            case 'unique-users':
+                $data = $this->website->uniqueUsers($website, $start, $end, $startPrevious, $endPrevious, $request->group);
                 break;
 
-            case 'chart':
-                $data = $this->website->chart($website, $start, $end, $request->group);
+            case 'page-views':
+                $data = $this->website->pageViews($website, $start, $end, $startPrevious, $endPrevious, $request->group);
                 break;
 
             case 'online':
@@ -207,6 +204,10 @@ class WebsiteController extends Controller
 
             case 'devices':
                 $data = $this->website->deviceStats($website->id, $start, $end);
+                break;
+
+            case 'screens':
+                $data = $this->website->screenStats($website->id, $start, $end);
                 break;
 
             case 'languages':

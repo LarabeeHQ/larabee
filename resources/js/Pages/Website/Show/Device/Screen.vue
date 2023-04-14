@@ -7,7 +7,7 @@ const { dateRange, website } = defineProps({
     website: Object,
 });
 
-const pages = ref(null);
+const screens = ref(null);
 
 const loadData = () => {
     axios
@@ -17,13 +17,13 @@ const loadData = () => {
                 end: dateRange.date.end,
                 start_previous: dateRange.date.start_previous,
                 end_previous: dateRange.date.end_previous,
-                metric: "entry-pages",
+                metric: "screens",
                 group: dateRange.group,
                 key: dateRange.key,
             },
         })
         .then((response) => {
-            pages.value = response.data;
+            screens.value = response.data;
         });
 };
 
@@ -35,7 +35,6 @@ watch(dateRange, (value) => {
     loadData();
 });
 </script>
-
 <template>
-    <Table v-if="pages" :data="pages" />
+    <Table v-if="screens" :data="screens" />
 </template>

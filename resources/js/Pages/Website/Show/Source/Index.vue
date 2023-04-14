@@ -32,23 +32,22 @@ const setTab = (value) => {
             :currentTab="tab"
             :tabs="tabNames"
             @update="setTab"
-            title="Top Sources"
+            title="Sources"
         >
             <template #right>
                 <Menu as="div" class="relative inline-block text-left">
                     <div>
                         <MenuButton
                             :class="{
-                                'ml-2 flex items-center cursor-pointer capitalize text-xs xl:text-base font-semibold border-b-2': true,
-                                'text-black dark:text-white border-black dark:border-white':
-                                    tab !== 'Referrer',
-                                'text-gray-600 dark:text-gray-400 border-transparent':
+                                'ml-2 cursor-pointer flex items-center capitalize text-xs font-medium rounded-md px-2 py-1 border': true,
+                                'card ': tab !== 'Referrer',
+                                'text-zinc-600 dark:text-zinc-400 border-transparent':
                                     tab === 'Referrer',
                             }"
                         >
                             {{ tab == "Referrer" ? "All campaigns" : tab }}
                             <ChevronDownIcon
-                                class="h-5 w-5"
+                                class="h-4 w-4"
                                 aria-hidden="true"
                             />
                         </MenuButton>
