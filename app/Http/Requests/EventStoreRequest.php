@@ -4,7 +4,7 @@ namespace App\Http\Requests;
 
 use Illuminate\Foundation\Http\FormRequest;
 
-class CollectRequest extends FormRequest
+class EventStoreRequest extends FormRequest
 {
     /**
      * Determine if the user is authorized to make this request.
@@ -25,10 +25,7 @@ class CollectRequest extends FormRequest
     {
         return [
             'hostname' => ['required', 'string'],
-            'referrer' => ['nullable', 'url'],
-            'language' => ['nullable', 'string'],
-            'screen' => ['required', 'string'],
-            'url' => ['required', 'string'],
+            'data' => ['array', 'nullable'],
         ];
     }
 }

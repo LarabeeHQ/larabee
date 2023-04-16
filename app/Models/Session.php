@@ -47,9 +47,19 @@ class Session extends Model
         return $this->belongsTo(Website::class);
     }
 
-    public function pageViews()
+    public function page_views()
     {
         return $this->hasMany(PageView::class);
+    }
+
+    public function first_page_view()
+    {
+        return $this->hasOne(PageView::class)->orderBy('created_at', 'asc');
+    }
+
+    public function last_page_view()
+    {
+        return $this->hasOne(PageView::class)->latest();
     }
 
     public static function generateHash($websiteId, $hostname, $ip, $userAgent)

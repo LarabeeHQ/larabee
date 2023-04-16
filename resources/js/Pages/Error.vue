@@ -1,7 +1,7 @@
 <script setup>
 import { Link } from "@inertiajs/vue3";
 import { computed } from "vue";
-import SiteLayout from "@/Layouts/Site/Master.vue";
+import AppLayout from "@/Layouts/App/Master.vue";
 
 const props = defineProps({ status: Number });
 
@@ -25,7 +25,7 @@ const description = computed(() => {
 </script>
 
 <template>
-    <SiteLayout>
+    <AppLayout>
         <main
             class="grid min-h-full place-items-center bg-white px-6 py-24 sm:py-48 lg:px-8 border-b border-gray-100"
         >
@@ -49,5 +49,5 @@ const description = computed(() => {
                 </div>
             </div>
         </main>
-    </SiteLayout>
+    </AppLayout>
 </template>

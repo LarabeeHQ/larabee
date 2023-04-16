@@ -4,9 +4,9 @@ namespace App\Http\Controllers\Api;
 
 use Illuminate\Support\Facades\Validator;
 
-use App\Jobs\ProcessColletectedData;
+use App\Jobs\ProcessEvent;
 
-use App\Http\Requests\CollectRequest;
+use App\Http\Requests\EventStoreRequest;
 
 use Illuminate\Http\Request;
 use Browser;
@@ -18,15 +18,15 @@ use App\Models\PageView;
 
 use Illuminate\Support\Facades\Cache;
 
-class CollectController extends Controller
+class EventController extends Controller
 {
-    public function store(CollectRequest $request)
+    public function store(EventStoreRequest $request)
     {
         $website = Cache::remember("website:{$request->website_id}", now()->addMinutes(5), function () use ($request) {
             return Website::where('id', $request->website_id)->first();
         });
 
-        if(!$website) {
+        if (!$website) {
             return response()->json(null, 404);
         }
 
@@ -34,13 +34,11 @@ class CollectController extends Controller
             'ip' => $request->ip(),
             'user_agent' => $request->header('user-agent'),
             'hostname' => $request->hostname,
-            'referrer' => $request->referrer,
-            'language' => $request->language,
-            'screen' => $request->screen,
-            'url' => $request->url
+            'name' => $request->name,
+            'data' => $request->data,
         ];
 
-        ProcessColletectedData::dispatch($data, $website);
+        ProcessEvent::dispatch($data, $website);
 
         return response()->json(null, 202);
     }

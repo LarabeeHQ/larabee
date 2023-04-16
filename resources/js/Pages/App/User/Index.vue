@@ -55,7 +55,16 @@ const formatDate = (date) => {
                                         :key="session.id"
                                     >
                                         <td class="table-td">
-                                            {{ session.id }}
+                                            <Link
+                                                :href="
+                                                    route(
+                                                        'users.show',
+                                                        session.id
+                                                    )
+                                                "
+                                            >
+                                                {{ session.id }}
+                                            </Link>
                                         </td>
                                         <td
                                             class="table-td flex items-center space-x-2"
@@ -67,12 +76,13 @@ const formatDate = (date) => {
                                             <div>{{ session.country }}</div>
                                         </td>
                                         <td class="table-td">
-                                            <div></div>
                                             {{
-                                                formatDate(
-                                                    session.page_views[0]
-                                                        ?.created_at
-                                                )
+                                                session.last_page_view
+                                                    ? formatDate(
+                                                          session.last_page_view
+                                                              ?.created_at
+                                                      )
+                                                    : "-"
                                             }}
                                         </td>
                                     </tr>

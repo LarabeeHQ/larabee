@@ -13,8 +13,6 @@ use Illuminate\Support\Facades\DB;
 
 use Browser;
 
-use App\Models\User;
-use App\Models\Website;
 use App\Models\Session;
 use App\Models\PageView;
 
