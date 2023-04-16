@@ -24,7 +24,7 @@
     install-composer-dependencies
     migration
     generate-i18n
-    npm
+    yarn
     activate-new-release
     cache
     horizon
