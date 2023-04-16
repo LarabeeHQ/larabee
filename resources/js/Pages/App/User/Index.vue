@@ -67,6 +67,7 @@ const formatDate = (date) => {
                                             <div>{{ session.country }}</div>
                                         </td>
                                         <td class="table-td">
+                                            <div></div>
                                             {{
                                                 formatDate(
                                                     session.page_views[0]
