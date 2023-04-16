@@ -42,10 +42,10 @@ const copySnippet = () => {
                     class="cursor-pointer mt-4 transition focus:outline-none focus:border-transparent focus:ring-0 overflow-hidden bg-gray-100 dark:bg-zinc-900 dark:hover:bg-zinc-500/20 border border-transparent rounded-md w-full resize-none"
                     ref="snippet"
                     readonly="readonly"
-                    rows="2"
-                >
-&lt;script defer src="https://tracker.wanalytics.io/l.js"&gt;&lt;/script&gt;
-</textarea
+                    rows="1"
+                    >{{
+                        `&lt;script defer website-id="${website.id}" src="https://tracker.wanalytics.io/l.js"&gt;&lt;/script&gt;`
+                    }}</textarea
                 >
                 <div class="absolute top-6 right-6">
                     <Square2StackIcon class="h-4 w-4 absolute text-white" />

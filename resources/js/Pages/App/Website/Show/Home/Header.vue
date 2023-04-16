@@ -176,7 +176,7 @@ const formatDate = (date) => {
 };
 
 onMounted(() => {
-    setCurrentFilter(periodFilters[0][1]);
+    setCurrentFilter(periodFilters[0][0]);
 });
 </script>
 <template>

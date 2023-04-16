@@ -35,6 +35,10 @@ class LocalDevelopmentSeeder extends Seeder
 
         $website = Website::first();
 
+        // set current website
+        $user->current_website_id = $website->id;
+        $user->save();
+
         $dates = CarbonPeriod::create(now()->subMonths(4), '5 minutes', now());
 
         foreach($dates as $date) {

@@ -36,6 +36,7 @@ class UserFactory extends Factory
             'trial_ends_at' => now()->addMonth(),
             'theme' => UserTheme::THEME_SYSTEM,
             'language_id' => Language::where('locale', 'en')->first()->id,
+            'accepted_terms_at' => now(),
         ];
     }
 

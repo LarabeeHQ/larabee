@@ -33,7 +33,7 @@ const formatDate = (date) => {
                         class="inline-block min-w-full py-2 align-middle md:px-6 lg:px-8"
                     >
                         <div
-                            class="overflow-hidden shadow rounded-md border border-zinc-200 dark:border-zinc-700"
+                            class="overflow-hidden rounded-md border border-zinc-200 dark:border-zinc-700"
                         >
                             <table class="table">
                                 <thead class="table-thead">
@@ -67,7 +67,12 @@ const formatDate = (date) => {
                                             <div>{{ session.country }}</div>
                                         </td>
                                         <td class="table-td">
-                                            {{ formatDate(session.updated_at) }}
+                                            {{
+                                                formatDate(
+                                                    session.page_views[0]
+                                                        .created_at
+                                                )
+                                            }}
                                         </td>
                                     </tr>
                                 </tbody>
