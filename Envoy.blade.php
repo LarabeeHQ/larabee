@@ -102,7 +102,3 @@
     ln -nfs {{ $releases }}/$(find . -maxdepth 1 -name "20*" | sort  | tail -n 2 | head -n1) {{ $current }}
     echo "Rolled back to $(find . -maxdepth 1 -name "20*" | sort  | tail -n 2 | head -n1)"
 @endtask
-
-@success
-    @slack('https://hooks.slack.com/services/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', '#development', 'wAnalytics has deployed successfully 🚀')
-@endsuccess
