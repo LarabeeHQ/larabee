@@ -70,7 +70,7 @@ const formatDate = (date) => {
                                             {{
                                                 formatDate(
                                                     session.page_views[0]
-                                                        .created_at
+                                                        ?.created_at
                                                 )
                                             }}
                                         </td>
