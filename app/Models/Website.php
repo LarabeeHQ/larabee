@@ -19,6 +19,7 @@ class Website extends Model
         'unique-users',
         'page-views',
         'pages',
+        'events',
         'entry-pages',
         'exit-pages',
         'referrers',

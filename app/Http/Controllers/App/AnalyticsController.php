@@ -136,6 +136,10 @@ class AnalyticsController extends Controller
                 $data = $this->website->utmTermStats($website->id, $start, $end);
                 break;
 
+            case 'events':
+                $data = $this->website->events($website->id, $start, $end);
+                break;
+
             case 'browsers':
                 $data = $this->website->browserStats($website->id, $start, $end);
                 break;

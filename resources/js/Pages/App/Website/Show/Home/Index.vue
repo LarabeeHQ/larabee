@@ -12,6 +12,7 @@ import UniqueUser from "../UniqueUser/Index.vue";
 import PageView from "../PageView/Index.vue";
 import Device from "../Device/Index.vue";
 import Location from "../Location/Index.vue";
+import Event from "../Event/Index.vue";
 
 const range = reactive({
     data: null,
@@ -49,6 +50,10 @@ const setRange = (data) => {
                 <div class="grid grid-cols-12 gap-4">
                     <Location :dateRange="range.data" :website="website" />
                     <Device :dateRange="range.data" :website="website" />
+                </div>
+
+                <div class="grid grid-cols-12 gap-4">
+                    <Event :dateRange="range.data" :website="website" />
                 </div>
             </div>
         </div>

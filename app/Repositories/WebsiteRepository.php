@@ -8,6 +8,7 @@ use Carbon\Carbon;
 
 use App\Models\Session;
 use App\Models\PageView;
+use App\Models\Event;
 
 class WebsiteRepository
 {
@@ -253,6 +254,18 @@ class WebsiteRepository
             ->whereBetween('created_at', [$start, $end])
             ->whereNotNull('utm_term')
             ->groupBy('utm_term')
+            ->orderBy('y', 'desc')
+            ->take($limit)
+            ->get();
+    }
+
+    public function events($websiteId, $start, $end, $limit = 10)
+    {
+        return Event::where('website_id', $websiteId)
+            ->select('name as x', DB::raw('count(*) as y'))
+            ->whereBetween('created_at', [$start, $end])
+            ->whereNotNull('name')
+            ->groupBy('name')
             ->orderBy('y', 'desc')
             ->take($limit)
             ->get();
