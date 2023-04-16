@@ -55,10 +55,10 @@
     {{ logMessage("i18n ✅") }}
 @endtask
 
-@task('npm', ['on' => ['serverOne', 'serverTwo']])
+@task('yarn', ['on' => ['serverOne', 'serverTwo']])
     cd {{ $release }}
-    npm install
-    npm run build
+    yarn install
+    yarn run build
     {{ logMessage("Npm ✅") }}
 @endtask
 

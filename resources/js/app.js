@@ -10,10 +10,6 @@ import { ZiggyVue } from '../../vendor/tightenco/ziggy/dist/vue.m';
 import { createI18n } from "vue-i18n";
 import localeMessages from "./vue-i18n-locales.generated";
 
-// calendar
-import VCalendar from "v-calendar";
-import 'v-calendar/dist/style.css';
-
 const appName =
     window.document.getElementsByTagName("title")[0]?.innerText || "wAnalytics";
 
@@ -36,7 +32,6 @@ createInertiaApp({
         return createApp({ render: () => h(App, props) })
             .use(plugin)
             .use(i18n)
-            .use(VCalendar)
             .use(ZiggyVue, Ziggy)
             .mount(el);
     },
