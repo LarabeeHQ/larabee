@@ -17,11 +17,5 @@ export default defineConfig({
                 },
             },
         }),
-    ],
-
-    resolve: {
-        alias: {
-            "~": ".",
-        },
-    },
+    ]
 });
