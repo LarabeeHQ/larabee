@@ -81,7 +81,6 @@ class Kernel extends HttpKernel
         'check.trial' => \App\Http\Middleware\CheckTrial::class,
 
         // app middlewares
-        'app.set-website' => \App\Http\Middleware\App\SetWebsite::class,
         'app.set-locale' => \App\Http\Middleware\App\SetLocale::class,
     ];
 }

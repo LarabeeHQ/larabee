@@ -44,7 +44,7 @@ const copySnippet = () => {
                     readonly="readonly"
                     rows="1"
                     >{{
-                        `&lt;script defer website-id="${website.id}" src="https://tracker.wanalytics.io/l.js"&gt;&lt;/script&gt;`
+                        `&lt;script defer website-id="${website.id}" src="https://cdn.wanalytics.io/l.js"&gt;&lt;/script&gt;`
                     }}</textarea
                 >
                 <div class="absolute top-6 right-6">

@@ -18,9 +18,12 @@
 
     <!-- Stripe -->
     <script src="https://js.stripe.com/v3/" defer></script>
+
+    @include('includes.head')
 </head>
 
 <body class="font-sans antialiased h-full bg-zinc-100 dark:bg-zinc-900">
+    @include('includes.body')
     @inertia
 </body>
 
