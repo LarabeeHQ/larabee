@@ -1,8 +1,8 @@
-@servers(['serverOne' => 'forge@5.78.103.105'])
+@servers(['serverOne' => 'forge@91.107.202.197', 'serverTwo' => 'forge@91.107.216.168'])
 
 @setup
-    $repository = 'git@github.com:launchstack/demo.launchstack.app.git';
-    $path = '/home/forge/demo.launchstack.app';
+    $repository = 'git@github.com:WanalyticsHQ/wanalytics.git';
+    $path = '/home/forge/wanalytics.io';
     $branch = 'main';
 
     $date = ( new DateTime )->format('YmdHis');
@@ -26,10 +26,11 @@
     npm
     activate-new-release
     cache
+    horizon
     clean-old-releases
 @endstory
 
-@task('close-new-release', ['on' => ['serverOne']])
+@task('close-new-release', ['on' => ['serverOne', 'serverTwo']])
     git clone {{ $repository }} --branch={{ $branch }} --depth=1 -q {{ $release }}
     {{ logMessage("Repository cloned ✅") }}
 
@@ -47,27 +48,33 @@
     {{ logMessage("Migration ✅") }}
 @endtask
 
-@task('npm', ['on' => ['serverOne']])
+@task('npm', ['on' => ['serverOne', 'serverTwo']])
     cd {{ $release }}
     npm install
     npm run build
     {{ logMessage("Npm ✅") }}
 @endtask
 
-@task('cache', ['on' => ['serverOne']])
+@task('cache', ['on' => ['serverOne', 'serverTwo']])
     cd {{ $release }}
     php artisan config:cache
     php artisan route:cache
     {{ logMessage("Cache ✅") }}
 @endtask
 
-@task('install-composer-dependencies', ['on' => ['serverOne']])
+@task('horizon', ['on' => ['serverOne', 'serverTwo']])
+    cd {{ $release }}
+    php artisan horizon:terminate
+    {{ logMessage("Horizon ✅") }}
+@endtask
+
+@task('install-composer-dependencies', ['on' => ['serverOne', 'serverTwo']])
     cd {{ $release }}
     composer install --no-interaction --quiet --no-dev --prefer-dist --optimize-autoloader
     {{ logMessage("Composer ✅") }}
 @endtask
 
-@task('activate-new-release', ['on' => ['serverOne']])
+@task('activate-new-release', ['on' => ['serverOne', 'serverTwo']])
     cd {{ $release }}
     ln -nfs {{ $release }} {{ $current }}
     {{ logMessage("Deployment [$release] symlinked to [$current] ✅") }}
@@ -82,3 +89,13 @@
     cd {{ $releases }}
     ls -dt {{ $releases }}/* | tail -n +6 | xargs -d "\n" rm -rf;
 @endtask
+
+@task('rollback')
+    cd {{ $releases }}
+    ln -nfs {{ $releases }}/$(find . -maxdepth 1 -name "20*" | sort  | tail -n 2 | head -n1) {{ $current }}
+    echo "Rolled back to $(find . -maxdepth 1 -name "20*" | sort  | tail -n 2 | head -n1)"
+@endtask
+
+@success
+    @slack('https://hooks.slack.com/services/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', '#development', 'wAnalytics has deployed successfully 🚀')
+@endsuccess
