@@ -8,7 +8,7 @@ use App\Http\Controllers\App\WebsiteController;
 use App\Http\Controllers\App\BillingController;
 use App\Http\Controllers\App\UserController;
 
-Route::group(['prefix' => 'app', 'middleware' => ['auth', 'verified', 'check.trial']], function () {
+Route::group(['prefix' => 'app', 'middleware' => ['auth', 'verified', 'app.set-locale', 'app.set-website', 'check.trial']], function () {
 
     // dashboard
     Route::get('/analytics', [AnalyticsController::class, 'index'])->name('analytics');
