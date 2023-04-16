@@ -23,6 +23,7 @@
     close-new-release
     install-composer-dependencies
     migration
+    generate-i18n
     npm
     activate-new-release
     cache
@@ -46,6 +47,12 @@
     cd {{ $release }}
     php artisan migrate --force
     {{ logMessage("Migration ✅") }}
+@endtask
+
+@task('generate-i18n', ['on' => ['serverOne', 'serverTwo']])
+    cd {{ $release }}
+    php artisan vue-i18n:generate
+    {{ logMessage("i18n ✅") }}
 @endtask
 
 @task('npm', ['on' => ['serverOne', 'serverTwo']])
