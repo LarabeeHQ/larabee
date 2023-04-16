@@ -6,6 +6,9 @@ use App\Models\User;
 use Illuminate\Foundation\Http\FormRequest;
 use Illuminate\Validation\Rule;
 
+use Illuminate\Validation\Rules\Enum;
+use App\Enums\UserTheme;
+
 class ProfileUpdateRequest extends FormRequest
 {
     /**
@@ -19,7 +22,7 @@ class ProfileUpdateRequest extends FormRequest
             'name' => ['string', 'max:255'],
             'email' => ['email', 'max:255', Rule::unique(User::class)->ignore($this->user()->id)],
             'timezone_id' => ['uuid'],
-            'theme' => ['in:light,dark,system'],
+            'theme' => [new Enum(UserTheme::class)],
         ];
     }
 }
