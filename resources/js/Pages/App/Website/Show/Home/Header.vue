@@ -61,11 +61,17 @@ const setCurrentFilter = (filter) => {
             range.group = "hour";
 
             range.date = {
-                start: dayjs().format("YYYY-MM-DD"),
-                end: dayjs().format("YYYY-MM-DD"),
+                start: dayjs().utc().format("YYYY-MM-DD HH:mm:ss"),
+                end: dayjs().utc().format("YYYY-MM-DD HH:mm:ss"),
 
-                start_previous: dayjs().subtract(1, "day").format("YYYY-MM-DD"),
-                end_previous: dayjs().subtract(1, "day").format("YYYY-MM-DD"),
+                start_previous: dayjs()
+                    .subtract(1, "day")
+                    .utc()
+                    .format("YYYY-MM-DD HH:mm:ss"),
+                end_previous: dayjs()
+                    .subtract(1, "day")
+                    .utc()
+                    .format("YYYY-MM-DD HH:mm:ss"),
             };
             break;
 

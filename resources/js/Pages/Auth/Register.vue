@@ -85,14 +85,14 @@ const submit = () => {
                             I agree to the
                             <a
                                 target="_blank"
-                                :href="route('site.terms')"
+                                href="https://wanalytics.io/terms"
                                 class="underline underline-offset-2 text-sm text-gray-600 hover:text-gray-900 dark:text-gray-300 dark:hover:text-gray-400"
                                 >Terms of Service</a
                             >
                             and
                             <a
                                 target="_blank"
-                                :href="route('site.privacy')"
+                                href="https://wanalytics.io/privacy"
                                 class="underline underline-offset-2 text-sm text-gray-600 hover:text-gray-900 dark:text-gray-300 dark:hover:text-gray-400"
                                 >Privacy Policy</a
                             >

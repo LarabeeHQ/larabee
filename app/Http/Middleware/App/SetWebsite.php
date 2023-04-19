@@ -12,8 +12,8 @@ class SetWebsite
         $websites = $user->websites;
 
         // if user has no website, redirect to create website page
-        if ($websites->count() == 0 && $request->segment(2) != 'websites' && $request->segment(3) != 'create') {
-            return redirect(route('app.websites.create'));
+        if ($websites->count() == 0 && $request->segment(1) != 'websites' && $request->segment(2) != 'create') {
+            return redirect(route('websites.create'));
         }
 
         // if user has any website,but no current website, set first website as current website

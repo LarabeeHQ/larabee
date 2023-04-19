@@ -59,10 +59,10 @@ class AnalyticsController extends Controller
     public function statistics(Request $request)
     {
         $request->validate([
-            'start' => ['required', 'max:255', 'date_format:Y-m-d'],
-            'end' => ['required', 'max:255', 'date_format:Y-m-d'],
-            'start_previous' => ['required', 'max:255', 'date_format:Y-m-d'],
-            'end_previous' => ['required', 'max:255', 'date_format:Y-m-d'],
+            'start' => ['required', 'max:255', 'date_format:Y-m-d H:i:s'],
+            'end' => ['required', 'max:255', 'date_format:Y-m-d H:i:s'],
+            'start_previous' => ['required', 'max:255', 'date_format:Y-m-d H:i:s'],
+            'end_previous' => ['required', 'max:255', 'date_format:Y-m-d H:i:s'],
             'metric' => ['required', 'max:255', Rule::in(Website::METRICS)],
             'group' => ['required', 'max:255', 'in:minute,hour,day,month'],
             'key' => ['required', 'in:today,yesterday,this_month,last_month,this_year,last_12_months']
@@ -81,11 +81,15 @@ class AnalyticsController extends Controller
         }
 
         $timezone = auth()->check() ? auth()->user()->timezone->value : 'UTC';
-        $start = Carbon::createFromFormat('Y-m-d', $request->start, $timezone)->setTimezone('UTC')->startOfDay();
-        $end = Carbon::createFromFormat('Y-m-d', $request->end, $timezone)->setTimezone('UTC')->endOfDay();
 
-        $startPrevious = Carbon::createFromFormat('Y-m-d', $request->start_previous, $timezone)->setTimezone('UTC')->startOfDay();
-        $endPrevious = Carbon::createFromFormat('Y-m-d', $request->end_previous, $timezone)->setTimezone('UTC')->endOfDay();
+        $start = Carbon::createFromFormat('Y-m-d H:i:s', $request->start, $timezone)->setTimezone('UTC');
+        $end = Carbon::createFromFormat('Y-m-d H:i:s', $request->end, $timezone)->setTimezone('UTC');
+
+
+        dd($start, $end);
+
+        $startPrevious = Carbon::createFromFormat('Y-m-d H:i:s', $request->start_previous, $timezone)->setTimezone('UTC');
+        $endPrevious = Carbon::createFromFormat('Y-m-d H:i:s', $request->end_previous, $timezone)->setTimezone('UTC');
 
         switch ($request->metric) {
             case 'unique-users':
