@@ -39,7 +39,7 @@ class WebsiteController extends Controller
     {
         $request->validate([
             'name' => 'required|min:2',
-            'domain' => 'required',
+            'domain' => ['required', 'min:3'],
         ]);
 
         // get auth user
@@ -136,7 +136,6 @@ class WebsiteController extends Controller
         } catch (\Throwable $th) {
             $favicon = file_get_contents(public_path('/images/websites/favicon.png'));
         }
-
 
         return response($favicon)->header('Content-Type', 'image/png');
     }

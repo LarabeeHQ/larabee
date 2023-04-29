@@ -24,6 +24,8 @@ const copySnippet = () => {
     usePage().props.flash.bannerStyle = "success";
     usePage().props.flash.banner =
         "The javascript code was been copy to the clipboard.";
+
+    textArea.remove();
 };
 </script>
 <template>
@@ -39,7 +41,7 @@ const copySnippet = () => {
             </div>
             <div class="relative" @click="copySnippet">
                 <textarea
-                    class="cursor-pointer mt-4 transition focus:outline-none focus:border-transparent focus:ring-0 overflow-hidden bg-gray-100 dark:bg-zinc-900 dark:hover:bg-zinc-500/20 border border-transparent rounded-md w-full resize-none"
+                    class="cursor-pointer overflow-y-auto mt-4 transition focus:outline-none focus:border-transparent focus:ring-0 overflow-hidden bg-gray-100 dark:bg-zinc-900 dark:hover:bg-zinc-500/20 border border-transparent rounded-md w-full resize-none"
                     ref="snippet"
                     readonly="readonly"
                     rows="1"
@@ -48,7 +50,9 @@ const copySnippet = () => {
                     }}</textarea
                 >
                 <div class="absolute top-6 right-6">
-                    <Square2StackIcon class="h-4 w-4 absolute text-white" />
+                    <Square2StackIcon
+                        class="h-4 w-4 absolute text-zinc-900 dark:text-white stroke-2"
+                    />
                 </div>
             </div>
         </div>

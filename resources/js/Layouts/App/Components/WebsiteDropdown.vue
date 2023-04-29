@@ -66,7 +66,12 @@ const switchToWebsite = (website) => {
                         >
                             <div class="flex items-center space-x-2">
                                 <img
-                                    :src="`https://www.google.com/s2/favicons?domain=${website.domain}&sz=128`"
+                                    :src="
+                                        route(
+                                            'websites.favicon',
+                                            website.domain
+                                        )
+                                    "
                                     class="w-4 h-4"
                                     :alt="website.name"
                                 />

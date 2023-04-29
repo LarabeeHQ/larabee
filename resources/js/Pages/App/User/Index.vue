@@ -3,14 +3,12 @@ import { Link, Head } from "@inertiajs/vue3";
 import AuthenticatedLayout from "@/Layouts/App/Master.vue";
 import Pagination from "@/Components/Pagination.vue";
 
+import helper from "@/helper";
+
 const { website, sessions } = defineProps({
     sessions: Object,
     website: Object,
 });
-
-const formatDate = (date) => {
-    return dayjs(date).format("MMMM D, YYYY h:mm A");
-};
 </script>
 <template>
     <AuthenticatedLayout>
@@ -78,7 +76,7 @@ const formatDate = (date) => {
                                         <td class="table-td">
                                             {{
                                                 session.last_page_view
-                                                    ? formatDate(
+                                                    ? helper.formatDate(
                                                           session.last_page_view
                                                               ?.created_at
                                                       )

@@ -1,5 +1,7 @@
 import colorLib from '@kurkle/color';
 
+const timezone = Intl.DateTimeFormat().resolvedOptions().timeZone;
+
 export default {
     kFormatter(num) {
         return Math.abs(num) > 999
@@ -35,5 +37,9 @@ export default {
     {
         var alpha = opacity === undefined ? 0.5 : 1 - opacity;
         return colorLib(value).alpha(alpha).rgbString();
+    },
+
+    formatDate(date) {
+        return dayjs.utc(date).tz(timezone).format("MMMM D, YYYY h:mm A");
     }
 };

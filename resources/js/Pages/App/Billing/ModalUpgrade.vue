@@ -33,9 +33,6 @@ const generateCheckout = () => {
         })
         .catch((error) => {
             isLoading.value = false;
-            if (error.response.status === 422) {
-                this.uploadHasErrors = error.response.data.message;
-            }
         });
 };
 
