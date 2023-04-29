@@ -39,8 +39,6 @@ class WebsiteRepository
                         $group
                     order by $group asc"));
 
-
-
         $total = Session::where('website_id', $website->id)->whereBetween('created_at', [$start, $end])->count();
         $totalPrevious = Session::where('website_id', $website->id)->whereBetween('created_at', [$startPrevious, $endPrevious])->count();
 
@@ -48,11 +46,11 @@ class WebsiteRepository
 
             switch ($group) {
                 case 'hour':
-                    return Carbon::createFromFormat('Y-m-d H:i:s', $label)->format('ga');
+                    return Carbon::createFromFormat('Y-m-d H:i:s', $label)->tz($timezone)->format('ga');
                 case 'day':
-                    return  Carbon::createFromFormat('Y-m-d', $label)->format('d M');
+                    return  Carbon::createFromFormat('Y-m-d', $label)->tz($timezone)->format('d M');
                 case 'month':
-                    return Carbon::createFromFormat('Y-m-d', $label)->format('F');
+                    return Carbon::createFromFormat('Y-m-d', $label)->tz($timezone)->format('F');
             }
 
             return $label;
@@ -94,11 +92,11 @@ class WebsiteRepository
 
             switch ($group) {
                 case 'hour':
-                    return Carbon::createFromFormat('Y-m-d H:i:s', $label)->format('ga');
+                    return Carbon::createFromFormat('Y-m-d H:i:s', $label)->tz($timezone)->format('ga');
                 case 'day':
-                    return  Carbon::createFromFormat('Y-m-d', $label)->format('d M');
+                    return  Carbon::createFromFormat('Y-m-d', $label)->tz($timezone)->format('d M');
                 case 'month':
-                    return Carbon::createFromFormat('Y-m-d', $label)->format('F');
+                    return Carbon::createFromFormat('Y-m-d', $label)->tz($timezone)->format('F');
             }
 
             return $label;
