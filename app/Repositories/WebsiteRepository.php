@@ -48,11 +48,11 @@ class WebsiteRepository
 
             switch ($group) {
                 case 'hour':
-                    return Carbon::createFromFormat('Y-m-d H:i:s', $label)->tz($timezone)->format('ga');
+                    return Carbon::createFromFormat('Y-m-d H:i:s', $label)->format('ga');
                 case 'day':
-                    return  Carbon::createFromFormat('Y-m-d', $label)->tz($timezone)->format('d M');
+                    return  Carbon::createFromFormat('Y-m-d', $label)->format('d M');
                 case 'month':
-                    return Carbon::createFromFormat('Y-m-d', $label)->tz($timezone)->format('F');
+                    return Carbon::createFromFormat('Y-m-d', $label)->format('F');
             }
 
             return $label;
@@ -94,11 +94,11 @@ class WebsiteRepository
 
             switch ($group) {
                 case 'hour':
-                    return Carbon::createFromFormat('Y-m-d H:i:s', $label)->tz($timezone)->format('ga');
+                    return Carbon::createFromFormat('Y-m-d H:i:s', $label)->format('ga');
                 case 'day':
-                    return  Carbon::createFromFormat('Y-m-d', $label)->tz($timezone)->format('d M');
+                    return  Carbon::createFromFormat('Y-m-d', $label)->format('d M');
                 case 'month':
-                    return Carbon::createFromFormat('Y-m-d', $label)->tz($timezone)->format('F');
+                    return Carbon::createFromFormat('Y-m-d', $label)->format('F');
             }
 
             return $label;
