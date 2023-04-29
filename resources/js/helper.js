@@ -26,6 +26,8 @@ export default {
 
     calcPercentage(total, value)
     {
+        if(total === 0) return 0;
+
         return ((value/total) * 100).toFixed(0);
     },
 

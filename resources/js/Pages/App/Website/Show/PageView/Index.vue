@@ -1,7 +1,7 @@
 <script setup>
 import helper from "@/helper";
 import Chart from "chart.js/auto";
-import { ref, onMounted, watch, reactive } from "vue";
+import { ref, watch, reactive } from "vue";
 
 const chartElementRef = ref(null);
 let chartElement;
@@ -88,10 +88,6 @@ const renderChart = () => {
         },
     });
 };
-
-onMounted(() => {
-    loadChartData();
-});
 
 watch(
     dateRange,

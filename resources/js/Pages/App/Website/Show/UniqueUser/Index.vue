@@ -105,7 +105,6 @@ const renderChart = () => {
 
 onMounted(() => {
     loadOnline();
-    loadChartData();
 });
 
 watch(

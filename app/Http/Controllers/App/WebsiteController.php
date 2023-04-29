@@ -128,4 +128,16 @@ class WebsiteController extends Controller
 
         return redirect()->route('websites.create');
     }
+
+    public function favicon($url)
+    {
+        try {
+            $favicon = file_get_contents("https://t1.gstatic.com/faviconV2?client=SOCIAL&type=FAVICON&fallback_opts=TYPE,SIZE,URL&url=https://{$url}&size=128");
+        } catch (\Throwable $th) {
+            $favicon = file_get_contents(public_path('/images/websites/favicon.png'));
+        }
+
+
+        return response($favicon)->header('Content-Type', 'image/png');
+    }
 }

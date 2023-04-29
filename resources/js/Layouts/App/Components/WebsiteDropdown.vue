@@ -27,10 +27,11 @@ const switchToWebsite = (website) => {
             >
                 <div class="flex items-center space-x-2">
                     <img
-                        :src="`https://www.google.com/s2/favicons?domain=${currentWebsite.domain}&sz=128`"
+                        :src="route('websites.favicon', currentWebsite.domain)"
                         class="w-4 h-4"
                         :alt="currentWebsite.name"
                     />
+
                     <div>
                         {{ currentWebsite.name }}
                     </div>

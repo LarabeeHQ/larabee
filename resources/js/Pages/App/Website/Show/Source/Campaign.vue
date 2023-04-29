@@ -1,6 +1,6 @@
 <script setup>
 import Table from "@/Components/Table.vue";
-import { ref, onMounted, watch } from "vue";
+import { ref, watch } from "vue";
 
 const { dateRange, website } = defineProps({
     dateRange: Object,
@@ -22,13 +22,13 @@ const loadData = () => {
         });
 };
 
-onMounted(() => {
-    loadData();
-});
-
-watch(dateRange, (value) => {
-    loadData();
-});
+watch(
+    dateRange,
+    () => {
+        loadData();
+    },
+    { immediate: true }
+);
 </script>
 <template>
     <Table v-if="data" :data="data" />

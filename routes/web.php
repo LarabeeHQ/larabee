@@ -24,6 +24,7 @@ Route::group(['middleware' => ['auth', 'verified', 'app.set-locale', 'app.set-we
     Route::post('/websites', [WebsiteController::class, 'store'])->name('websites.store');
     Route::get('/website/edit', [WebsiteController::class, 'edit'])->name('websites.edit');
     Route::put('/website', [WebsiteController::class, 'update'])->name('websites.update');
+    Route::get('/websites/favicon/{url}', [WebsiteController::class, 'favicon'])->name('websites.favicon');
     // Route::get('/website', [WebsiteController::class, 'show'])->name('websites.show')->withoutMiddleware(['auth', 'verified', 'check.trial']);
 
     // users (sessions)

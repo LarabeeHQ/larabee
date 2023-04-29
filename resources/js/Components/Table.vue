@@ -1,12 +1,15 @@
 <script setup>
 import countryHelper from "@/countryHelper";
 import helper from "@/helper";
-import { onMounted, ref, computed } from "vue";
+import { onMounted, ref, computed, watch } from "vue";
 
 const total = ref(0);
 
-const { data, country, favicon } = defineProps({
-    data: Object,
+const prop = defineProps({
+    data: {
+        type: Object,
+        required: true,
+    },
     favicon: {
         type: Boolean,
         default: false,
@@ -28,19 +31,23 @@ const { data, country, favicon } = defineProps({
 });
 
 const formatName = (name) => {
-    return country ? countryHelper.getCountryName(name) : name;
+    return prop.country ? countryHelper.getCountryName(name) : name;
 };
 
-onMounted(async () => {
-    total.value = helper.calcTotal(data);
-});
+watch(
+    prop,
+    async () => {
+        total.value = helper.calcTotal(prop.data);
+    },
+    { deep: true, immediate: true }
+);
 </script>
 
 <template>
-    <div v-if="data.length >= 1">
+    <div v-if="prop.data">
         <div class="space-y-2 relative">
             <div
-                v-for="value in data"
+                v-for="value in prop.data"
                 :key="value"
                 class="relative w-full group"
             >
@@ -55,23 +62,21 @@ onMounted(async () => {
                         ></div>
                         <div class="flex items-center space-x-2 z-10 px-2 py-1">
                             <img
-                                v-if="favicon"
-                                :src="`https://www.google.com/s2/favicons?domain=${value.x}&sz=128`"
+                                v-if="prop.favicon"
+                                :src="route('websites.favicon', value.x)"
                                 class="w-4 h-4"
                                 :alt="value.x"
                             />
 
-                            <img
-                                v-if="country"
-                                :src="`https://flagcdn.com/16x12/${value.x.toLowerCase()}.png`"
-                                :alt="value.x"
-                            />
+                            <div v-if="prop.country">
+                                {{ countryHelper.getCountryFlag(value.x) }}
+                            </div>
 
                             <div
                                 :class="{
                                     'text-gray-800 dark:text-white text-sm font-semibold': true,
-                                    capitalize: capitalize,
-                                    uppercase: uppercase,
+                                    capitalize: prop.capitalize,
+                                    uppercase: prop.uppercase,
                                 }"
                             >
                                 {{ formatName(value.x) }}
