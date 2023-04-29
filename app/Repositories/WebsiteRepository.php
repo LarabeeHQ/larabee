@@ -12,22 +12,23 @@ use App\Models\Event;
 
 class WebsiteRepository
 {
+    public $format;
+
+    public function __construct()
+    {
+        $this->format = [
+            'minute' => 'YYYY-MM-DD HH24:MI:00',
+            'hour' => 'YYYY-MM-DD HH24:00:00',
+            'day' => 'YYYY-MM-DD',
+            'month' => 'YYYY-MM-01',
+            'year' => 'YYYY-01-01',
+        ];
+    }
+
     public function uniqueUsers($website, $timezone, $start, $end, $startPrevious, $endPrevious, $group)
     {
-        switch ($group) {
-            case 'hour':
-                $format = "to_char(date_trunc('$group', created_at), 'HH24:00')";
-                break;
-            case 'day':
-                $format = "to_char(date_trunc('$group', created_at), 'DD')";
-                break;
-            case 'month':
-                $format = "to_char(date_trunc('$group', created_at), 'YY-MM')";
-                break;
-        }
-
         $sessions = collect(DB::select("SELECT
-                        $format as $group,
+                        to_char(date_trunc('$group', created_at at time zone '$timezone'), '{$this->format[$group]}') as $group,
                         count(*) as value
                     FROM
                         sessions
@@ -38,17 +39,22 @@ class WebsiteRepository
                         $group
                     order by $group asc"));
 
+
+
         $total = Session::where('website_id', $website->id)->whereBetween('created_at', [$start, $end])->count();
         $totalPrevious = Session::where('website_id', $website->id)->whereBetween('created_at', [$startPrevious, $endPrevious])->count();
 
         $labels = $sessions->pluck($group)->map(function (string $label) use ($group, $timezone) {
+
             switch ($group) {
                 case 'hour':
-                    return Carbon::createFromFormat('Y-m-d H:i', date("Y-m-d " . $label))->tz($timezone)->format('ga');
+                    return Carbon::createFromFormat('Y-m-d H:i:s', $label)->tz($timezone)->format('ga');
+
                 case 'day':
                     return $label;
                 case 'month':
-                    return Carbon::createFromFormat('Y-m', $label)->tz($timezone)->format('M');
+
+                    return Carbon::createFromFormat('Y-m-d', $label)->tz($timezone)->format('M');
             }
 
             return $label;
@@ -69,20 +75,9 @@ class WebsiteRepository
 
     public function pageViews($website, $timezone, $start, $end, $startPrevious, $endPrevious, $group)
     {
-        switch ($group) {
-            case 'hour':
-                $format = "to_char(date_trunc('$group', created_at), 'HH24:00')";
-                break;
-            case 'day':
-                $format = "to_char(date_trunc('$group', created_at), 'DD')";
-                break;
-            case 'month':
-                $format = "to_char(date_trunc('$group', created_at), 'YY-MM')";
-                break;
-        }
 
         $pageViews = collect(DB::select("SELECT
-                            $format as $group,
+                            to_char(date_trunc('$group', created_at at time zone '$timezone'), '{$this->format[$group]}') as $group,
                             count(*) as value
                         FROM
                             page_views
@@ -98,13 +93,14 @@ class WebsiteRepository
         $totalPrevious = PageView::where('website_id', $website->id)->whereBetween('created_at', [$startPrevious, $endPrevious])->count();
 
         $labels = $pageViews->pluck($group)->map(function (string $label) use ($group, $timezone) {
+
             switch ($group) {
                 case 'hour':
-                    return Carbon::createFromFormat('Y-m-d H:i', date("Y-m-d " . $label))->tz($timezone)->format('ga');
+                    return Carbon::createFromFormat('Y-m-d H:i:s', $label)->tz($timezone)->format('ga');
                 case 'day':
                     return $label;
                 case 'month':
-                    return Carbon::createFromFormat('Y-m', $label)->tz($timezone)->format('M');
+                    return Carbon::createFromFormat('Y-m-d', $label)->tz($timezone)->format('M');
             }
 
             return $label;

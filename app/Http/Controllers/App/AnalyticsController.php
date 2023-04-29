@@ -65,7 +65,7 @@ class AnalyticsController extends Controller
             'end_previous' => ['required', 'max:255', 'date_format:Y-m-d'],
             'metric' => ['required', 'max:255', Rule::in(Website::METRICS)],
             'group' => ['required', 'max:255', 'in:minute,hour,day,month'],
-            'key' => ['required', 'in:today,yesterday,this_month,last_month,this_year,last_12_months'],
+            'key' => ['required', 'in:today,yesterday,last_7_days,last_30_days,this_month,last_month,this_year,last_12_months'],
             'timezone' => ['required', 'max:255'],
         ]);
 
