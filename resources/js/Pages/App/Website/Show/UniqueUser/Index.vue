@@ -26,13 +26,8 @@ const loadOnline = () => {
     axios
         .get(route("analytics.statistics"), {
             params: {
-                start: dateRange.date.start,
-                end: dateRange.date.end,
-                start_previous: dateRange.date.start_previous,
-                end_previous: dateRange.date.end_previous,
+                ...dateRange,
                 metric: "online",
-                group: dateRange.group,
-                key: dateRange.key,
             },
         })
         .then((response) => {
@@ -44,13 +39,8 @@ const loadChartData = () => {
     axios
         .get(route("analytics.statistics"), {
             params: {
-                start: dateRange.date.start,
-                end: dateRange.date.end,
-                start_previous: dateRange.date.start_previous,
-                end_previous: dateRange.date.end_previous,
+                ...dateRange,
                 metric: "unique-users",
-                group: dateRange.group,
-                key: dateRange.key,
             },
         })
         .then((response) => {

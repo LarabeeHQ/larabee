@@ -15,7 +15,6 @@ class DatabaseSeeder extends Seeder
     public function run()
     {
         $this->call([
-            TimezoneSeeder::class,
             LanguageSeeder::class,
         ]);
     }

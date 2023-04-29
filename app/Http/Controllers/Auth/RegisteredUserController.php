@@ -12,7 +12,6 @@ use Inertia\Inertia;
 
 use App\Enums\UserTheme;
 use App\Models\User;
-use App\Models\Timezone;
 use App\Models\Language;
 
 class RegisteredUserController extends Controller
@@ -40,7 +39,6 @@ class RegisteredUserController extends Controller
         $user->name = $request->name;
         $user->email = $request->email;
         $user->password = Hash::make($request->password);
-        $user->timezone_id = Timezone::where('value', 'America/Sao_Paulo')->first()->id;
         $user->language_id = Language::where('locale', 'en')->first()->id;
         $user->theme = UserTheme::THEME_SYSTEM;
         $user->trial_ends_at = now()->addMonth();

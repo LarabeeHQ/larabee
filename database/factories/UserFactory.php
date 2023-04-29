@@ -32,7 +32,6 @@ class UserFactory extends Factory
             'email_verified_at' => now(),
             'password' => Hash::make('admin'),
             'remember_token' => Str::random(10),
-            'timezone_id' => Timezone::factory(),
             'trial_ends_at' => now()->addMonth(),
             'theme' => UserTheme::THEME_SYSTEM,
             'language_id' => Language::where('locale', 'en')->first()->id,

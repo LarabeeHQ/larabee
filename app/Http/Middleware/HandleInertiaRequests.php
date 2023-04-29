@@ -42,7 +42,6 @@ class HandleInertiaRequests extends Middleware
                         'current_website' => $request->user()->current_website_id ? $request->user()->currentWebsite : null,
                         'websites' => $request->user()->websites,
                         'is_trial' => $request->user()->onTrial(),
-                        'timezone' => $request->user()->timezone,
                         'plan' => $request->user()->plan,
                     ]));
                 },

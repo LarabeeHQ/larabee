@@ -8,11 +8,15 @@ const websites = user.value ? user.value.websites : [];
 
 const emit = defineEmits(["update"]);
 
+const timezone = Intl.DateTimeFormat().resolvedOptions().timeZone;
+
 const { website } = defineProps({
     website: Object,
 });
 
-const range = reactive({});
+const range = reactive({
+    timezone: timezone,
+});
 
 const periodFilters = [
     [
@@ -59,20 +63,16 @@ const setCurrentFilter = (filter) => {
             range.key = filter.key;
             range.name = filter.name;
             range.group = "hour";
+            range.start = dayjs().format("YYYY-MM-DD");
+            range.end = dayjs().format("YYYY-MM-DD");
 
-            range.date = {
-                start: dayjs().utc().format("YYYY-MM-DD HH:mm:ss"),
-                end: dayjs().utc().format("YYYY-MM-DD HH:mm:ss"),
+            range.start_previous = dayjs()
+                .subtract(1, "day")
+                .format("YYYY-MM-DD");
+            range.end_previous = dayjs()
+                .subtract(1, "day")
+                .format("YYYY-MM-DD");
 
-                start_previous: dayjs()
-                    .subtract(1, "day")
-                    .utc()
-                    .format("YYYY-MM-DD HH:mm:ss"),
-                end_previous: dayjs()
-                    .subtract(1, "day")
-                    .utc()
-                    .format("YYYY-MM-DD HH:mm:ss"),
-            };
             break;
 
         case "yesterday":
@@ -80,32 +80,35 @@ const setCurrentFilter = (filter) => {
             range.name = filter.name;
             range.group = "hour";
 
-            range.date = {
-                start: dayjs().subtract(1, "day").format("YYYY-MM-DD"),
-                end: dayjs().subtract(1, "day").format("YYYY-MM-DD"),
+            range.start = dayjs().subtract(1, "day").format("YYYY-MM-DD");
+            range.end = dayjs().subtract(1, "day").format("YYYY-MM-DD");
 
-                start_previous: dayjs().subtract(2, "day").format("YYYY-MM-DD"),
-                end_previous: dayjs().subtract(2, "day").format("YYYY-MM-DD"),
-            };
+            range.start_previous = dayjs()
+                .subtract(2, "day")
+                .format("YYYY-MM-DD");
+            range.end_previous = dayjs()
+                .subtract(2, "day")
+                .format("YYYY-MM-DD");
+
             break;
 
         case "this_month":
             range.key = filter.key;
             range.name = filter.name;
             range.group = "day";
-            range.date = {
-                start: dayjs().startOf("month").format("YYYY-MM-DD"),
-                end: dayjs().format("YYYY-MM-DD"),
 
-                start_previous: dayjs()
-                    .startOf("month")
-                    .subtract(1, "month")
-                    .format("YYYY-MM-DD"),
-                end_previous: dayjs()
-                    .startOf("month")
-                    .subtract(1, "month")
-                    .format("YYYY-MM-DD"),
-            };
+            range.start = dayjs().startOf("month").format("YYYY-MM-DD");
+            range.end = dayjs().format("YYYY-MM-DD");
+
+            range.start_previous = dayjs()
+                .startOf("month")
+                .subtract(1, "month")
+                .format("YYYY-MM-DD");
+            range.end_previous = dayjs()
+                .startOf("month")
+                .subtract(1, "month")
+                .format("YYYY-MM-DD");
+
             break;
 
         case "last_month":
@@ -113,25 +116,23 @@ const setCurrentFilter = (filter) => {
             range.name = filter.name;
             range.group = "day";
 
-            range.date = {
-                start: dayjs()
-                    .subtract(1, "month")
-                    .startOf("month")
-                    .format("YYYY-MM-DD"),
-                end: dayjs()
-                    .subtract(1, "month")
-                    .endOf("month")
-                    .format("YYYY-MM-DD"),
+            range.start = dayjs()
+                .subtract(1, "month")
+                .startOf("month")
+                .format("YYYY-MM-DD");
+            range.end = dayjs()
+                .subtract(1, "month")
+                .endOf("month")
+                .format("YYYY-MM-DD");
 
-                start_previous: dayjs()
-                    .subtract(2, "month")
-                    .startOf("month")
-                    .format("YYYY-MM-DD"),
-                end_previous: dayjs()
-                    .subtract(2, "month")
-                    .endOf("month")
-                    .format("YYYY-MM-DD"),
-            };
+            range.start_previous = dayjs()
+                .subtract(2, "month")
+                .startOf("month")
+                .format("YYYY-MM-DD");
+            range.end_previous = dayjs()
+                .subtract(2, "month")
+                .endOf("month")
+                .format("YYYY-MM-DD");
 
             break;
 
@@ -140,36 +141,34 @@ const setCurrentFilter = (filter) => {
             range.name = filter.name;
             range.group = "month";
 
-            range.date = {
-                start: dayjs().startOf("year").format("YYYY-MM-DD"),
-                end: dayjs().format("YYYY-MM-DD"),
+            range.start = dayjs().startOf("year").format("YYYY-MM-DD");
+            range.end = dayjs().format("YYYY-MM-DD");
 
-                start_previous: dayjs()
-                    .startOf("year")
-                    .subtract(1, "year")
-                    .format("YYYY-MM-DD"),
-                end_previous: dayjs()
-                    .endOf("year")
-                    .subtract(1, "year")
-                    .format("YYYY-MM-DD"),
-            };
+            range.start_previous = dayjs()
+                .startOf("year")
+                .subtract(1, "year")
+                .format("YYYY-MM-DD");
+            range.end_previous = dayjs()
+                .endOf("year")
+                .subtract(1, "year")
+                .format("YYYY-MM-DD");
+
             break;
 
         case "last_12_months":
             range.key = filter.key;
             range.name = filter.name;
             range.group = "month";
-            range.date = {
-                start: dayjs().subtract(12, "month").format("YYYY-MM-DD"),
-                end: dayjs().format("YYYY-MM-DD"),
 
-                start_previous: dayjs()
-                    .subtract(24, "month")
-                    .format("YYYY-MM-DD"),
-                end_previous: dayjs()
-                    .subtract(24, "month")
-                    .format("YYYY-MM-DD"),
-            };
+            range.start = dayjs().subtract(12, "month").format("YYYY-MM-DD");
+            range.end = dayjs().format("YYYY-MM-DD");
+
+            range.start_previous = dayjs()
+                .subtract(24, "month")
+                .format("YYYY-MM-DD");
+            range.end_previous = dayjs()
+                .subtract(24, "month")
+                .format("YYYY-MM-DD");
 
             break;
     }

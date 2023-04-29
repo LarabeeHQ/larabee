@@ -11,7 +11,6 @@ import { Link, useForm, usePage } from "@inertiajs/vue3";
 defineProps({
     mustVerifyEmail: Boolean,
     status: String,
-    timezones: Object,
 });
 
 const user = computed(() => usePage().props.auth.user);
@@ -19,7 +18,6 @@ const user = computed(() => usePage().props.auth.user);
 const form = useForm({
     name: user.value.name,
     email: user.value.email,
-    timezone_id: user.value.timezone_id,
     theme: user.value.theme,
 });
 
@@ -42,7 +40,7 @@ const sendEmailVerification = () => {
         <template #title> Account Information </template>
 
         <template #description>
-            Update your account's name, email address and timezone.
+            Update your account's name and email address.
         </template>
 
         <template #form>
@@ -108,18 +106,6 @@ const sendEmailVerification = () => {
                 />
 
                 <InputError :message="form.errors.theme" class="mt-2" />
-            </div>
-
-            <div class="col-span-6 sm:col-span-4">
-                <Label for="timezone_id" value="Timezone" />
-                <Select
-                    id="timezone_id"
-                    :values="timezones"
-                    class="mt-1 block w-full"
-                    v-model="form.timezone_id"
-                />
-
-                <InputError :message="form.errors.timezone_id" class="mt-2" />
             </div>
         </template>
 

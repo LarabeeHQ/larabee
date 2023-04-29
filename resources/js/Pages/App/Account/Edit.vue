@@ -9,7 +9,6 @@ import { Head } from "@inertiajs/vue3";
 defineProps({
     mustVerifyEmail: Boolean,
     status: String,
-    timezones: Object,
 });
 </script>
 
@@ -33,7 +32,6 @@ defineProps({
                     <UpdateProfileInformationForm
                         :must-verify-email="mustVerifyEmail"
                         :status="status"
-                        :timezones="timezones"
                     />
 
                     <SectionBorder />

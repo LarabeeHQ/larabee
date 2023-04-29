@@ -30,7 +30,6 @@ class User extends Authenticatable implements MustVerifyEmail
         'name',
         'email',
         'password',
-        'timezone_id',
         'theme',
         'current_website_id'
     ];
@@ -90,11 +89,6 @@ class User extends Authenticatable implements MustVerifyEmail
                 return $plan;
             }
         }
-    }
-
-    public function timezone()
-    {
-        return $this->belongsTo(Timezone::class);
     }
 
     public function language()

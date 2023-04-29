@@ -12,7 +12,7 @@ use App\Models\Event;
 
 class WebsiteRepository
 {
-    public function uniqueUsers($website, $start, $end, $startPrevious, $endPrevious, $group)
+    public function uniqueUsers($website, $timezone, $start, $end, $startPrevious, $endPrevious, $group)
     {
         switch ($group) {
             case 'hour':
@@ -41,14 +41,14 @@ class WebsiteRepository
         $total = Session::where('website_id', $website->id)->whereBetween('created_at', [$start, $end])->count();
         $totalPrevious = Session::where('website_id', $website->id)->whereBetween('created_at', [$startPrevious, $endPrevious])->count();
 
-        $labels = $sessions->pluck($group)->map(function (string $label) use ($group) {
+        $labels = $sessions->pluck($group)->map(function (string $label) use ($group, $timezone) {
             switch ($group) {
                 case 'hour':
-                    return Carbon::createFromFormat('Y-m-d H:i', date("Y-m-d " . $label))->format('ga');
+                    return Carbon::createFromFormat('Y-m-d H:i', date("Y-m-d " . $label))->tz($timezone)->format('ga');
                 case 'day':
                     return $label;
                 case 'month':
-                    return Carbon::createFromFormat('Y-m', $label)->format('M');
+                    return Carbon::createFromFormat('Y-m', $label)->tz($timezone)->format('M');
             }
 
             return $label;
@@ -67,7 +67,7 @@ class WebsiteRepository
         return $data;
     }
 
-    public function pageViews($website, $start, $end, $startPrevious, $endPrevious, $group)
+    public function pageViews($website, $timezone, $start, $end, $startPrevious, $endPrevious, $group)
     {
         switch ($group) {
             case 'hour':
@@ -97,14 +97,14 @@ class WebsiteRepository
         $total = PageView::where('website_id', $website->id)->whereBetween('created_at', [$start, $end])->count();
         $totalPrevious = PageView::where('website_id', $website->id)->whereBetween('created_at', [$startPrevious, $endPrevious])->count();
 
-        $labels = $pageViews->pluck($group)->map(function (string $label) use ($group) {
+        $labels = $pageViews->pluck($group)->map(function (string $label) use ($group, $timezone) {
             switch ($group) {
                 case 'hour':
-                    return Carbon::createFromFormat('Y-m-d H:i', date("Y-m-d " . $label))->format('ga');
+                    return Carbon::createFromFormat('Y-m-d H:i', date("Y-m-d " . $label))->tz($timezone)->format('ga');
                 case 'day':
                     return $label;
                 case 'month':
-                    return Carbon::createFromFormat('Y-m', $label)->format('M');
+                    return Carbon::createFromFormat('Y-m', $label)->tz($timezone)->format('M');
             }
 
             return $label;

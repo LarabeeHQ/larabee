@@ -8,6 +8,10 @@ use App\Http\Controllers\App\WebsiteController;
 use App\Http\Controllers\App\BillingController;
 use App\Http\Controllers\App\UserController;
 
+Route::get('/', function () {
+    return redirect('/login');
+});
+
 Route::group(['middleware' => ['auth', 'verified', 'app.set-locale', 'app.set-website', 'check.trial']], function () {
 
     // dashboard

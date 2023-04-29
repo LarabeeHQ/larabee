@@ -14,9 +14,7 @@ import Device from "../Device/Index.vue";
 import Location from "../Location/Index.vue";
 import Event from "../Event/Index.vue";
 
-const range = reactive({
-    data: null,
-});
+const range = ref(null);
 
 const user = computed(() => usePage().props.auth.user);
 
@@ -25,7 +23,7 @@ const { website } = defineProps({
 });
 
 const setRange = (data) => {
-    range.data = data;
+    range.value = data;
 };
 </script>
 
@@ -36,24 +34,24 @@ const setRange = (data) => {
         <div v-if="website.sessions_count >= 1">
             <Header :website="website" @update="setRange" />
 
-            <div class="space-y-4" v-if="range.data">
+            <div class="space-y-4" v-if="range">
                 <div class="grid grid-cols-12 gap-4">
-                    <UniqueUser :dateRange="range.data" :website="website" />
-                    <PageView :dateRange="range.data" :website="website" />
+                    <UniqueUser :dateRange="range" :website="website" />
+                    <PageView :dateRange="range" :website="website" />
                 </div>
 
                 <div class="grid grid-cols-12 gap-4">
-                    <Source :dateRange="range.data" :website="website" />
-                    <Page :dateRange="range.data" :website="website" />
+                    <Source :dateRange="range" :website="website" />
+                    <Page :dateRange="range" :website="website" />
                 </div>
 
                 <div class="grid grid-cols-12 gap-4">
-                    <Location :dateRange="range.data" :website="website" />
-                    <Device :dateRange="range.data" :website="website" />
+                    <Location :dateRange="range" :website="website" />
+                    <Device :dateRange="range" :website="website" />
                 </div>
 
                 <div class="grid grid-cols-12 gap-4">
-                    <Event :dateRange="range.data" :website="website" />
+                    <Event :dateRange="range" :website="website" />
                 </div>
             </div>
         </div>

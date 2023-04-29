@@ -13,13 +13,8 @@ const loadData = async () => {
     return await axios
         .get(route("analytics.statistics"), {
             params: {
-                start: dateRange.date.start,
-                end: dateRange.date.end,
-                start_previous: dateRange.date.start_previous,
-                end_previous: dateRange.date.end_previous,
+                ...dateRange,
                 metric: "cities",
-                group: dateRange.group,
-                key: dateRange.key,
             },
         })
         .then((response) => {

@@ -23,7 +23,6 @@ return new class extends Migration
 
             $table->enum('theme', ['LIGHT', 'DARK', 'SYSTEM']);
 
-            $table->foreignUuid('timezone_id');
             $table->foreignUuid('language_id');
             $table->foreignUuid('current_website_id')->nullable();
 

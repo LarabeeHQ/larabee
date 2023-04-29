@@ -12,8 +12,6 @@ use Illuminate\Support\Facades\Redirect;
 use Illuminate\Validation\Rules;
 use Inertia\Inertia;
 
-use App\Models\Timezone;
-
 class AccountController extends Controller
 {
     /**
@@ -24,12 +22,9 @@ class AccountController extends Controller
      */
     public function edit(Request $request)
     {
-        $timezones = Timezone::orderBy('title', 'asc')->pluck('title', 'id');
-
         return Inertia::render('App/Account/Edit', [
             'mustVerifyEmail' => $request->user() instanceof MustVerifyEmail,
             'status' => session('status'),
-            'timezones' => $timezones,
         ]);
     }
 
