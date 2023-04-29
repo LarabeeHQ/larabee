@@ -28,7 +28,7 @@ class WebsiteRepository
     public function uniqueUsers($website, $timezone, $start, $end, $startPrevious, $endPrevious, $group)
     {
         $sessions = collect(DB::select("SELECT
-                        to_char(date_trunc('$group', created_at at time zone '$timezone'), '{$this->format[$group]}') as $group,
+                        to_char(date_trunc('$group', created_at), '{$this->format[$group]}') as $group,
                         count(*) as value
                     FROM
                         sessions
@@ -73,7 +73,7 @@ class WebsiteRepository
     {
 
         $pageViews = collect(DB::select("SELECT
-                            to_char(date_trunc('$group', created_at at time zone '$timezone'), '{$this->format[$group]}') as $group,
+                            to_char(date_trunc('$group', created_at), '{$this->format[$group]}') as $group,
                             count(*) as value
                         FROM
                             page_views
