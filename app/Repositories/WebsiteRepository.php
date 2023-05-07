@@ -182,10 +182,9 @@ class WebsiteRepository
     public function referrerStats($websiteId, $start, $end, $limit = 10)
     {
         return PageView::where('website_id', $websiteId)
-            ->select('referrer as x', DB::raw('count(*) as y'))
+            ->select(DB::raw("count(*) as y, CASE WHEN referrer IS NULL THEN 'Direct' ELSE referrer END AS x"))
             ->whereBetween('created_at', [$start, $end])
-            ->whereNotNull('referrer')
-            ->groupBy('referrer')
+            ->groupBy('x')
             ->orderBy('y', 'desc')
             ->take($limit)
             ->get();

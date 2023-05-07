@@ -77,18 +77,7 @@ class User extends Authenticatable implements MustVerifyEmail
             return ['name' => 'trial'];
         };
 
-        $plans = config('plans.index');
-        $stripeId = $this->subscription('default')->items->first()->stripe_price;
-
-        foreach($plans as $plan) {
-            if ($plan['stripeIdMonthly'] === $stripeId) {
-                return $plan;
-            }
-
-            else if ($plan['stripeIdYearly'] === $stripeId) {
-                return $plan;
-            }
-        }
+        return 'Pro';
     }
 
     public function language()

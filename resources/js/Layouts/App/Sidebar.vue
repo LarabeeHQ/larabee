@@ -30,6 +30,7 @@ const modalUpgrade = ref(null);
 
 const sidebarOpen = ref(false);
 const user = usePage().props.auth.user;
+const selfHosted = usePage().props.self_hosted;
 
 const navigation = [
     {
@@ -37,24 +38,28 @@ const navigation = [
         href: route("analytics"),
         icon: ArrowTrendingUpIcon,
         current: route().current("analytics"),
+        show: true,
     },
     {
         name: "Users",
         href: route("users.index"),
         icon: UsersIcon,
         current: route().current("users.*"),
+        show: true,
     },
     {
         name: "Settings",
         href: route("websites.edit"),
         icon: Cog6ToothIcon,
         current: route().current("websites.edit"),
+        show: true,
     },
     {
         name: "Billing",
         href: route("billing.index"),
         icon: CreditCardIcon,
         current: false,
+        show: !selfHosted,
     },
 ];
 
@@ -139,12 +144,14 @@ const openModalUpgrade = () => {
                                             >
                                                 <Link
                                                     :href="item.href"
-                                                    :class="[
-                                                        item.current
-                                                            ? 'bg-zinc-900 text-white'
-                                                            : 'text-zinc-400 hover:text-white hover:bg-zinc-900',
-                                                        'group flex gap-x-3 rounded-md p-2 text-sm leading-6 font-semibold',
-                                                    ]"
+                                                    :class="{
+                                                        'bg-zinc-900 text-white':
+                                                            item.current,
+                                                        'text-zinc-400 hover:text-white hover:bg-zinc-900':
+                                                            !item.current,
+                                                        'group flex gap-x-3 rounded-md p-2 text-sm leading-6 font-semibold': true,
+                                                        hidden: !item.show,
+                                                    }"
                                                 >
                                                     <component
                                                         :is="item.icon"
@@ -185,12 +192,13 @@ const openModalUpgrade = () => {
                             <li v-for="item in navigation" :key="item.name">
                                 <Link
                                     :href="item.href"
-                                    :class="[
-                                        item.current
-                                            ? 'bg-zinc-900 text-white'
-                                            : 'text-zinc-400 hover:text-white hover:bg-zinc-900',
-                                        'group flex gap-x-3 rounded-md p-2 text-sm leading-6 font-semibold',
-                                    ]"
+                                    :class="{
+                                        'bg-zinc-900 text-white': item.current,
+                                        'text-zinc-400 hover:text-white hover:bg-zinc-900':
+                                            !item.current,
+                                        'group flex gap-x-3 rounded-md p-2 text-sm leading-6 font-semibold': true,
+                                        hidden: !item.show,
+                                    }"
                                 >
                                     <component
                                         :is="item.icon"

@@ -12,7 +12,6 @@ use App\Enums\UserTheme;
 use App\Models\User;
 use App\Models\Website;
 use App\Models\Language;
-use App\Models\Timezone;
 
 /**
  * @extends \Illuminate\Database\Eloquent\Factories\Factory<\App\Models\User>
@@ -59,7 +58,7 @@ class UserFactory extends Factory
             $website = Website::factory()->create();
 
             // add the user to the team
-            $user->teams()->attach($website->id, ['role' => UserRole::ROLE_OWNER, 'onboarding' => false]);
+            $user->teams()->attach($website->id, ['role' => UserRole::ROLE_OWNER]);
 
             // set the current team
             $user->current_website_id = $website->id;

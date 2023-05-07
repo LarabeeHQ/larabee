@@ -1,0 +1,21 @@
+{
+  "name": "@wanalytics/tracker",
+  "description": "A simple, lightweight, and open source Google Analytics alternative.",
+  "author": "Paulo Castellano <paulo@wanalytics.io>",
+  "license": "MIT",
+  "homepage": "https://wanalytics.io",
+  "private": false,
+  "version": "0.0.1",
+  "type": "module",
+  "files": [
+    "dist"
+  ],
+
+  "scripts": {
+    "dev": "vite",
+    "build": "vite build"
+  },
+  "devDependencies": {
+    "vite": "^4.0.4"
+  }
+}

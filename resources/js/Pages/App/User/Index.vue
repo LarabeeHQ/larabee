@@ -2,7 +2,7 @@
 import { Link, Head } from "@inertiajs/vue3";
 import AuthenticatedLayout from "@/Layouts/App/Master.vue";
 import Pagination from "@/Components/Pagination.vue";
-
+import countryHelper from "@/countryHelper";
 import helper from "@/helper";
 
 const { website, sessions } = defineProps({
@@ -40,6 +40,9 @@ const { website, sessions } = defineProps({
                                             Name
                                         </th>
                                         <th scope="col" class="table-th">
+                                            Page Views
+                                        </th>
+                                        <th scope="col" class="table-th">
                                             Country
                                         </th>
                                         <th scope="col" class="table-th">
@@ -64,14 +67,29 @@ const { website, sessions } = defineProps({
                                                 {{ session.id }}
                                             </Link>
                                         </td>
+                                        <td class="table-td">
+                                            <div>
+                                                {{ session.page_views_count }}
+                                            </div>
+                                        </td>
                                         <td
                                             class="table-td flex items-center space-x-2"
                                         >
-                                            <img
-                                                :src="`https://flagcdn.com/16x12/${session.country.toLowerCase()}.png`"
-                                                :alt="session.country"
-                                            />
-                                            <div>{{ session.country }}</div>
+                                            <div>
+                                                {{
+                                                    countryHelper.getCountryFlag(
+                                                        session.country
+                                                    )
+                                                }}
+                                            </div>
+
+                                            <div>
+                                                {{
+                                                    countryHelper.getCountryName(
+                                                        session.country
+                                                    )
+                                                }}
+                                            </div>
                                         </td>
                                         <td class="table-td">
                                             {{

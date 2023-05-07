@@ -64,7 +64,7 @@ class ProcessColletectedData implements ShouldQueue
             $url = parse_url($this->data['url']);
             isset($url['query']) ? parse_str($url['query'], $queryParams) : null;
 
-            // if found in cache, revalidate for more 30min
+            // if found in cache
             if (Cache::has("session:$hash")) {
                 $session = Cache::get("session:$hash");
             }
@@ -102,12 +102,13 @@ class ProcessColletectedData implements ShouldQueue
 
             Cache::put("session:$hash", $session, now()->addMinutes($this->website['session_duration']));
 
-            // parse referrer
-            $referrer = null;
-            $referrerUrl = parse_url($this->data['referrer']);
 
-            if ($this->website['domain'] !== $this->data['referrer'] && isset($referrerUrl['host'])) {
-                $referrer = $referrerUrl['host'];
+            $referrer = null;
+            if($this->data['referrer']) {
+                $referrerUrl = parse_url($this->data['referrer']);
+                if (isset($referrerUrl['host']) && $referrerUrl['host'] != $this->website['domain'] ) {
+                    $referrer = $referrerUrl['host'];
+                }
             }
 
             $pageView = new PageView;

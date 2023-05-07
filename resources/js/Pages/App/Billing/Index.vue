@@ -149,33 +149,29 @@ const openModalUpgrade = () => {
                     </div>
                     <div class="grid grid-cols-2 gap-y-8 gap-x-4">
                         <div class="col-12 col-md-6">
-                            <p>
-                                <span class="text-muted">Event quota:</span
-                                ><br /><span class="">1,000</span>
-                            </p>
+                            <div>
+                                <div class="text-muted">Total Events:</div>
+                                <div class="">
+                                    {{ helper.kFormatter(data.totalEvents) }}
+                                </div>
+                            </div>
                         </div>
                         <div class="col-12 col-md-6">
-                            <p>
-                                <span class="text-muted">Data retention:</span
-                                ><br /><span class="">30 days</span>
-                            </p>
+                            <div>
+                                <div class="text-muted">Data retention:</div>
+                                <div class="">5 Years</div>
+                            </div>
                         </div>
                         <div class="col-12 col-md-6">
-                            <p>
-                                <span class="text-muted">Sites:</span
-                                ><br /><span class="">2 / 50</span>
-                            </p>
+                            <div>
+                                <div class="text-muted">Total Sites:</div>
+                                <div class="">{{ data.totalSites }}</div>
+                            </div>
                         </div>
                         <div class="col-12 col-md-6">
                             <p>
                                 <span class="text-muted">API quota:</span
                                 ><br /><span class="">50 requests per day</span>
-                            </p>
-                        </div>
-                        <div class="col-12 col-md-6">
-                            <p>
-                                <span class="text-muted">Alerts:</span
-                                ><br /><span class="">0 / 1</span>
                             </p>
                         </div>
                     </div>
@@ -189,11 +185,6 @@ const openModalUpgrade = () => {
                     >
                         Event usage: {{ data.startCycle }} —
                         {{ data.endCycle }} (UTC)
-                    </div>
-                    <div
-                        class="flex items-center space-x-1 text-sm font-medium leading-none text-zinc-800 dark:text-zinc-100"
-                    >
-                        {{ helper.kFormatter(data.totalEvents) }}/1,000
                     </div>
                 </div>
 

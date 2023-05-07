@@ -32,24 +32,7 @@ class AnalyticsController extends Controller
 
     public function index()
     {
-        // Gate::forUser(auth()->user())->authorize('view', auth()->user());
-
-        $website = auth()->user()->currentWebsite;
-
-        $website = Website::where('id', $website->id)
-            ->withCount('sessions')
-            ->firstOrFail();
-            // dd($website);
-
-        // check if website is public or user is logged in
-        if (!auth()->check() && !$website->public) {
-            abort(404);
-        }
-
-        // validate if user belongs to website
-        if (auth()->check()) {
-            auth()->user()->belongsToWebsite($website);
-        }
+        $website = auth()->user()->currentWebsite->loadCount('sessions');
 
         return Inertia::render('App/Website/Show/Home/Index', [
             'website' => $website

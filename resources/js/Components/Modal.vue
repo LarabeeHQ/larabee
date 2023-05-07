@@ -1,10 +1,71 @@
+<script setup>
+import { computed, onMounted, onUnmounted, watch } from "vue";
+
+const props = defineProps({
+    show: {
+        default: false,
+    },
+    maxWidth: {
+        type: String,
+        default: "2xl",
+    },
+    closeable: {
+        type: Boolean,
+        default: true,
+    },
+});
+
+const emit = defineEmits(["close"]);
+
+watch(
+    () => props.show,
+    () => {
+        if (props.show) {
+            document.body.style.overflow = "hidden";
+        } else {
+            document.body.style.overflow = null;
+        }
+    }
+);
+
+const close = () => {
+    if (props.closeable) {
+        emit("close");
+    }
+};
+
+const closeOnEscape = (e) => {
+    if (e.key === "Escape" && props.show) {
+        close();
+    }
+};
+
+onMounted(() => document.addEventListener("keydown", closeOnEscape));
+
+onUnmounted(() => {
+    document.removeEventListener("keydown", closeOnEscape);
+    document.body.style.overflow = null;
+});
+
+const maxWidthClass = computed(() => {
+    return {
+        sm: "sm:max-w-sm",
+        md: "sm:max-w-md",
+        lg: "sm:max-w-lg",
+        xl: "sm:max-w-xl",
+        "2xl": "sm:max-w-2xl",
+        "3xl": "sm:max-w-3xl",
+        "4xl": "sm:max-w-4xl",
+    }[props.maxWidth];
+});
+</script>
+
 <template>
     <teleport to="body">
         <transition leave-active-class="duration-200">
             <div
                 v-show="show"
                 class="fixed inset-0 overflow-y-auto z-50"
-                :class="left"
                 scroll-region
             >
                 <transition
@@ -18,12 +79,11 @@
                     <div
                         v-show="show"
                         class="fixed inset-0 transform transition-all"
-                        :class="left"
                         @click="close"
                     >
                         <div
-                            class="absolute inset-0 bg-zinc-600/75 dark:bg-zinc-300/20"
-                        ></div>
+                            class="absolute inset-0 bg-gray-600/75 dark:bg-black/75"
+                        />
                     </div>
                 </transition>
 
@@ -38,10 +98,10 @@
                     <div class="flex items-center justify-center h-screen p-4">
                         <div
                             v-show="show"
-                            class="w-full mx-auto mb-6 bg-white dark:bg-zinc-800 dark:text-white rounded-lg shadow-xl transform transition-all sm:w-full sm:mx-auto"
+                            class="mb-6 bg-white dark:bg-gray-900 rounded-lg overflow-hidden shadow-xl transform transition-all sm:w-full sm:mx-auto"
                             :class="maxWidthClass"
                         >
-                            <slot v-if="show"></slot>
+                            <slot v-if="show" />
                         </div>
                     </div>
                 </transition>
@@ -49,78 +109,3 @@
         </transition>
     </teleport>
 </template>
-
-<script>
-import { onMounted, onUnmounted } from "vue";
-
-export default {
-    emits: ["close"],
-
-    props: {
-        left: {
-            required: false,
-            default: null,
-        },
-        show: {
-            default: false,
-        },
-        maxWidth: {
-            default: "2xl",
-        },
-        closeable: {
-            default: true,
-        },
-    },
-
-    watch: {
-        show: {
-            immediate: true,
-            handler: (show) => {
-                if (show) {
-                    document.body.style.overflow = "hidden";
-                } else {
-                    document.body.style.overflow = null;
-                }
-            },
-        },
-    },
-
-    setup(props, { emit }) {
-        const close = () => {
-            if (props.closeable) {
-                emit("close");
-            }
-        };
-
-        const closeOnEscape = (e) => {
-            if (e.key === "Escape" && props.show) {
-                close();
-            }
-        };
-
-        onMounted(() => document.addEventListener("keydown", closeOnEscape));
-        onUnmounted(() => {
-            document.removeEventListener("keydown", closeOnEscape);
-            document.body.style.overflow = null;
-        });
-
-        return {
-            close,
-        };
-    },
-
-    computed: {
-        maxWidthClass() {
-            return {
-                sm: "sm:max-w-sm",
-                md: "sm:max-w-md",
-                lg: "sm:max-w-lg",
-                xl: "sm:max-w-xl",
-                "2xl": "sm:max-w-2xl",
-                "3xl": "sm:max-w-3xl",
-                "4xl": "sm:max-w-4xl",
-            }[this.maxWidth];
-        },
-    },
-};
-</script>

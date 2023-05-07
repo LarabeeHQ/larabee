@@ -14,6 +14,7 @@ class UserController extends Controller
 
         $sessions = Session::where('website_id', $website->id)
             ->with('last_page_view')
+            ->withCount('page_views')
             ->latest()
             ->paginate();
 
@@ -38,5 +39,21 @@ class UserController extends Controller
         return Inertia::render('App/User/Show', [
             'session' => $session
         ]);
+    }
+
+    public function destroy($id)
+    {
+        $website = auth()->user()->currentWebsite;
+
+        $session = Session::where('website_id', $website->id)
+            ->where('id', $id)
+            ->firstOrFail();
+
+        $session->delete();
+
+        session()->flash('flash.banner', 'User deleted successfully');
+        session()->flash('flash.bannerStyle', 'success');
+
+        return redirect()->route('users.index');
     }
 }

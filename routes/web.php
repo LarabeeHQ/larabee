@@ -25,12 +25,11 @@ Route::group(['middleware' => ['auth', 'verified', 'app.set-locale', 'app.set-we
     Route::get('/website/edit', [WebsiteController::class, 'edit'])->name('websites.edit');
     Route::put('/website', [WebsiteController::class, 'update'])->name('websites.update');
     Route::get('/websites/favicon/{url}', [WebsiteController::class, 'favicon'])->name('websites.favicon');
-    // Route::get('/website', [WebsiteController::class, 'show'])->name('websites.show')->withoutMiddleware(['auth', 'verified', 'check.trial']);
 
     // users (sessions)
     Route::get('/users', [UserController::class, 'index'])->name('users.index');
     Route::get('/users/{id}', [UserController::class, 'show'])->name('users.show');
-    Route::delete('/users/{id}', [UserController::class, 'shodestroyw'])->name('users.destroy');
+    Route::delete('/users/{id}', [UserController::class, 'destroy'])->name('users.destroy');
 
     // account
     Route::get('/account', [AccountController::class, 'edit'])->name('account.edit');

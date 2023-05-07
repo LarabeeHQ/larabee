@@ -50,6 +50,7 @@ class HandleInertiaRequests extends Middleware
             'flash' => $request->session()->get('flash', []),
             'env' => config('app.env'),
             'locale' => app()->getLocale(),
+            'self_hosted' => config('app.self_hosted'),
             'ziggy' => function () use ($request) {
                 return array_merge((new Ziggy)->toArray(), [
                     'location' => $request->url(),

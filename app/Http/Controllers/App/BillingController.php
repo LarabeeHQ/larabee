@@ -9,6 +9,7 @@ use Illuminate\Support\Facades\DB;
 use Illuminate\Http\Request;
 use Inertia\Inertia;
 
+use App\Models\Event;
 use App\Models\PageView;
 
 class BillingController extends Controller
@@ -17,11 +18,16 @@ class BillingController extends Controller
     {
         $websites = auth()->user()->websites()->get();
 
-        $start = now()->startOfMonth()->startOfDay();
-        $end = now()->endOfMonth()->endOfDay();
+        $start = now()->tz('UTC')->startOfMonth()->startOfDay();
+        $end = now()->tz('UTC')->endOfMonth()->endOfDay();
 
+        $totalSites = $websites->count();
 
-        $totalEvents = PageView::whereIn('website_id', $websites->pluck('id')->toArray())
+        $totalPageViews = PageView::whereIn('website_id', $websites->pluck('id')->toArray())
+            ->whereBetween('created_at', [$start, $end])
+            ->count();
+
+        $totalEvents = Event::whereIn('website_id', $websites->pluck('id')->toArray())
             ->whereBetween('created_at', [$start, $end])
             ->count();
 
@@ -42,14 +48,18 @@ class BillingController extends Controller
 
         $period = CarbonPeriod::create($start, $end);
         foreach ($period as $date) {
-            $date = $date->format('Y-m-d');
+            $day = $date->format('Y-m-d');
 
-            if (!isset($pageViews[$date])) {
-                $pageViews[$date] = [
-                    'date' => $date,
+            if (!isset($pageViews[$day])) {
+                $pageViews[$day] = [
+                    'date' => $date->format('d M'),
                     'views' => 0
                 ];
             }
+            else {
+                $pageViews[$day]['date'] = $date->format('d M');
+            }
+
         }
         ksort($pageViews);
 
@@ -58,12 +68,13 @@ class BillingController extends Controller
 
         return Inertia::render('App/Billing/Index', [
             'data' => [
-                'totalEvents' => $totalEvents,
+                'totalEvents' => $totalPageViews + $totalEvents,
                 'startCycle' => $start->format('Y-m-d'),
                 'endCycle' => $end->format('Y-m-d'),
                 'data' => $events,
                 'labels' => $days,
-                'label' => 'events'
+                'label' => 'events',
+                'totalSites' => $totalSites,
             ],
         ]);
     }
@@ -83,8 +94,10 @@ class BillingController extends Controller
     public function generateCheckoutLink(Request $request)
     {
         $checkout = $request->user()
-            ->newSubscription('default', $request->stripePlan)
+            ->newSubscription('default')
+            ->meteredPrice('price_1N4srlBzYJfGgKHPjPLk2oS7')
             ->allowPromotionCodes()
+            ->trialDays(8)
             ->checkout([
                 'success_url' => route('billing.index'),
                 'cancel_url' => route('billing.index')

@@ -16,15 +16,12 @@ const isLoading = ref(false);
 const plans = computed(() => usePage().props.plans);
 
 const selectedPlan = ref(plans.value[0]);
-const yearly = ref(true);
 
 const generateCheckout = () => {
     isLoading.value = true;
     axios
         .post(route("billing.generate-checkout-link"), {
-            stripePlan: yearly.value
-                ? selectedPlan.value.stripeIdYearly
-                : selectedPlan.value.stripeIdMonthly,
+            stripePlan: selectedPlan.value.stripeId,
         })
         .then((data) => {
             window.Stripe(import.meta.env.VITE_STRIPE_KEY).redirectToCheckout({
@@ -57,34 +54,7 @@ defineExpose({
 
         <template #content>
             <div class="mb-4">
-                <div class="flex flex-col align-center">
-                    <div
-                        class="relative self-center rounded-md border border-zinc-100 p-1 flex"
-                    >
-                        <div
-                            @click="yearly = false"
-                            :class="{
-                                'relative rounded py-1.5 text-sm font-bold whitespace-nowrap focus:outline-none focus:z-10 w-auto px-6 cursor-pointer': true,
-                                'bg-zinc-100 text-zinc-800 dark:text-white dark:bg-zinc-700':
-                                    !yearly,
-                                'text-black dark:text-white': yearly,
-                            }"
-                        >
-                            Pay Monthly
-                        </div>
-                        <div
-                            @click="yearly = true"
-                            :class="{
-                                'relative rounded py-1.5 text-sm font-bold  whitespace-nowrap focus:outline-none focus:z-10 w-auto px-6 cursor-pointer': true,
-                                'bg-zinc-100 text-zinc-800 dark:text-white dark:bg-zinc-700':
-                                    yearly,
-                                'text-black dark:text-white': !yearly,
-                            }"
-                        >
-                            Pay Annually
-                        </div>
-                    </div>
-                </div>
+                <div class="flex flex-col align-center"></div>
             </div>
             <RadioGroup v-model="selectedPlan">
                 <RadioGroupLabel class="sr-only">
@@ -139,12 +109,7 @@ defineExpose({
                                     'text-sm ml-0 pl-0 text-right',
                                 ]"
                             >
-                                {{
-                                    yearly
-                                        ? `$${plan.priceYearly}`
-                                        : `$${plan.priceMonthly}`
-                                }}
-                                {{ yearly ? "/ yr" : "/ mo" }}
+                                {{ `${plan.price}/mo` }}
                             </RadioGroupDescription>
                         </div>
                     </RadioGroupOption>

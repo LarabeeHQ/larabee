@@ -12,6 +12,13 @@
 }
 
 /**
+ * Heading
+ */
+.h1 {
+    @apply text-2xl font-bold text-gray-800 dark:text-gray-300
+}
+
+/**
  * Dropdown
  */
 .btn-dropdown {
@@ -42,4 +49,35 @@
 
 .table-td {
     @apply whitespace-nowrap text-sm py-4 px-4 sm:px-6 text-zinc-600 dark:text-zinc-300;
+}
+
+/**
+ * Form
+ */
+.kbd-search {
+    @apply inline-flex items-center rounded border border-gray-200 dark:border-gray-700 px-2.5 font-sans text-sm font-medium text-gray-400 dark:text-gray-500;
+}
+
+/**
+ * Scrollbar
+ */
+::-webkit-scrollbar {
+    width: 10px;
+    height: 10px;
+}
+
+
+::-webkit-scrollbar-track {
+    border-radius: 100vh;
+    background: #eff0f1;
+}
+
+::-webkit-scrollbar-thumb {
+    background: #b3b8c0;
+    border-radius: 100vh;
+    border: 2px solid #e5e7eb;
+}
+
+::-webkit-scrollbar-thumb:hover {
+    background: #9ea2ad;
 }

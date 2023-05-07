@@ -44,7 +44,7 @@ watch(
 </script>
 
 <template>
-    <div v-if="prop.data">
+    <div v-if="prop.data.length >= 1">
         <div class="space-y-2 relative">
             <div
                 v-for="value in prop.data"
@@ -85,7 +85,7 @@ watch(
                     </div>
                     <div class="flex items-center justify-between min-w-[3rem]">
                         <div
-                            class="invisible group-hover:visible flex text-xs font-semibold text-gray-500 dark:hover:text-gray-300"
+                            class="invisible group-hover:visible flex text-xs font-semibold text-gray-500 dark:hover:text-gray-300 mr-2"
                         >
                             {{ helper.calcPercentage(total, value.y) }}%
                         </div>

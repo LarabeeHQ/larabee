@@ -1,4 +1,5 @@
 <script setup>
+import helper from "@/helper";
 import { Link } from "@inertiajs/vue3";
 
 defineProps({
@@ -76,7 +77,9 @@ defineProps({
                     {{ $t("pagination.to") }}
                     <span class="font-medium">{{ data.to }}</span>
                     {{ $t("pagination.of") }}
-                    <span class="font-medium">{{ data.total }}</span>
+                    <span class="font-medium">{{
+                        helper.kFormatter(data.total)
+                    }}</span>
                     {{ $t("pagination.results") }}
                 </p>
             </div>
