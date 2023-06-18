@@ -18,6 +18,7 @@ return new class extends Migration
             $table->foreignUuid('website_id');
             $table->string('hostname')->nullable();
             $table->string('browser')->nullable();
+            $table->string('browser_version')->nullable();
             $table->string('os')->nullable();
             $table->string('device')->nullable();
             $table->string('screen')->nullable();

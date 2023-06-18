@@ -11,8 +11,6 @@ use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\Cache;
 use Illuminate\Support\Facades\DB;
 
-use Browser;
-
 use App\Models\Session;
 use App\Models\PageView;
 
@@ -45,12 +43,6 @@ class ProcessColletectedData implements ShouldQueue
         DB::beginTransaction();
 
         try {
-            // get browser data
-            $browser = Browser::parse($this->data['user_agent']);
-
-            if($browser->isBot()) {
-                return;
-            }
 
             // redis cache key
             $hash = Session::generateHash(
@@ -61,7 +53,7 @@ class ProcessColletectedData implements ShouldQueue
             );
 
             // parse url
-            $url = parse_url($this->data['url']);
+            $url = parse_url($this->data['url']['path']);
             isset($url['query']) ? parse_str($url['query'], $queryParams) : null;
 
             // if found in cache
@@ -72,21 +64,13 @@ class ProcessColletectedData implements ShouldQueue
                 // get geo data
                 $geo = geoip($this->data['ip']);
 
-                // get user device
-                if ($browser->isMobile()) {
-                    $device = Session::DEVICE_MOBILE;
-                } elseif ($browser->isTablet()) {
-                    $device = Session::DEVICE_TABLET;
-                } elseif ($browser->isDesktop()) {
-                    $device = Session::DEVICE_DESKTOP;
-                }
-
                 $session = Session::create([
                     'website_id' => $this->website['id'],
-                    'device' => $device,
+                    'device' => $this->data['device'],
                     'hostname' => $this->data['hostname'],
-                    'browser' => $browser->browserFamily(),
-                    'os' => $browser->platformFamily(),
+                    'browser' => $this->data['browser']['name'],
+                    'browser_version' => $this->data['browser']['version'],
+                    'os' => $this->data['os'],
                     'screen' => $this->data['screen'],
                     'language' => $this->data['language'],
                     'country' => $geo->iso_code,
@@ -102,7 +86,6 @@ class ProcessColletectedData implements ShouldQueue
 
             Cache::put("session:$hash", $session, now()->addMinutes($this->website['session_duration']));
 
-
             $referrer = null;
             if($this->data['referrer']) {
                 $referrerUrl = parse_url($this->data['referrer']);
@@ -115,6 +98,7 @@ class ProcessColletectedData implements ShouldQueue
             $pageView->session_id = $session->id;
             $pageView->website_id = $session->website_id;
             $pageView->url = $url['path'];
+            $pageView->title = $this->data['url']['title'];
             $pageView->referrer = $referrer;
             $pageView->save();
 

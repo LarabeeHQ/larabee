@@ -4,7 +4,7 @@
 
 
 .card {
-    @apply rounded-md border border-zinc-200 dark:border-zinc-700 bg-white dark:bg-zinc-800 text-zinc-700 dark:text-white;
+    @apply rounded-md border-2 border-zinc-200 dark:border-zinc-700 bg-white dark:bg-zinc-800 text-zinc-700 dark:text-white;
 }
 
 .card-hover {
@@ -22,7 +22,7 @@
  * Dropdown
  */
 .btn-dropdown {
-    @apply cursor-pointer rounded-md border flex items-center truncate border-zinc-200 dark:border-zinc-700 bg-white dark:bg-zinc-800 text-zinc-700 dark:text-white px-4 py-2 text-sm font-medium focus:outline-none;
+    @apply cursor-pointer rounded-md border-2 flex items-center truncate border-zinc-200 dark:border-zinc-700 bg-white dark:bg-zinc-800 text-zinc-700 dark:text-white px-4 py-2 text-sm font-medium focus:outline-none;
 }
 
 /**
@@ -31,8 +31,12 @@
  /**
  * Table
  */
+.table-wrapper {
+    @apply overflow-hidden rounded-md border-2 border-zinc-200 dark:border-zinc-700;
+}
+
 .table {
-    @apply min-w-full divide-y divide-zinc-200 dark:divide-zinc-700 ;
+    @apply min-w-full divide-y-2 divide-zinc-200 dark:divide-zinc-700 ;
 }
 
 .table-thead {
@@ -44,7 +48,7 @@
 }
 
 .table-tbody {
-    @apply divide-y divide-zinc-200 dark:divide-zinc-700 bg-white dark:bg-zinc-800/60;
+    @apply divide-y-2 divide-zinc-200 dark:divide-zinc-700 bg-white dark:bg-zinc-800/60;
 }
 
 .table-td {

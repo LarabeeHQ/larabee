@@ -18,6 +18,7 @@ return new class extends Migration
             $table->foreignUuid('session_id');
             $table->foreignUuid('website_id');
 
+            $table->string('title');
             $table->string('url', 900);
             $table->string('referrer', 900)->nullable();
             $table->dateTime('created_at', 0);

@@ -96,6 +96,12 @@ const updateAccount = () => {
                                 15: '15 minutes',
                                 30: '30 minutes',
                                 60: '1 hour',
+                                360: '6 hours',
+                                720: '12 hours',
+                                1440: '1 day',
+                                10080: '7 days',
+                                20160: '14 days',
+                                43200: '1 month',
                             }"
                             class="mt-1 block w-full"
                             v-model="form.session_duration"

@@ -222,10 +222,6 @@ const setCurrentFilter = (filter) => {
     emit("update", range);
 };
 
-const formatDate = (date) => {
-    return dayjs(date).format("YYYY-MM-DD");
-};
-
 onMounted(() => {
     setCurrentFilter(periodFilters[0][0]);
 });
@@ -264,7 +260,7 @@ onMounted(() => {
                     leave-to-class="transform opacity-0 scale-95"
                 >
                     <MenuItems
-                        class="absolute right-0 z-10 mt-1 w-44 origin-top-right border border-gray-200 dark:border-gray-700 divide-y divide-gray-100 dark:divide-zinc-700 rounded-md bg-white dark:bg-[#303030] shadow-lg focus:outline-none"
+                        class="absolute right-0 z-10 mt-1 w-44 origin-top-right border-2 border-gray-200 dark:border-gray-700 divide-y-2 divide-gray-100 dark:divide-zinc-700 rounded-md bg-white dark:bg-[#303030] shadow-lg focus:outline-none"
                     >
                         <div
                             v-for="periodFilter in periodFilters"
@@ -278,7 +274,7 @@ onMounted(() => {
                                 v-slot="{ active }"
                             >
                                 <div
-                                    class="text-gray-700 dark:text-white block px-4 py-2 text-sm cursor-pointer hover:bg-gray-100 dark:hover:bg-zinc-700"
+                                    class="rounded text-gray-700 dark:text-white block px-4 py-2 text-sm cursor-pointer hover:bg-gray-100 dark:hover:bg-zinc-700"
                                 >
                                     {{ filter.name }}
                                 </div>

@@ -6,6 +6,8 @@ import { createInertiaApp } from '@inertiajs/vue3';
 import { resolvePageComponent } from 'laravel-vite-plugin/inertia-helpers';
 import { ZiggyVue } from '../../vendor/tightenco/ziggy/dist/vue.m';
 
+import VueTippy from "vue-tippy";
+
 // locales
 import { createI18n } from "vue-i18n";
 import localeMessages from "./vue-i18n-locales.generated";
@@ -32,6 +34,7 @@ createInertiaApp({
         return createApp({ render: () => h(App, props) })
             .use(plugin)
             .use(i18n)
+            .use(VueTippy)
             .use(ZiggyVue, Ziggy)
             .mount(el);
     },

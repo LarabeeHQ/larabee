@@ -1,4 +1,5 @@
 <script setup>
+import browserHelper from "@/browserHelper";
 import Table from "@/Components/Table.vue";
 import { ref, watch } from "vue";
 
@@ -18,7 +19,12 @@ const loadData = () => {
             },
         })
         .then((response) => {
-            browsers.value = response.data;
+            browsers.value = response.data.map((item) => {
+                return {
+                    ...item,
+                    browser: browserHelper.getBrowserName(item.x),
+                };
+            });
         });
 };
 

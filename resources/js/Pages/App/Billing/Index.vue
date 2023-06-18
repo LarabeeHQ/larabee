@@ -68,10 +68,6 @@ onMounted(() => {
     renderChart();
 });
 
-const formatDate = (date) => {
-    return dayjs(date).format("MMM DD, YYYY");
-};
-
 const openModalUpgrade = () => {
     modalUpgrade.value.open();
 };
@@ -95,7 +91,7 @@ const openModalUpgrade = () => {
                             class="text-sm font-medium text-zinc-800 dark:text-white"
                         >
                             You are currently on a trial period until
-                            {{ formatDate(user.trial_ends_at) }}.
+                            {{ helper.formatDate(user.trial_ends_at) }}.
                         </div>
                         <div>
                             <button

@@ -26,7 +26,8 @@ class Event extends Model
      * @var array<string, string>
      */
     protected $casts = [
-        'data' => 'json'
+        'data' => 'json',
+        'created_at' => 'datetime'
     ];
 
     public function session()

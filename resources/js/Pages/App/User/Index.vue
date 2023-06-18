@@ -30,9 +30,7 @@ const { website, sessions } = defineProps({
                     <div
                         class="inline-block min-w-full py-2 align-middle md:px-6 lg:px-8"
                     >
-                        <div
-                            class="overflow-hidden rounded-md border border-zinc-200 dark:border-zinc-700"
-                        >
+                        <div class="table-wrapper">
                             <table class="table">
                                 <thead class="table-thead">
                                     <tr>
@@ -64,7 +62,15 @@ const { website, sessions } = defineProps({
                                                     )
                                                 "
                                             >
-                                                {{ session.id }}
+                                                <div v-if="session.name">
+                                                    {{ session.name }}
+                                                </div>
+                                                <div v-else-if="session.email">
+                                                    {{ session.email }}
+                                                </div>
+                                                <div v-else>
+                                                    {{ session.id }}
+                                                </div>
                                             </Link>
                                         </td>
                                         <td class="table-td">
@@ -94,7 +100,7 @@ const { website, sessions } = defineProps({
                                         <td class="table-td">
                                             {{
                                                 session.last_page_view
-                                                    ? helper.formatDate(
+                                                    ? helper.formatDateTime(
                                                           session.last_page_view
                                                               ?.created_at
                                                       )

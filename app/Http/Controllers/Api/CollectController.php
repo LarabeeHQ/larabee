@@ -32,11 +32,14 @@ class CollectController extends Controller
 
         $data = [
             'ip' => $request->ip(),
-            'user_agent' => $request->header('user-agent'),
+            'user_agent' => $request->user_agent,
             'hostname' => $request->hostname,
             'referrer' => $request->referrer,
             'language' => $request->language,
             'screen' => $request->screen,
+            'device' => $request->device,
+            'os' => $request->os,
+            'browser' => $request->browser,
             'url' => $request->url
         ];
 

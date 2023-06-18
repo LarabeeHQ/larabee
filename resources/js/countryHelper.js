@@ -245,7 +245,7 @@ const countries = [
 
 export default {
 
-    getCountryName: function (code) {
+    getCountryName (code) {
         let country = countries.find(c => c.code === code);
         if (country) {
             return country.name;
@@ -253,7 +253,7 @@ export default {
         return code;
     },
 
-    getCountryFlag: function (code) {
+    getCountryFlag (code) {
         let country = countries.find(c => c.code === code);
         if (country) {
             return country.flag;

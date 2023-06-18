@@ -5,6 +5,8 @@ namespace App\Http\Controllers\App;
 use Inertia\Inertia;
 
 use App\Models\Session;
+use App\Models\PageView;
+use App\Models\Event;
 
 class UserController extends Controller
 {
@@ -30,14 +32,29 @@ class UserController extends Controller
 
         $session = Session::where('website_id', $website->id)
             ->where('id', $id)
-            ->with('page_views', function ($query) {
-                $query->orderBy('created_at', 'desc');
-            })
             ->with('first_page_view')
             ->firstOrFail();
 
+
+        $eventsQuery = Event::where('session_id', $session->id)
+        ->get();
+
+        $eventDates = PageView::where('session_id', $session->id)
+            ->get()
+            ->merge($eventsQuery)
+            ->sortByDesc('created_at')
+            ->map(function ($data) {
+                $data->type = $data->getTable() == 'page_views' ? 'page_view' : 'event';
+                return $data;
+            })
+            ->groupBy(function ($event) {
+                return $event->created_at->format('Y-m-d');
+            })
+            ->toArray();
+
         return Inertia::render('App/User/Show', [
-            'session' => $session
+            'session' => $session,
+            'eventDates' => $eventDates,
         ]);
     }
 

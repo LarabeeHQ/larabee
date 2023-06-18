@@ -20,6 +20,15 @@ class PageView extends Model
         });
     }
 
+    /**
+     * The attributes that should be cast.
+     *
+     * @var array<string, string>
+     */
+    protected $casts = [
+        'created_at' => 'datetime'
+    ];
+
     public function session()
     {
         return $this->belongsTo(Session::class);

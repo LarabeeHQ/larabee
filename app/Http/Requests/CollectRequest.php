@@ -24,11 +24,15 @@ class CollectRequest extends FormRequest
     public function rules()
     {
         return [
+            'browser' => ['required', 'array'],
+            'device' => ['required', 'string'],
             'hostname' => ['required', 'string'],
-            'referrer' => ['nullable', 'url'],
             'language' => ['nullable', 'string'],
+            'os' => ['required', 'string'],
+            'referrer' => ['nullable', 'url'],
             'screen' => ['required', 'string'],
-            'url' => ['required', 'string'],
+            'url' => ['required', 'array'],
+            'website_id' => ['required', 'uuid'],
         ];
     }
 }
