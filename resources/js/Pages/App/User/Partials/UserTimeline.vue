@@ -9,7 +9,9 @@ defineProps({
     <div class="col-span-3">
         <div class="space-y-4">
             <div v-for="(eventDate, date) in eventDates" :key="date">
-                <div class="text-sm font-semibold mb-1 text-gray-800 dark:text-gray-300">
+                <div
+                    class="text-sm font-semibold mb-1 text-gray-800 dark:text-gray-300"
+                >
                     {{ helper.formatDate(date) }}
                 </div>
                 <div class="space-y-2">
@@ -29,13 +31,13 @@ defineProps({
                                         class="flex items-center space-x-2"
                                     >
                                         <EyeIcon
-                                            v-tippy="{
+                                            v-tooltip="{
                                                 content: 'Page View',
                                             }"
                                             class="h-4 w-4 stroke-2"
                                         />
                                         <div
-                                            v-tippy="{
+                                            v-tooltip="{
                                                 content: event.title,
                                                 placement: 'top',
                                             }"
@@ -48,7 +50,7 @@ defineProps({
                                         class="flex items-center space-x-2"
                                     >
                                         <BoltIcon
-                                            v-tippy="{
+                                            v-tooltip="{
                                                 content: 'Event',
                                             }"
                                             class="h-4 w-4 stroke-2"

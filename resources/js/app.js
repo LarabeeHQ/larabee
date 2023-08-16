@@ -6,7 +6,9 @@ import { createInertiaApp } from '@inertiajs/vue3';
 import { resolvePageComponent } from 'laravel-vite-plugin/inertia-helpers';
 import { ZiggyVue } from '../../vendor/tightenco/ziggy/dist/vue.m';
 
-import VueTippy from "vue-tippy";
+// Import modules...
+import FloatingVue from "floating-vue";
+import "floating-vue/dist/style.css";
 
 // locales
 import { createI18n } from "vue-i18n";
@@ -34,7 +36,9 @@ createInertiaApp({
         return createApp({ render: () => h(App, props) })
             .use(plugin)
             .use(i18n)
-            .use(VueTippy)
+            .use(FloatingVue, {
+                distance: 2,
+            })
             .use(ZiggyVue, Ziggy)
             .mount(el);
     },

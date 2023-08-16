@@ -8,13 +8,14 @@
     history,
   } = window;
 
-  "undefined" === typeof window.wanalytics && (window.wanalytics = {
-    user: {
-      set: (data) => {
-        trackUser(data);
+  "undefined" === typeof window.wanalytics &&
+    (window.wanalytics = {
+      user: {
+        set: (data) => {
+          trackUser(data);
+        },
       },
-    }
-  }); // main
+    }); // main
 
   const { hostname, pathname, search } = location;
   const { currentScript } = document;
@@ -41,40 +42,6 @@
   let currentPath = `${pathname}${search}`;
   let currentRef = document.referrer || null;
   let cache;
-
-
-   // changes for spa
-   document.body.addEventListener(
-     "click",
-     () => {
-       requestAnimationFrame(() => {
-         if (currentUrl !== location.href) {
-           currentUrl = location.href;
-           currentRef = null;
-           currentPath = `${location.pathname}${location.search}`;
-           trackView();
-         }
-       });
-     },
-     true
-   );
-
-  // events
-  document.querySelectorAll("[data-wanalytics-event]").forEach((element) => {
-    element.addEventListener("click", (e) => {
-      let data = {};
-      const values = Object.keys(element.dataset);
-      values.forEach((value) => {
-        if (value != "wanalyticsEvent") {
-          const key = value.replace("wanalyticsEvent", "");
-          data[key] = element.dataset[value];
-        }
-      });
-
-      const name = element.dataset.wanalyticsEvent;
-      trackEvent(name, Object.keys(data).length >= 1 ? data : null);
-    });
-  });
 
   const getBrowser = () => {
     const agent = navigator.userAgent;
@@ -224,4 +191,37 @@
   console.log(
     `wAnalytics started: [Build impacting products from user feedback - https://wanalytics.io]`
   );
+
+  // changes for spa
+  document.body.addEventListener(
+    "click",
+    () => {
+      requestAnimationFrame(() => {
+        if (currentUrl !== location.href) {
+          currentUrl = location.href;
+          currentRef = null;
+          currentPath = `${location.pathname}${location.search}`;
+          trackView();
+        }
+      });
+    },
+    true
+  );
+
+  // events
+  document.querySelectorAll("[data-wanalytics-event]").forEach((element) => {
+    element.addEventListener("click", (e) => {
+      let data = {};
+      const values = Object.keys(element.dataset);
+      values.forEach((value) => {
+        if (value != "wanalyticsEvent") {
+          const key = value.replace("wanalyticsEvent", "");
+          data[key] = element.dataset[value];
+        }
+      });
+
+      const name = element.dataset.wanalyticsEvent;
+      trackEvent(name, Object.keys(data).length >= 1 ? data : null);
+    });
+  });
 })(window);
