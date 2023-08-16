@@ -10,8 +10,8 @@
 
   "undefined" === typeof window.wanalytics && (window.wanalytics = {
     user: {
-      set: (key, value) => {
-        trackUser(key, value);
+      set: (data) => {
+        trackUser(data);
       },
     }
   }); // main
@@ -37,10 +37,29 @@
     return a;
   };
 
-  const currentUrl = `${pathname}${search}`;
+  let currentUrl = location.href;
+  let currentPath = `${pathname}${search}`;
   let currentRef = document.referrer || null;
   let cache;
 
+
+   // changes for spa
+   document.body.addEventListener(
+     "click",
+     () => {
+       requestAnimationFrame(() => {
+         if (currentUrl !== location.href) {
+           currentUrl = location.href;
+           currentRef = null;
+           currentPath = `${location.pathname}${location.search}`;
+           trackView();
+         }
+       });
+     },
+     true
+   );
+
+  // events
   document.querySelectorAll("[data-wanalytics-event]").forEach((element) => {
     element.addEventListener("click", (e) => {
       let data = {};
@@ -154,7 +173,7 @@
     screen: `${screen.width}x${screen.height}`,
     referrer: currentRef,
     url: {
-      path: currentUrl,
+      path: currentPath,
       title: document.title,
     },
     language: language,
@@ -202,4 +221,7 @@
   };
 
   trackView();
+  console.log(
+    `wAnalytics started: [Build impacting products from user feedback - https://wanalytics.io]`
+  );
 })(window);

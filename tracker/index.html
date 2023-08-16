@@ -4,32 +4,71 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Vite App</title>
+    <script src="https://unpkg.com/vue@3/dist/vue.global.js"></script>
+    <script src="https://unpkg.com/vue-router@4.0.15/dist/vue-router.global.js"></script>
   </head>
   <body>
-    <div id="app"></div>
-    <button
-      data-wanalytics-event="Choose Plan"
-      data-wanalytics-event-plan="Pro"
-      data-wanalytics-event-user-id="1"
-      data-wanalytics-event-user-email="paulofcastellano@gmail.com"
-      >
-      selecione o plano
-    </button >
 
-    <a href="/">
-      home
-    </a>
 
-    <a href="/pricing">
-      pricing
-    </a>
+    <div id="app">
+      <button data-wanalytics-event="Choose Plan" data-wanalytics-event-plan="Pro" data-wanalytics-event-user-id="1"
+        data-wanalytics-event-user-email="paulofcastellano@gmail.com">
+        selecione o plano
+      </button>
+      <h1>{{ hello }}</h1>
+      <p>
+        <!-- use the router-link component for navigation. -->
+        <!-- specify the link by passing the `to` prop. -->
+        <!-- `<router-link>` will render an `<a>` tag with the correct `href` attribute -->
+        <router-link to="/">Go to Home</router-link>
+        <router-link to="/about-us">Go to About</router-link>
+      </p>
+      <!-- route outlet -->
+      <!-- component matched by the route will render here -->
+      <router-view></router-view>
+    </div>
 
     <script async
       src="/main.js"
       data-api="https://app.wanalytics.test"
       allow-localhost="true"
       website-id="99e77567-8bc0-4e52-9913-9b92065e72ad"
-      onload="if(window.wanalytics) wanalytics.user.set({name: 'Paulo Castellano', email: 'paulofcastellano@gmail.com', id: 26})"
+      onload="if(window.wanalytics) wanalytics.user.set({name: 'Paulo Castellano', email: 'paulofcastellano@gmail.com', afk: 26})"
       ></script>
+
+
+      <script>
+        const { createApp, ref } = Vue
+
+        const Home = { template: '<div>Home</div>' }
+          const About = { template: '<div>About</div>' }
+
+          // 2. Define some routes
+          // Each route should map to a component.
+          // We'll talk about nested routes later.
+          const routes = [
+            { path: '/', component: Home },
+            { path: '/about-us', component: About },
+          ]
+
+          // 3. Create the router instance and pass the `routes` option
+          // You can pass in additional options here, but let's
+          // keep it simple for now.
+          const router = VueRouter.createRouter({
+            // 4. Provide the history implementation to use. We are using the hash history for simplicity here.
+            history: VueRouter.createWebHistory(),
+            routes, // short for `routes: routes`
+          })
+
+        createApp({
+          setup() {
+            const hello = ref('Hello World!')
+            return {
+              hello
+            }
+          }
+        })
+        .use(router).mount('#app')
+      </script>
   </body>
 </html>
