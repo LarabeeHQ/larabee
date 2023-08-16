@@ -11,6 +11,8 @@ use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\Cache;
 use Illuminate\Support\Facades\DB;
 
+use App\Services\Bot;
+
 use App\Models\Session;
 use App\Models\PageView;
 
@@ -22,6 +24,8 @@ class ProcessColletectedData implements ShouldQueue
 
     public $website;
 
+    public $bot;
+
     /**
      * Create a new job instance.
      *
@@ -31,6 +35,7 @@ class ProcessColletectedData implements ShouldQueue
     {
         $this->data = $data;
         $this->website = $website;
+        $this->bot = new Bot;
     }
 
     /**
@@ -43,6 +48,10 @@ class ProcessColletectedData implements ShouldQueue
         DB::beginTransaction();
 
         try {
+
+            if ($this->bot->isBot($this->data['user_agent'])) {
+                return;
+            }
 
             // redis cache key
             $hash = Session::generateHash(
@@ -86,10 +95,11 @@ class ProcessColletectedData implements ShouldQueue
 
             Cache::put("session:$hash", $session, now()->addMinutes($this->website['session_duration']));
 
+            // get referrer
             $referrer = null;
-            if($this->data['referrer']) {
+            if ($this->data['referrer']) {
                 $referrerUrl = parse_url($this->data['referrer']);
-                if (isset($referrerUrl['host']) && $referrerUrl['host'] != $this->website['domain'] ) {
+                if (isset($referrerUrl['host']) && $referrerUrl['host'] != $this->website['domain']) {
                     $referrer = $referrerUrl['host'];
                 }
             }

@@ -40,7 +40,7 @@ Route::group(['middleware' => ['auth', 'verified', 'app.set-locale', 'app.set-we
     // billing
     Route::get('/billing', [BillingController::class, 'index'])->name('billing.index');
     Route::get('/billing/redirect-to-portal', [BillingController::class, 'redirectToPortal'])->name('billing.redirect-to-portal');
-    Route::post('/billing/generate-checkout-link', [BillingController::class, 'generateCheckoutLink'])->name('billing.generate-checkout-link');
+    Route::get('/billing/checkout', [BillingController::class, 'checkout'])->name('billing.checkout');
     Route::get('/billing/upgrade-success', [BillingController::class, 'index'])->name('billing.upgrade-success');
     Route::inertia('/billing/upgrade-success', 'Billing/success');
 });

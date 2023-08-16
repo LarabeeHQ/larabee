@@ -29,6 +29,8 @@ class SessionFactory extends Factory
         $devices = json_decode(file_get_contents(database_path('factories/data/device.json')));
 
         // definitions
+        $browser = collect(['Chrome', 'Safari', 'Firefox', 'Opera', 'Edge', 'Unknown'])->random();
+        $os = collect(['MacOS', 'Windows', 'GNU/Linux'])->random();
         $ip = collect($ips)->random();
         $userAgent = collect($userAgents)->random();
         $screen = collect($screens)->random();
@@ -44,14 +46,11 @@ class SessionFactory extends Factory
         // get geo data
         $geo = geoip($ip);
 
-        // get browser data
-        $browser = Browser::parse($userAgent);
-
         return [
             'website_id' => Website::factory(),
             'hostname' => $hostname,
-            'browser' => $browser->browserFamily(),
-            'os' => $browser->platformFamily(),
+            'browser' => $browser,
+            'os' => $os,
             'device' => $device,
             'screen' => $screen,
             'language' => $language,

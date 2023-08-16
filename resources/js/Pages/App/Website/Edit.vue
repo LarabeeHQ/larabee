@@ -113,7 +113,7 @@ const updateAccount = () => {
                         />
                     </div>
 
-                    <div class="col-span-6 sm:col-span-4">
+                    <!-- <div class="col-span-6 sm:col-span-4">
                         <Toggle
                             id="public"
                             label="Public"
@@ -124,7 +124,7 @@ const updateAccount = () => {
                             :message="form.errors.public"
                             class="mt-2"
                         />
-                    </div>
+                    </div> -->
                 </template>
 
                 <template #actions>

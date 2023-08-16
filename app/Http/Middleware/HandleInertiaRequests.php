@@ -46,7 +46,6 @@ class HandleInertiaRequests extends Middleware
                     ]));
                 },
             ],
-            'plans' => config('plans.index'),
             'flash' => $request->session()->get('flash', []),
             'env' => config('app.env'),
             'locale' => app()->getLocale(),

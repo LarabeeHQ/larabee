@@ -12,11 +12,10 @@ use Illuminate\Support\Facades\Cache;
 use Illuminate\Support\Facades\DB;
 
 use App\Models\Session;
-use App\Models\Event;
 
 use App\Services\Bot;
 
-class ProcessEvent implements ShouldQueue
+class ProcessUserData implements ShouldQueue
 {
     use Dispatchable, InteractsWithQueue, Queueable, SerializesModels;
 
@@ -61,21 +60,15 @@ class ProcessEvent implements ShouldQueue
                 $this->data['user_agent']
             );
 
-            // if found in cache, revalidate for more 30min
             if (!Cache::has("session:$hash")) {
                 return;
             }
 
-            // get session
             $session = Cache::get("session:$hash");
-
-            // create event
-            $event = new Event;
-            $event->session_id = $session->id;
-            $event->website_id = $session->website_id;
-            $event->name = $this->data['name'];
-            $event->data = $this->data['data'];
-            $event->save();
+            $session->name = isset($this->data['user']['name'] ) ? $this->data['user']['name'] : null;
+            $session->email = isset($this->data['user']['email'] ) ? $this->data['user']['email'] : null;
+            $session->unique_id = isset($this->data['user']['id'] ) ? $this->data['user']['id'] : null;
+            $session->save();
 
             DB::commit();
         } catch (\Exception $e) {

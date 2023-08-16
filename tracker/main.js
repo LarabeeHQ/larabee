@@ -8,6 +8,14 @@
     history,
   } = window;
 
+  "undefined" === typeof window.wanalytics && (window.wanalytics = {
+    user: {
+      set: (key, value) => {
+        trackUser(key, value);
+      },
+    }
+  }); // main
+
   const { hostname, pathname, search } = location;
   const { currentScript } = document;
   if (!currentScript) return;
@@ -17,9 +25,7 @@
     : "https://app.wanalytics.io/api";
 
   const ALLOW_LOCALHOST =
-      currentScript.getAttribute("allow-localhost") == "true"
-          ? true
-          : false;
+    currentScript.getAttribute("allow-localhost") == "true" ? true : false;
 
   const WEBSITE_ID = currentScript.getAttribute("website-id");
   if (!WEBSITE_ID) return;
@@ -37,12 +43,10 @@
 
   document.querySelectorAll("[data-wanalytics-event]").forEach((element) => {
     element.addEventListener("click", (e) => {
-
       let data = {};
       const values = Object.keys(element.dataset);
       values.forEach((value) => {
         if (value != "wanalyticsEvent") {
-
           const key = value.replace("wanalyticsEvent", "");
           data[key] = element.dataset[value];
         }
@@ -95,47 +99,52 @@
 
   const getOS = () => {
     let userAgent = window.navigator.userAgent,
-        platform = window.navigator.platform,
-        macosPlatforms = ["Macintosh", "MacIntel", "MacPPC", "Mac68K"],
-        windowsPlatforms = ["Win32", "Win64", "Windows", "WinCE"],
-        iosPlatforms = ["iPhone", "iPad", "iPod"],
-        os = null;
+      platform = window.navigator.platform,
+      macosPlatforms = ["Macintosh", "MacIntel", "MacPPC", "Mac68K"],
+      windowsPlatforms = ["Win32", "Win64", "Windows", "WinCE"],
+      iosPlatforms = ["iPhone", "iPad", "iPod"],
+      os = null;
 
     if (macosPlatforms.indexOf(platform) !== -1) {
-        os = "MacOS";
+      os = "MacOS";
     } else if (iosPlatforms.indexOf(platform) !== -1) {
-        os = "iOS";
+      os = "iOS";
     } else if (windowsPlatforms.indexOf(platform) !== -1) {
-        os = "Windows";
+      os = "Windows";
     } else if (/Android/.test(userAgent)) {
-        os = "Android";
+      os = "Android";
     } else if (!os && /Linux/.test(platform)) {
-        os = "GNU/Linux";
+      os = "GNU/Linux";
     } else if (!os && /X11/.test(platform)) {
-        os = "Unix";
+      os = "Unix";
     } else {
-        os = "Unknown";
+      os = "Unknown";
     }
 
     return os;
-  }
+  };
 
   const getDevice = () => {
-      const ua = navigator.userAgent;
-      if (/(tablet|ipad|playbook|silk)|(android(?!.*mobi))/i.test(ua)) {
-          return "tablet";
-      }
-      if (
-          /Mobile|iP(hone|od)|Android|BlackBerry|IEMobile|Kindle|Silk-Accelerated|(hpw|web)OS|Opera M(obi|ini)/.test(
-              ua
-          )
-      ) {
-          return "mobile";
-      }
-      return "desktop";
+    const ua = navigator.userAgent;
+    if (/(tablet|ipad|playbook|silk)|(android(?!.*mobi))/i.test(ua)) {
+      return "tablet";
+    }
+    if (
+      /Mobile|iP(hone|od)|Android|BlackBerry|IEMobile|Kindle|Silk-Accelerated|(hpw|web)OS|Opera M(obi|ini)/.test(
+        ua
+      )
+    ) {
+      return "mobile";
+    }
+    return "desktop";
   };
 
   const getTrackEventPayload = () => ({
+    hostname: hostname,
+    website_id: WEBSITE_ID,
+  });
+
+  const getUserPayload = () => ({
     hostname: hostname,
     website_id: WEBSITE_ID,
   });
@@ -170,11 +179,7 @@
     });
   };
 
-  const trackView = () =>
-    collect(
-      assign(getTrackViewPayload(), {}),
-      "collect"
-    );
+  const trackView = () => collect(assign(getTrackViewPayload(), {}), "collect");
 
   const trackEvent = (name, data) => {
     collect(
@@ -185,5 +190,16 @@
       "event"
     );
   };
+
+  const trackUser = (user, data) => {
+    collect(
+      assign(getUserPayload(), {
+        user,
+        data,
+      }),
+      "user"
+    );
+  };
+
   trackView();
 })(window);

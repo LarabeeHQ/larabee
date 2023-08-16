@@ -16,6 +16,8 @@ class BillingController extends Controller
 {
     public function index()
     {
+        // auth()->user()->subscription('default')->reportUsage(3);
+
         $websites = auth()->user()->websites()->get();
 
         $start = now()->tz('UTC')->startOfMonth()->startOfDay();
@@ -91,18 +93,15 @@ class BillingController extends Controller
 
     }
 
-    public function generateCheckoutLink(Request $request)
+    public function checkout(Request $request)
     {
-        $checkout = $request->user()
+        return $request->user()
             ->newSubscription('default')
-            ->meteredPrice('price_1N4srlBzYJfGgKHPjPLk2oS7')
+            ->meteredPrice('price_1NfnN7BzYJfGgKHP3zzP6ujX')
             ->allowPromotionCodes()
-            ->trialDays(8)
             ->checkout([
                 'success_url' => route('billing.index'),
                 'cancel_url' => route('billing.index')
             ]);
-
-        return response()->json($checkout->id);
     }
 }

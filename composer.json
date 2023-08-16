@@ -9,7 +9,6 @@
     "require": {
         "php": "^8.1",
         "guzzlehttp/guzzle": "^7.2",
-        "hisorange/browser-detect": "^4.5",
         "inertiajs/inertia-laravel": "^0.6.9",
         "laravel/cashier": "^14.7",
         "laravel/framework": "^10.0",

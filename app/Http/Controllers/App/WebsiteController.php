@@ -84,7 +84,7 @@ class WebsiteController extends Controller
     {
         $request->validate([
             'name' => 'required|min:2',
-            'domain' => 'required',
+            'domain' => ['required', 'min:3'],
         ]);
 
         $website = auth()->user()->currentWebsite;

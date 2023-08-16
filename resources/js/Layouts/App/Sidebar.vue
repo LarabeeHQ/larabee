@@ -23,11 +23,6 @@ import {
 import WebsiteDropdown from "./Components/WebsiteDropdown.vue";
 import AccountDropdown from "./Components/AccountDropdown.vue";
 
-import ModalUpgrade from "@/Pages/App/Billing/ModalUpgrade.vue";
-
-const showingNavigationDropdown = ref(false);
-const modalUpgrade = ref(null);
-
 const sidebarOpen = ref(false);
 const user = usePage().props.auth.user;
 const selfHosted = usePage().props.self_hosted;
@@ -58,15 +53,10 @@ const navigation = [
         name: "Billing",
         href: route("billing.index"),
         icon: CreditCardIcon,
-        current: false,
+        current: route().current("billing.*"),
         show: !selfHosted,
     },
 ];
-
-const openModalUpgrade = () => {
-    modalUpgrade.value.open();
-    sidebarOpen.value = false;
-};
 </script>
 
 <template>
@@ -233,6 +223,4 @@ const openModalUpgrade = () => {
             <Bars3Icon class="h-6 w-6" aria-hidden="true" />
         </button>
     </div>
-
-    <ModalUpgrade ref="modalUpgrade" />
 </template>

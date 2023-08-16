@@ -29,16 +29,35 @@ const deleteUser = () => {
     <div class="col-span-2">
         <div class="card">
             <div class="block divide-y-2 divide-zinc-200 dark:divide-zinc-700">
-                <div class="">First Visit</div>
+                <div
+                    class="flex items-center px-4 py-2 font-bold text-sm text-black dark:text-white"
+                >
+                    Attributes
+                </div>
+
+                <div
+                    v-if="session.first_page_view"
+                    class="flex items-center px-4 py-2"
+                >
+                    <dt class="text-sm font-semibold leading-5 text-gray-500">
+                        First visit
+                    </dt>
+                    <dd
+                        class="flex-1 text-sm leading-5 text-left break-all flex justify-end text-gray-900 dark:text-white font-medium"
+                    >
+                        {{ session.first_page_view.created_at_formatted }}
+                    </dd>
+                </div>
+
                 <div
                     v-if="session.first_page_view.referrer"
                     class="flex items-center px-4 py-2"
                 >
-                    <dt class="text-sm font-medium leading-5 text-gray-500">
+                    <dt class="text-sm font-semibold leading-5 text-gray-500">
                         Referrer
                     </dt>
                     <dd
-                        class="flex-1 text-sm leading-5 text-left break-all flex justify-end text-gray-900 over-limit"
+                        class="flex-1 text-sm leading-5 text-left break-all flex justify-end text-gray-900 dark:text-white"
                     >
                         <div class="flex items-center space-x-1">
                             <img
@@ -61,29 +80,216 @@ const deleteUser = () => {
                         </div>
                     </dd>
                 </div>
-            </div>
-        </div>
-        <!-- <div class="flex items-center space-x-2">
-            <div class="flex items-center space-x-2">
-                <div>
-                    {{ countryHelper.getCountryFlag(session.country) }}
-                </div>
-                <div>
-                    {{ countryHelper.getCountryName(session.country) }}
-                </div>
-            </div>
-            <div>{{ session.browser }}</div>
-            <div>{{ session.os }}</div>
-        </div>
-        <div>
-            <div>First visit</div>
-            <div>
-                <div>Referrer</div>
-                <div>{{ session.first_page_view.referrer }}</div>
-            </div>
-        </div>
 
-        <div @click="confirmDeletion(session.id)">Delete</div> -->
+                <div class="flex items-center px-4 py-2">
+                    <dt class="text-sm font-semibold leading-5 text-gray-500">
+                        Country
+                    </dt>
+                    <dd
+                        class="flex-1 text-sm leading-5 text-left break-all flex justify-end text-gray-900 dark:text-white font-medium"
+                    >
+                        <span class="flex items-center space-x-2">
+                            <div v-if="session.country">
+                                {{
+                                    countryHelper.getCountryFlag(
+                                        session.country
+                                    )
+                                }}
+                            </div>
+
+                            <div v-if="session.country">
+                                {{
+                                    countryHelper.getCountryName(
+                                        session.country
+                                    )
+                                }}
+                            </div>
+                        </span>
+                    </dd>
+                </div>
+
+                <div v-if="session.region" class="flex items-center px-4 py-2">
+                    <dt class="text-sm font-semibold leading-5 text-gray-500">
+                        Region
+                    </dt>
+                    <dd
+                        class="flex-1 text-sm leading-5 text-left break-all flex justify-end text-gray-900 dark:text-white font-medium"
+                    >
+                        {{ session.region }}
+                    </dd>
+                </div>
+
+                <div v-if="session.city" class="flex items-center px-4 py-2">
+                    <dt class="text-sm font-semibold leading-5 text-gray-500">
+                        City
+                    </dt>
+                    <dd
+                        class="flex-1 text-sm leading-5 text-left break-all flex justify-end text-gray-900 dark:text-white font-medium"
+                    >
+                        {{ session.city }}
+                    </dd>
+                </div>
+
+                <div
+                    v-if="session.language"
+                    class="flex items-center px-4 py-2"
+                >
+                    <dt class="text-sm font-semibold leading-5 text-gray-500">
+                        Language
+                    </dt>
+                    <dd
+                        class="flex-1 text-sm leading-5 text-left break-all flex justify-end text-gray-900 dark:text-white font-medium"
+                    >
+                        {{ session.language }}
+                    </dd>
+                </div>
+
+                <div v-if="session.os" class="flex items-center px-4 py-2">
+                    <dt class="text-sm font-semibold leading-5 text-gray-500">
+                        OS
+                    </dt>
+                    <dd
+                        class="flex-1 text-sm leading-5 text-left break-all flex justify-end text-gray-900 dark:text-white font-medium"
+                    >
+                        {{ session.os }}
+                    </dd>
+                </div>
+
+                <div v-if="session.browser" class="flex items-center px-4 py-2">
+                    <dt class="text-sm font-semibold leading-5 text-gray-500">
+                        Browser
+                    </dt>
+                    <dd
+                        class="flex-1 flex items-center justify-end space-x-1 text-sm leading-5 text-left break-all text-gray-900 dark:text-white font-medium"
+                    >
+                        <span>{{ session.browser }}</span>
+                        <span v-if="session.browser_version">
+                            ({{ session.browser_version }})
+                        </span>
+                    </dd>
+                </div>
+
+                <div v-if="session.device" class="flex items-center px-4 py-2">
+                    <dt class="text-sm font-semibold leading-5 text-gray-500">
+                        Device
+                    </dt>
+                    <dd
+                        class="flex-1 flex items-center justify-end space-x-1 text-sm leading-5 text-left break-all text-gray-900 dark:text-white font-medium"
+                    >
+                        <span v-if="session.device">{{ session.device }}</span>
+                        <span v-if="session.screen">
+                            ({{ session.screen }})
+                        </span>
+                    </dd>
+                </div>
+
+                <div
+                    v-if="session.utm_medium"
+                    class="flex items-center px-4 py-2"
+                >
+                    <dt class="text-sm font-semibold leading-5 text-gray-500">
+                        UTM Medium
+                    </dt>
+                    <dd
+                        class="flex-1 text-sm leading-5 text-left break-all flex justify-end text-gray-900 dark:text-white font-medium"
+                    >
+                        {{ session.utm_medium }}
+                    </dd>
+                </div>
+
+                <div
+                    v-if="session.utm_source"
+                    class="flex items-center px-4 py-2"
+                >
+                    <dt class="text-sm font-semibold leading-5 text-gray-500">
+                        UTM Source
+                    </dt>
+                    <dd
+                        class="flex-1 text-sm leading-5 text-left break-all flex justify-end text-gray-900 dark:text-white font-medium"
+                    >
+                        {{ session.utm_source }}
+                    </dd>
+                </div>
+
+                <div
+                    v-if="session.utm_campaign"
+                    class="flex items-center px-4 py-2"
+                >
+                    <dt class="text-sm font-semibold leading-5 text-gray-500">
+                        UTM Campaign
+                    </dt>
+                    <dd
+                        class="flex-1 text-sm leading-5 text-left break-all flex justify-end text-gray-900 dark:text-white font-medium"
+                    >
+                        {{ session.utm_campaign }}
+                    </dd>
+                </div>
+
+                <div
+                    v-if="session.utm_content"
+                    class="flex items-center px-4 py-2"
+                >
+                    <dt class="text-sm font-semibold leading-5 text-gray-500">
+                        UTM Content
+                    </dt>
+                    <dd
+                        class="flex-1 text-sm leading-5 text-left break-all flex justify-end text-gray-900 dark:text-white font-medium"
+                    >
+                        {{ session.utm_content }}
+                    </dd>
+                </div>
+
+                <div
+                    v-if="session.utm_term"
+                    class="flex items-center px-4 py-2"
+                >
+                    <dt class="text-sm font-semibold leading-5 text-gray-500">
+                        UTM Term
+                    </dt>
+                    <dd
+                        class="flex-1 text-sm leading-5 text-left break-all flex justify-end text-gray-900 dark:text-white font-medium"
+                    >
+                        {{ session.utm_term }}
+                    </dd>
+                </div>
+
+                <div
+                    v-if="session.unique_id"
+                    class="flex items-center px-4 py-2"
+                >
+                    <dt class="text-sm font-semibold leading-5 text-gray-500">
+                        ID
+                    </dt>
+                    <dd
+                        class="flex-1 text-sm leading-5 text-left break-all flex justify-end text-gray-900 dark:text-white font-medium"
+                    >
+                        {{ session.unique_id }}
+                    </dd>
+                </div>
+
+                <div v-if="session.name" class="flex items-center px-4 py-2">
+                    <dt class="text-sm font-semibold leading-5 text-gray-500">
+                        Name
+                    </dt>
+                    <dd
+                        class="flex-1 text-sm leading-5 text-left break-all flex justify-end text-gray-900 dark:text-white font-medium"
+                    >
+                        {{ session.name }}
+                    </dd>
+                </div>
+
+                <div v-if="session.email" class="flex items-center px-4 py-2">
+                    <dt class="text-sm font-semibold leading-5 text-gray-500">
+                        Email
+                    </dt>
+                    <dd
+                        class="flex-1 text-sm leading-5 text-left break-all flex justify-end text-gray-900 dark:text-white font-medium"
+                    >
+                        {{ session.email }}
+                    </dd>
+                </div>
+            </div>
+        </div>
     </div>
 
     <ConfirmationModal

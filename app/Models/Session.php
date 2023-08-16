@@ -29,6 +29,7 @@ class Session extends Model
         'website_id',
         'hostname',
         'browser',
+        'browser_version',
         'os',
         'device',
         'screen',

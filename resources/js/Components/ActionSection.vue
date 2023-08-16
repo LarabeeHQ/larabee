@@ -15,7 +15,7 @@ import SectionTitle from "./SectionTitle.vue";
 
         <div class="mt-5 md:mt-0 md:col-span-2">
             <div
-                class="px-4 py-5 sm:p-6 bg-white dark:bg-zinc-800 dark:text-zinc-300 rounded-md"
+                class="px-4 py-5 sm:p-6 border-2 border-zinc-200 dark:border-zinc-700 bg-white dark:bg-zinc-800 dark:text-zinc-300 rounded-md"
             >
                 <slot name="content" />
             </div>

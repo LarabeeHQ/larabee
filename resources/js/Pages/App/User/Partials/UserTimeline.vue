@@ -9,7 +9,7 @@ defineProps({
     <div class="col-span-3">
         <div class="space-y-4">
             <div v-for="(eventDate, date) in eventDates" :key="date">
-                <div class="text-sm font-semibold mb-1">
+                <div class="text-sm font-semibold mb-1 text-gray-800 dark:text-gray-300">
                     {{ helper.formatDate(date) }}
                 </div>
                 <div class="space-y-2">

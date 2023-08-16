@@ -18,7 +18,6 @@ const { data } = defineProps({
     data: Object,
 });
 
-const modalUpgrade = ref(null);
 const chartElementRef = ref(null);
 let chartElement;
 
@@ -67,10 +66,6 @@ const renderChart = () => {
 onMounted(() => {
     renderChart();
 });
-
-const openModalUpgrade = () => {
-    modalUpgrade.value.open();
-};
 </script>
 <template>
     <Head title="Billing" />
@@ -94,9 +89,8 @@ const openModalUpgrade = () => {
                             {{ helper.formatDate(user.trial_ends_at) }}.
                         </div>
                         <div>
-                            <button
-                                @click="openModalUpgrade"
-                                type="button"
+                            <a
+                                :href="route('billing.checkout')"
                                 class="flex items-center space-x-1 rounded-md bg-green-500 px-4 py-1.5 text-sm font-semibold text-white hover:bg-green-600 focus:outline-none"
                             >
                                 <div>Upgrade Now</div>
@@ -104,7 +98,7 @@ const openModalUpgrade = () => {
                                     class="h-5 w-5"
                                     aria-hidden="true"
                                 />
-                            </button>
+                            </a>
                         </div>
                     </div>
                 </div>
@@ -187,7 +181,5 @@ const openModalUpgrade = () => {
                 <canvas ref="chartElementRef"></canvas>
             </div>
         </div>
-
-        <ModalUpgrade ref="modalUpgrade" />
     </AuthenticatedLayout>
 </template>
