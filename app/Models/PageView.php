@@ -29,20 +29,6 @@ class PageView extends Model
         'created_at' => 'datetime'
     ];
 
-    /**
-     * The accessors to append to the model's array form.
-     *
-     * @var array<int, string>
-     */
-    protected $appends = [
-        'created_at_formatted',
-    ];
-
-    public function getCreatedAtFormattedAttribute()
-    {
-        return $this->created_at->format('M d, Y h:i A');
-    }
-
     public function session()
     {
         return $this->belongsTo(Session::class);

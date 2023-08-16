@@ -1,6 +1,7 @@
 <script setup>
 import { ref } from "vue";
 import { useForm } from "@inertiajs/vue3";
+import helper from "@/helper";
 import countryHelper from "@/countryHelper";
 import DangerButton from "@/Components/DangerButton.vue";
 import SecondaryButton from "@/Components/SecondaryButton.vue";
@@ -45,7 +46,11 @@ const deleteUser = () => {
                     <dd
                         class="flex-1 text-sm leading-5 text-left break-all flex justify-end text-gray-900 dark:text-white font-medium"
                     >
-                        {{ session.first_page_view.created_at_formatted }}
+                        {{
+                            helper.formatDateTime(
+                                session.first_page_view.created_at
+                            )
+                        }}
                     </dd>
                 </div>
 
