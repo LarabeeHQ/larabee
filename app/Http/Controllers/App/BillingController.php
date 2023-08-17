@@ -97,7 +97,7 @@ class BillingController extends Controller
     {
         return $request->user()
             ->newSubscription('default')
-            ->meteredPrice('price_1NfnN7BzYJfGgKHP3zzP6ujX')
+            ->meteredPrice(env('STRIPE_PRICE_ID'))
             ->allowPromotionCodes()
             ->checkout([
                 'success_url' => route('billing.index'),
