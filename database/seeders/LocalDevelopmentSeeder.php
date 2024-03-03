@@ -25,7 +25,7 @@ class LocalDevelopmentSeeder extends Seeder
     {
         $user = User::factory([
                 'name' => 'Admin',
-                'email' => 'admin@wanalytics.io'
+                'email' => 'admin@larabee.io'
             ])
             ->hasAttached(
                 Website::factory(),
@@ -45,7 +45,11 @@ class LocalDevelopmentSeeder extends Seeder
             Session::factory(['created_at' => $date])
                 ->count(rand(1, 2))
                 ->for($website)
-                ->has(PageView::factory(['created_at' => $date])->count(rand(1, 4))->for($website))
+                ->has(
+                    PageView::factory(['created_at' => $date])
+                        ->count(rand(1, 4))
+                        ->for($website)
+                )
                 ->create();
         }
     }

@@ -4,7 +4,7 @@ export default defineConfig({
   build: {
     lib: {
       entry: "./main.js",
-      name: "wAnalytics",
+      name: "larabee",
       fileName: "l",
     },
   },

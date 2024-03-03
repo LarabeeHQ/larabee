@@ -78,8 +78,6 @@ class Kernel extends HttpKernel
         'throttle' => \Illuminate\Routing\Middleware\ThrottleRequests::class,
         'verified' => \Illuminate\Auth\Middleware\EnsureEmailIsVerified::class,
 
-        'check.trial' => \App\Http\Middleware\CheckTrial::class,
-
         // app middlewares
         'app.set-website' => \App\Http\Middleware\App\SetWebsite::class,
         'app.set-locale' => \App\Http\Middleware\App\SetLocale::class,

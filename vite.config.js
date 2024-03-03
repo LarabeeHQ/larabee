@@ -7,7 +7,6 @@ export default defineConfig({
         laravel({
             input: "resources/js/app.js",
             refresh: true,
-            // valetTls: "wanalytics.test",
         }),
         vue({
             template: {

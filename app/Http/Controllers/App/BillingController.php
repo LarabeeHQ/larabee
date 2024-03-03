@@ -90,7 +90,6 @@ class BillingController extends Controller
         $url = auth()->user()->billingPortalUrl(route('billing.index'));
 
         return Inertia::location($url);
-
     }
 
     public function checkout(Request $request)

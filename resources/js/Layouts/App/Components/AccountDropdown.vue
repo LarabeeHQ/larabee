@@ -47,7 +47,7 @@ import {
                 <div class="py-1">
                     <MenuItem v-slot="{ active }">
                         <a
-                            href="https://docs.wanalytics.io"
+                            href="https://docs.larabee.io"
                             target="_blank"
                             class="text-white px-4 py-2 text-sm cursor-pointer hover:bg-zinc-700 font-medium flex items-center space-x-2"
                         >

@@ -15,7 +15,7 @@ import { createI18n } from "vue-i18n";
 import localeMessages from "./vue-i18n-locales.generated";
 
 const appName =
-    window.document.getElementsByTagName("title")[0]?.innerText || "wAnalytics";
+    window.document.getElementsByTagName("title")[0]?.innerText || "Larabee";
 
 createInertiaApp({
     title: (title) => `${title} - ${appName}`,

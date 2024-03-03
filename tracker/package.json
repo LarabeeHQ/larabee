@@ -1,9 +1,9 @@
 {
-  "name": "@wanalytics/tracker",
+  "name": "@larabee/tracker",
   "description": "A simple, lightweight, and open source Google Analytics alternative.",
-  "author": "Paulo Castellano <paulo@wanalytics.io>",
+  "author": "Paulo Castellano <paulo@larabee.io>",
   "license": "MIT",
-  "homepage": "https://wanalytics.io",
+  "homepage": "https://larabee.io",
   "private": false,
   "version": "0.0.1",
   "type": "module",

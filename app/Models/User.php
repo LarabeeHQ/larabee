@@ -10,7 +10,6 @@ use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
 use Laravel\Sanctum\HasApiTokens;
 use Illuminate\Database\Eloquent\Concerns\HasUuids;
-use Laravel\Cashier\Billable;
 use Illuminate\Support\Facades\Storage;
 
 use App\Models\Traits\HasWebsites;
@@ -19,7 +18,7 @@ use App\Enums\UserTheme;
 
 class User extends Authenticatable implements MustVerifyEmail
 {
-    use HasApiTokens, HasFactory, Notifiable, HasUuids, Billable, HasWebsites;
+    use HasApiTokens, HasFactory, Notifiable, HasUuids, HasWebsites;
 
     /**
      * The attributes that are mass assignable.

@@ -49,13 +49,6 @@ const navigation = [
         current: route().current("websites.edit"),
         show: true,
     },
-    {
-        name: "Billing",
-        href: route("billing.index"),
-        icon: CreditCardIcon,
-        current: route().current("billing.*"),
-        show: !selfHosted,
-    },
 ];
 </script>
 

@@ -1,8 +1,8 @@
-# wAnalytics Core
+# Larabee Core
 
 # Running Docker (Sail) Locally
 
-The docker-compose contains all what you need to run wAnalytics on your localhost.
+The docker-compose contains all what you need to run Larabee on your localhost.
 * PHP 8.2
 * [PostgreSQL 15](https://www.postgresql.org/)
 * [Mailpit](https://github.com/axllent/mailpit) - http://localhost:8025/
@@ -11,7 +11,7 @@ The docker-compose contains all what you need to run wAnalytics on your localhos
 
 git clone
 ```
-git@github.com:WanalyticsHQ/wanalytics.git
+git@github.com:larabeeHQ/larabee.git
 ```
 
 Install composer packages

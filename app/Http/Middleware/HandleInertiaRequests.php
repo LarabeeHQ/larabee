@@ -41,8 +41,6 @@ class HandleInertiaRequests extends Middleware
                     return array_merge($request->user()->toArray(), array_filter([
                         'current_website' => $request->user()->current_website_id ? $request->user()->currentWebsite : null,
                         'websites' => $request->user()->websites,
-                        'is_trial' => $request->user()->onTrial(),
-                        'plan' => $request->user()->plan,
                     ]));
                 },
             ],

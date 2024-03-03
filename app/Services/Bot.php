@@ -2,14 +2,6 @@
 
 namespace App\Services;
 
-use Illuminate\Support\Facades\DB;
-
-use Carbon\Carbon;
-
-use App\Models\Session;
-use App\Models\PageView;
-use App\Models\Event;
-
 class Bot
 {
 

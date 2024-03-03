@@ -15,7 +15,7 @@ return [
     |
     */
 
-    'name' => env('APP_NAME', 'wAnalytics'),
+    'name' => env('APP_NAME', 'Larabee'),
 
     /*
     |--------------------------------------------------------------------------
@@ -67,7 +67,7 @@ return [
     |
     */
 
-    'url' => env('APP_URL', 'https://wanalytics.io'),
+    'url' => env('APP_URL', 'https://larabee.io'),
 
     'asset_url' => env('ASSET_URL'),
 

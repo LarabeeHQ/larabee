@@ -11,8 +11,8 @@
 
 
     <div id="app">
-      <button data-wanalytics-event="Choose Plan" data-wanalytics-event-plan="Pro" data-wanalytics-event-user-id="1"
-        data-wanalytics-event-user-email="paulofcastellano@gmail.com">
+      <button data-larabee-event="Choose Plan" data-larabee-event-plan="Pro" data-larabee-event-user-id="1"
+        data-larabee-event-user-email="paulofcastellano@gmail.com">
         selecione o plano
       </button>
       <h1>{{ hello }}</h1>
@@ -30,12 +30,11 @@
 
     <script async
       src="/main.js"
-      data-api="https://app.wanalytics.test"
+      data-api="https://api.larabee.test/v1"
       allow-localhost="true"
-      website-id="99e77567-8bc0-4e52-9913-9b92065e72ad"
-      onload="if(window.wanalytics) wanalytics.user.set({name: 'Paulo Castellano', email: 'paulofcastellano@gmail.com', afk: 26})"
+      website-id="9b7a7d15-8631-4c49-bf9c-0ab5fd83c750"
+      onload="if(window.larabee) larabee.user.set({name: 'Paulo Castellano', email: 'paulofcastellano@gmail.com', afk: 26})"
       ></script>
-
 
       <script>
         const { createApp, ref } = Vue

@@ -8,8 +8,8 @@
     history,
   } = window;
 
-  "undefined" === typeof window.wanalytics &&
-    (window.wanalytics = {
+  "undefined" === typeof window.larabee &&
+    (window.larabee = {
       user: {
         set: (data) => {
           trackUser(data);
@@ -22,8 +22,8 @@
   if (!currentScript) return;
 
   const BASE_URL = currentScript.getAttribute("data-api")
-    ? currentScript.getAttribute("data-api") + "/api"
-    : "https://app.wanalytics.io/api";
+    ? currentScript.getAttribute("data-api")
+    : "https://api.larabee.io/v1";
 
   const ALLOW_LOCALHOST =
     currentScript.getAttribute("allow-localhost") == "true" ? true : false;
@@ -189,7 +189,7 @@
 
   trackView();
   console.log(
-    `wAnalytics started: [Build impacting products from user feedback - https://wanalytics.io]`
+    `Larabee started: [Build impacting products from user feedback - https://larabee.io]`
   );
 
   // changes for spa
@@ -209,18 +209,18 @@
   );
 
   // events
-  document.querySelectorAll("[data-wanalytics-event]").forEach((element) => {
+  document.querySelectorAll("[data-larabee-event]").forEach((element) => {
     element.addEventListener("click", (e) => {
       let data = {};
       const values = Object.keys(element.dataset);
       values.forEach((value) => {
-        if (value != "wanalyticsEvent") {
-          const key = value.replace("wanalyticsEvent", "");
+        if (value != "larabeeEvent") {
+          const key = value.replace("larabeeEvent", "");
           data[key] = element.dataset[value];
         }
       });
 
-      const name = element.dataset.wanalyticsEvent;
+      const name = element.dataset.larabeeEvent;
       trackEvent(name, Object.keys(data).length >= 1 ? data : null);
     });
   });

@@ -2,7 +2,6 @@
 
 namespace App\Providers;
 
-use Laravel\Cashier\Cashier;
 use App\Models\User;
 use Illuminate\Support\ServiceProvider;
 
@@ -15,8 +14,6 @@ class AppServiceProvider extends ServiceProvider
      */
     public function register()
     {
-        Cashier::ignoreMigrations();
-
         if ($this->app->environment('local')) {
             $this->app->register(\Laravel\Telescope\TelescopeServiceProvider::class);
             $this->app->register(TelescopeServiceProvider::class);
@@ -30,6 +27,6 @@ class AppServiceProvider extends ServiceProvider
      */
     public function boot()
     {
-        Cashier::useCustomerModel(User::class);
+
     }
 }

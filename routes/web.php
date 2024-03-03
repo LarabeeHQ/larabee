@@ -5,14 +5,11 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\App\AnalyticsController;
 use App\Http\Controllers\App\AccountController;
 use App\Http\Controllers\App\WebsiteController;
-use App\Http\Controllers\App\BillingController;
 use App\Http\Controllers\App\UserController;
 
-Route::get('/', function () {
-    return redirect('/login');
-});
-
-Route::group(['middleware' => ['auth', 'verified', 'app.set-locale', 'app.set-website', 'check.trial']], function () {
+Route::group([
+    'domain' => 'app.' . parse_url(config('app.url'), PHP_URL_HOST),
+    'middleware' => ['auth', 'verified', 'app.set-locale', 'app.set-website']], function () {
 
     // dashboard
     Route::get('/analytics', [AnalyticsController::class, 'index'])->name('analytics');
@@ -36,13 +33,6 @@ Route::group(['middleware' => ['auth', 'verified', 'app.set-locale', 'app.set-we
     Route::post('/account', [AccountController::class, 'update'])->name('account.update');
     Route::post('/account/update-password', [AccountController::class, 'updatePassword'])->name('account.update-password');
     Route::delete('/account', [AccountController::class, 'destroy'])->name('account.destroy');
-
-    // billing
-    Route::get('/billing', [BillingController::class, 'index'])->name('billing.index');
-    Route::get('/billing/redirect-to-portal', [BillingController::class, 'redirectToPortal'])->name('billing.redirect-to-portal');
-    Route::get('/billing/checkout', [BillingController::class, 'checkout'])->name('billing.checkout');
-    Route::get('/billing/upgrade-success', [BillingController::class, 'index'])->name('billing.upgrade-success');
-    Route::inertia('/billing/upgrade-success', 'Billing/success');
 });
 
 require __DIR__.'/auth.php';

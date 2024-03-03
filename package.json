@@ -1,12 +1,12 @@
 {
-    "name": "@wanalytics/wanalytics",
+    "name": "@larabee/larabee",
     "repository": {
         "type": "git",
-        "url": "https://github.com/WanalyticsHQ/wanalytics.git"
+        "url": "https://github.com/larabeeHQ/larabee.git"
     },
     "description": "A simple, lightweight, and open source Google Analytics alternative.",
-    "author": "Paulo Castellano <paulo@wanalytics.io>",
-    "homepage": "https://wanalytics.io",
+    "author": "Paulo Castellano <paulo@larabee.io>",
+    "homepage": "https://larabee.io",
     "private": false,
     "version": "0.0.1",
     "scripts": {
