@@ -32,8 +32,3 @@ Running migrations and seeders.
 ```
 sail artisan migrate:fresh --seed
 ```
-
-i18n
-```
-php artisan vue-i18n:generate
-```
