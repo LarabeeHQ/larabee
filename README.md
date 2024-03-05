@@ -4,6 +4,9 @@ A simple, lightweight, and open source Google Analytics alternative based on Lar
 
 ![Screenshot 2024-03-05 at 3 27 28 PM](https://github.com/LarabeeHQ/larabee/assets/265964/4190250c-0326-42db-8cfa-2c2ed0d275c1)
 
+## Cloud Version
+We have a cloud version where you can sign up and test at [app.larabee.io](https://app.larabee.io/register)
+
 ## Development
 
 ### Running Docker (Sail) Locally
