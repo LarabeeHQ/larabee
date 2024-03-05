@@ -1,7 +1,12 @@
-# Larabee Core
+# Larabee
 
-# Running Docker (Sail) Locally
+A simple, lightweight, and open source Google Analytics alternative based on Laravel.
 
+![Screenshot 2024-03-05 at 3 27 28 PM](https://github.com/LarabeeHQ/larabee/assets/265964/4190250c-0326-42db-8cfa-2c2ed0d275c1)
+
+## Development
+
+### Running Docker (Sail) Locally
 The docker-compose contains all what you need to run Larabee on your localhost.
 * PHP 8.2
 * [PostgreSQL 15](https://www.postgresql.org/)

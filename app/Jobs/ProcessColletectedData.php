@@ -65,6 +65,8 @@ class ProcessColletectedData implements ShouldQueue
             $url = parse_url($this->data['url']['path']);
             isset($url['query']) ? parse_str($url['query'], $queryParams) : null;
 
+            \Log::info($url);
+
             // if found in cache
             if (Cache::has("session:$hash")) {
                 $session = Cache::get("session:$hash");

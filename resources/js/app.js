@@ -11,8 +11,7 @@ import FloatingVue from "floating-vue";
 import "floating-vue/dist/style.css";
 
 // locales
-import { createI18n } from "vue-i18n";
-import localeMessages from "./vue-i18n-locales.generated";
+import { i18nVue } from 'laravel-vue-i18n'
 
 const appName =
     window.document.getElementsByTagName("title")[0]?.innerText || "Larabee";
@@ -25,17 +24,14 @@ createInertiaApp({
             import.meta.glob("./Pages/**/*.vue")
         ),
     setup({ el, App, props, plugin }) {
-         const i18n = createI18n({
-             locale: props.initialPage.props.locale
-                 ? props.initialPage.props.locale
-                 : "en",
-             fallbackLocale: "en", // set fallback locale
-             messages: localeMessages, // set locale messages
-         });
-
         return createApp({ render: () => h(App, props) })
             .use(plugin)
-            .use(i18n)
+            .use(i18nVue, {
+                resolve: async (lang) => {
+                    const langs = import.meta.glob("../../lang/*.json");
+                    return await langs[`../../lang/php_${lang}.json`]();
+                },
+            })
             .use(FloatingVue, {
                 distance: 2,
             })

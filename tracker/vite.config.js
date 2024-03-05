@@ -5,7 +5,7 @@ export default defineConfig({
     lib: {
       entry: "./main.js",
       name: "larabee",
-      fileName: "l",
+      fileName: "t",
     },
   },
 
