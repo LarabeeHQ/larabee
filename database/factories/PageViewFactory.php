@@ -26,8 +26,9 @@ class PageViewFactory extends Factory
         $url = collect($urls)->random();
 
         return [
-            'website_id' => Website::factory(),
             'session_id' => Session::factory(),
+            'website_id' => Website::factory(),
+            'title' => $this->faker->sentence,
             'url' => $url,
             'referrer' => $referrer,
             'created_at' => now()

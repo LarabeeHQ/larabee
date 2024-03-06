@@ -1,5 +1,4 @@
 <script setup>
-import helper from "@/helper";
 import { Link } from "@inertiajs/vue3";
 
 defineProps({
@@ -7,79 +6,23 @@ defineProps({
         type: Object,
         required: true,
     },
-
-    style: {
-        type: String,
-        required: false,
-        default: "list",
-    },
 });
 </script>
 
 <template>
-    <nav v-if="style == 'table'" aria-label="Pagination">
-        <div
-            v-if="data.links.length > 3"
-            class="bg-gray-50 px-4 py-3 flex items-center justify-between border-t border-gray-200 sm:px-6"
-        >
-            <div class="hidden sm:block">
-                <p class="text-sm text-gray-700">
-                    Showing
-                    <span class="font-medium">{{ data.from }}</span>
-                    to
-                    <span class="font-medium">{{ data.to }}</span>
-                    of
-                    <span class="font-medium">{{ data.total }}</span>
-                    results
-                </p>
-            </div>
-            <div class="flex-1 flex justify-between sm:justify-end">
-                <Link
-                    v-if="data.prev_page_url"
-                    :href="data.prev_page_url"
-                    class="relative inline-flex items-center px-3 py-1.5 border border-gray-300 text-sm font-medium rounded-md text-gray-700 bg-white hover:bg-gray-50"
-                >
-                    Previous
-                </Link>
-                <div
-                    v-else
-                    class="relative inline-flex items-center px-3 py-1.5 border border-gray-300 text-sm font-medium rounded-md text-gray-400 bg-gray-100"
-                >
-                    Previous
-                </div>
-
-                <Link
-                    v-if="data.next_page_url"
-                    :href="data.next_page_url"
-                    class="ml-2 relative inline-flex items-center px-3 py-1.5 border border-gray-300 text-sm font-medium rounded-md text-gray-700 bg-white hover:bg-gray-50"
-                >
-                    Next
-                </Link>
-                <div
-                    v-else
-                    class="ml-2 relative inline-flex items-center px-3 py-1.5 border border-gray-300 text-sm font-medium rounded-md text-gray-400 bg-gray-100"
-                >
-                    Next
-                </div>
-            </div>
-        </div>
-    </nav>
-
-    <nav v-if="style == 'list'" aria-label="Pagination">
+    <div>
         <div
             v-if="data.links.length > 3"
             class="py-2 flex items-center justify-between"
         >
             <div class="hidden sm:block">
-                <p class="text-sm text-gray-700">
+                <p class="text-sm text-gray-700 dark:text-gray-300">
                     {{ $t("pagination.showing") }}
                     <span class="font-medium">{{ data.from }}</span>
                     {{ $t("pagination.to") }}
                     <span class="font-medium">{{ data.to }}</span>
                     {{ $t("pagination.of") }}
-                    <span class="font-medium">{{
-                        helper.kFormatter(data.total)
-                    }}</span>
+                    <span class="font-medium">{{ data.total }}</span>
                     {{ $t("pagination.results") }}
                 </p>
             </div>
@@ -87,14 +30,16 @@ defineProps({
                 <Link
                     v-if="data.prev_page_url"
                     :href="data.prev_page_url"
-                    class="cursor-pointer relative inline-flex items-center px-3 py-1.5 border border-gray-300 text-sm font-medium rounded-md text-gray-700 bg-white hover:bg-gray-50"
+                    class="relative inline-flex items-center px-3 py-1.5 border border-gray-300 dark:border-gray-700 text-sm font-medium rounded-md text-gray-700 dark:text-gray-300 bg-white dark:bg-gray-800 hover:bg-gray-50 hover:dark:bg-gray-900"
+                    preserve-scroll
+                    preserve-state
                 >
                     {{ $t("pagination.previous") }}
                 </Link>
 
                 <div
                     v-else
-                    class="cursor-pointer relative inline-flex items-center px-3 py-1.5 border border-gray-300 text-sm font-medium rounded-md text-gray-400 bg-gray-100"
+                    class="relative cursor-not-allowed inline-flex items-center px-3 py-1.5 border border-gray-300 dark:border-gray-700 text-sm font-medium rounded-md text-gray-700 dark:text-gray-500 bg-white dark:bg-gray-800/40 hover:bg-gray-50"
                 >
                     {{ $t("pagination.previous") }}
                 </div>
@@ -102,17 +47,19 @@ defineProps({
                 <Link
                     v-if="data.next_page_url"
                     :href="data.next_page_url"
-                    class="cursor-pointer ml-2 relative inline-flex items-center px-3 py-1.5 border border-gray-300 text-sm font-medium rounded-md text-gray-700 bg-white hover:bg-gray-50"
+                    class="ml-2 relative inline-flex items-center px-3 py-1.5 border border-gray-300 dark:border-gray-700 text-sm font-medium rounded-md text-gray-700 dark:text-gray-300 bg-white dark:bg-gray-800 hover:bg-gray-50 hover:dark:bg-gray-900"
+                    preserve-scroll
+                    preserve-state
                 >
                     {{ $t("pagination.next") }}
                 </Link>
                 <div
                     v-else
-                    class="cursor-pointer ml-2 relative inline-flex items-center px-3 py-1.5 border border-gray-300 text-sm font-medium rounded-md text-gray-400 bg-gray-100"
+                    class="ml-2 relative cursor-not-allowed inline-flex items-center px-3 py-1.5 border border-gray-300 dark:border-gray-700 text-sm font-medium rounded-md text-gray-700 dark:text-gray-500 bg-white dark:bg-gray-800/40 hover:bg-gray-50"
                 >
                     {{ $t("pagination.next") }}
                 </div>
             </div>
         </div>
-    </nav>
+    </div>
 </template>

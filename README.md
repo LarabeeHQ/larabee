@@ -55,3 +55,10 @@ Running migrations and seeders.
 ```
 sail artisan migrate:fresh --seed
 ```
+
+### Mocking data for development
+
+It can take some minutes, depending on your machine.
+```sh
+sail artisan db:seed --class=LocalDevelopmentSeeder
+```

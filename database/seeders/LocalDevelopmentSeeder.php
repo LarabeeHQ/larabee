@@ -48,7 +48,7 @@ class LocalDevelopmentSeeder extends Seeder
                 ->has(
                     PageView::factory(['created_at' => $date])
                         ->count(rand(1, 4))
-                        ->for($website)
+                        ->for($website), 'page_views'
                 )
                 ->create();
         }
