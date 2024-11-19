@@ -2,34 +2,15 @@
 
 namespace App\Http\Controllers\App;
 
-use App\Repositories\WebsiteRepository;
-
-use Illuminate\Support\Facades\Gate;
-
 use App\Enums\UserRole;
 
-use Carbon\Carbon;
 use Illuminate\Http\Request;
-use Illuminate\Validation\Rule;
 use Inertia\Inertia;
 
-use App\Models\User;
 use App\Models\Website;
 
 class WebsiteController extends Controller
 {
-    /**
-     * The website repository implementation.
-     *
-     * @var WebsiteRepository
-     */
-    protected $website;
-
-    public function __construct(WebsiteRepository $website)
-    {
-        $this->website = $website;
-    }
-
     public function create()
     {
         return Inertia::render('App/Website/Create');
@@ -114,7 +95,6 @@ class WebsiteController extends Controller
 
     public function destroy()
     {
-
         $website = auth()->user()->currentWebsite;
 
         // update all users with current website equal it to null

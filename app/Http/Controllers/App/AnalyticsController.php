@@ -2,9 +2,7 @@
 
 namespace App\Http\Controllers\App;
 
-use App\Repositories\WebsiteRepository;
-
-use Illuminate\Support\Facades\Gate;
+use App\Services\CalculateStat;
 
 use App\Enums\UserRole;
 
@@ -18,17 +16,9 @@ use App\Models\Website;
 
 class AnalyticsController extends Controller
 {
-    /**
-     * The website repository implementation.
-     *
-     * @var WebsiteRepository
-     */
-    protected $website;
-
-    public function __construct(WebsiteRepository $website)
-    {
-        $this->website = $website;
-    }
+    public function __construct(
+        public CalculateStat $stat
+    ) {}
 
     public function index()
     {
@@ -74,87 +64,87 @@ class AnalyticsController extends Controller
 
         switch ($request->metric) {
             case 'unique-users':
-                $data = $this->website->uniqueUsers($website, $timezone, $start, $end, $startPrevious, $endPrevious, $request->group);
+                $data = $this->stat->uniqueUsers($website, $timezone, $start, $end, $startPrevious, $endPrevious, $request->group);
                 break;
 
             case 'page-views':
-                $data = $this->website->pageViews($website, $timezone, $start, $end, $startPrevious, $endPrevious, $request->group);
+                $data = $this->stat->pageViews($website, $timezone, $start, $end, $startPrevious, $endPrevious, $request->group);
                 break;
 
             case 'online':
-                $data = $this->website->online($website);
+                $data = $this->stat->online($website);
                 break;
 
             case 'pages':
-                $data = $this->website->pageStats($website->id, $start, $end);
+                $data = $this->stat->pageStats($website->id, $start, $end);
                 break;
 
             case 'entry-pages':
-                $data = $this->website->entryPageStats($website->id, $start, $end);
+                $data = $this->stat->entryPageStats($website->id, $start, $end);
                 break;
 
             case 'exit-pages':
-                $data = $this->website->exitPageStats($website->id, $start, $end);
+                $data = $this->stat->exitPageStats($website->id, $start, $end);
                 break;
 
             case 'referrers':
-                $data = $this->website->referrerStats($website->id, $start, $end);
+                $data = $this->stat->referrerStats($website->id, $start, $end);
                 break;
 
             case 'utm-sources':
-                $data = $this->website->utmSourceStats($website->id, $start, $end);
+                $data = $this->stat->utmSourceStats($website->id, $start, $end);
                 break;
 
             case 'utm-mediums':
-                $data = $this->website->utmMediumStats($website->id, $start, $end);
+                $data = $this->stat->utmMediumStats($website->id, $start, $end);
                 break;
 
             case 'utm-campaigns':
-                $data = $this->website->utmCampaignStats($website->id, $start, $end);
+                $data = $this->stat->utmCampaignStats($website->id, $start, $end);
                 break;
 
             case 'utm-contents':
-                $data = $this->website->utmContentStats($website->id, $start, $end);
+                $data = $this->stat->utmContentStats($website->id, $start, $end);
                 break;
 
             case 'utm-terms':
-                $data = $this->website->utmTermStats($website->id, $start, $end);
+                $data = $this->stat->utmTermStats($website->id, $start, $end);
                 break;
 
             case 'events':
-                $data = $this->website->events($website->id, $start, $end);
+                $data = $this->stat->events($website->id, $start, $end);
                 break;
 
             case 'browsers':
-                $data = $this->website->browserStats($website->id, $start, $end);
+                $data = $this->stat->browserStats($website->id, $start, $end);
                 break;
 
             case 'os':
-                $data = $this->website->osStats($website->id, $start, $end);
+                $data = $this->stat->osStats($website->id, $start, $end);
                 break;
 
             case 'devices':
-                $data = $this->website->deviceStats($website->id, $start, $end);
+                $data = $this->stat->deviceStats($website->id, $start, $end);
                 break;
 
             case 'screens':
-                $data = $this->website->screenStats($website->id, $start, $end);
+                $data = $this->stat->screenStats($website->id, $start, $end);
                 break;
 
             case 'languages':
-                $data = $this->website->languageStats($website->id, $start, $end);
+                $data = $this->stat->languageStats($website->id, $start, $end);
                 break;
 
             case 'countries':
-                $data = $this->website->countryStats($website->id, $start, $end);
+                $data = $this->stat->countryStats($website->id, $start, $end);
                 break;
 
             case 'regions':
-                $data = $this->website->regionStats($website->id, $start, $end);
+                $data = $this->stat->regionStats($website->id, $start, $end);
                 break;
 
             case 'cities':
-                $data = $this->website->cityStats($website->id, $start, $end);
+                $data = $this->stat->cityStats($website->id, $start, $end);
                 break;
 
             default:
